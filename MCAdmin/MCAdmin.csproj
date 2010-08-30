@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1A2CC44C-CE23-4CAA-A1C6-5778EC9966B9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MCAdmin</RootNamespace>
+    <AssemblyName>MCAdmin</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NBT">
+      <HintPath>..\NBT.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\BanCommand.cs" />
+    <Compile Include="Commands\BanipCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\RulesCommand.cs" />
+    <Compile Include="Commands\MotdCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\GiveCommand.cs" />
+    <Compile Include="Commands\KickCommand.cs" />
+    <Compile Include="Commands\KitCommand.cs" />
+    <Compile Include="Commands\SetrankCommand.cs" />
+    <Compile Include="Commands\SummonCommand.cs" />
+    <Compile Include="Commands\TpCommand.cs" />
+    <Compile Include="Commands\UnbanCommand.cs" />
+    <Compile Include="Commands\UnbanipCommand.cs" />
+    <Compile Include="Commands\VersionCommand.cs" />
+    <Compile Include="Commands\WhoCommand.cs" />
+    <Compile Include="frmRankConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRankConfig.Designer.cs">
+      <DependentUpon>frmRankConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBlockMangementAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBlockMangementAdd.Designer.cs">
+      <DependentUpon>frmBlockMangementAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmBlocksMangement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBlocksMangement.Designer.cs">
+      <DependentUpon>frmBlocksMangement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCmdLevels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCmdLevels.Designer.cs">
+      <DependentUpon>frmCmdLevels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmIPBans.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIPBans.Designer.cs">
+      <DependentUpon>frmIPBans.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmKitItemAddEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmKitItemAddEdit.Designer.cs">
+      <DependentUpon>frmKitItemAddEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmKitCreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmKitCreate.Designer.cs">
+      <DependentUpon>frmKitCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmKits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmKits.Designer.cs">
+      <DependentUpon>frmKits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProperties.Designer.cs">
+      <DependentUpon>frmProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRanks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRanks.Designer.cs">
+      <DependentUpon>frmRanks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Kit.cs" />
+    <Compile Include="MCFirewall.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rcon.cs" />
+    <Compile Include="ServerQuery.cs" />
+    <Compile Include="Util.cs" />
+    <EmbeddedResource Include="frmRankConfig.resx">
+      <DependentUpon>frmRankConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBlockMangementAdd.resx">
+      <DependentUpon>frmBlockMangementAdd.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBlocksMangement.resx">
+      <DependentUpon>frmBlocksMangement.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCmdLevels.resx">
+      <DependentUpon>frmCmdLevels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmIPBans.resx">
+      <DependentUpon>frmIPBans.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmKitItemAddEdit.resx">
+      <DependentUpon>frmKitItemAddEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmKitCreate.resx">
+      <DependentUpon>frmKitCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmKits.resx">
+      <DependentUpon>frmKits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProperties.resx">
+      <DependentUpon>frmProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRanks.resx">
+      <DependentUpon>frmRanks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
