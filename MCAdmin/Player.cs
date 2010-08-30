@@ -471,12 +471,13 @@ namespace MCAdmin
                                 }
                                 if (packet_size == -2)
                                 {
-                                    fwl.parent.SendServerMessage("Client \"" + name + "\" (IP: "+ip+") sent unknown packet. Disabled firewalling!!!", '4');
+                                    fwl.parent.SendServerMessage("Client \"" + name + "\" (IP: "+ip+") sent unknown packet. Kicked!", '4');
                                     fwl.parent.AddRTLine(Color.Orange, "Invalid packet ID: " + ((int)packet_id) + "\r\n", false);
-                                    internalSock.Send(fwcache_ext);
-                                    invalidRecvd = true;
-                                    dat = new byte[256];
-                                    continue;
+                                    //internalSock.Send(fwcache_ext);
+                                    //invalidRecvd = true;
+                                    //dat = new byte[256];
+                                    this.Disconnect("Invalid packet ID: " + packet_id.ToString());
+                                    return;
                                 }
                                 if (forwardpacket) internalSock.Send(fwcache_ext);
                             }
