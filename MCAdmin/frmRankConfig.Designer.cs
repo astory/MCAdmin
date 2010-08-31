@@ -30,13 +30,13 @@
         {
             this.lvRanks = new System.Windows.Forms.ListView();
             this.chRank = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chLevel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chTag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnMod = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.chLevel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chTag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tbName = new System.Windows.Forms.TextBox();
             this.numLevel = new System.Windows.Forms.NumericUpDown();
             this.tbTag = new System.Windows.Forms.TextBox();
@@ -69,6 +69,14 @@
             // 
             this.chRank.Text = "Rank";
             this.chRank.Width = 100;
+            // 
+            // chLevel
+            // 
+            this.chLevel.Text = "Level";
+            // 
+            // chTag
+            // 
+            this.chTag.Text = "Tag";
             // 
             // btnMod
             // 
@@ -136,14 +144,6 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // chLevel
-            // 
-            this.chLevel.Text = "Level";
-            // 
-            // chTag
-            // 
-            this.chTag.Text = "Tag";
-            // 
             // tbName
             // 
             this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -158,6 +158,16 @@
             // 
             this.numLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.numLevel.Location = new System.Drawing.Point(214, 394);
+            this.numLevel.Maximum = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            0});
+            this.numLevel.Minimum = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            -2147483648});
             this.numLevel.Name = "numLevel";
             this.numLevel.Size = new System.Drawing.Size(66, 20);
             this.numLevel.TabIndex = 13;
