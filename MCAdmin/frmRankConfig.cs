@@ -92,6 +92,9 @@ namespace MCAdmin
             }
             parent.SaveRankLevels();
 
+            parent.SaveRanks();
+            parent.LoadRanks();
+
             this.Close();
         }
     }
