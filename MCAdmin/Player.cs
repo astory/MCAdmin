@@ -251,6 +251,14 @@ namespace MCAdmin
                                 else if (packet_size > 0)
                                 {
                                     dat = ReceiveBytes(internalSock, packet_size);
+                                    switch (packet_id)
+                                    {
+                                        case 0x0B:
+                                        case 0x0C:
+                                        case 0x0D:
+                                            __HandleMovementPacket(packet_id, dat);
+                                            break;
+                                    }
                                 }
 
                                 if (packet_size == -2)
@@ -438,6 +446,11 @@ namespace MCAdmin
                                     dat = ReceiveBytes(externalSock, packet_size);
                                     switch (packet_id)
                                     {
+                                        case 0x0B:
+                                        case 0x0C:
+                                        case 0x0D:
+                                            __HandleMovementPacket(packet_id, dat);
+                                            break;
                                         case 0x0F:
                                             short blockid = Util.AtoN(dat, 0);
                                             if (blockid == 61) //now with working furnaces :3
@@ -510,6 +523,34 @@ namespace MCAdmin
                 catch { }
             }
             this.Disconnect();
+        }
+
+        public double x = 0; public double y = 0; public double z = 0;
+        public float rot = 0; public float pitch = 0;
+
+        private void __HandleMovementPacket(byte packet_id, byte[] data)
+        {   
+            switch (packet_id)
+            {
+                case 0x0B:
+                    x = Util.AtoD(data, 0);
+                    y = Util.AtoD(data, 8);
+                    //Stance = Util.AtoD(data, 16);
+                    z = Util.AtoD(data, 24);
+                    break;
+                case 0x0C:
+                    rot = Util.AtoF(data, 0);
+                    pitch = Util.AtoF(data, 4);
+                    break;
+                case 0x0D:
+                    x = Util.AtoD(data, 0);
+                    y = Util.AtoD(data, 8);
+                    //Stance = Util.AtoD(data, 16);
+                    z = Util.AtoD(data, 24);
+                    rot = Util.AtoF(data, 32);
+                    pitch = Util.AtoF(data, 36);
+                    break;
+            }
         }
 
         #region Networking stuff

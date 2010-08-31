@@ -178,6 +178,7 @@ namespace MCAdmin
             commands.Add("rules", new RulesCommand(this));
 
             commands.Add("version", new VersionCommand(this));
+            commands.Add("compass", new CompassCommand(this));
             #endregion
 
             #region Blocks <-> IDs init

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MiscUtil.Conversion;
 
 namespace MCAdmin
 {
@@ -10,33 +11,33 @@ namespace MCAdmin
         static Encoding enc = new UTF8Encoding(false);
 
         #region Networking ByteArray Encoders
+
+
         public static short AtoN(byte[] arr, int start)
         {
-            byte[] xarr = new byte[2];
-            xarr[0] = arr[start + 1];
-            xarr[1] = arr[start];
-            return BitConverter.ToInt16(xarr, 0);
+            return EndianBitConverter.Big.ToInt16(arr, start);
         }
         public static int AtoI(byte[] arr, int start)
         {
-            byte[] xarr = new byte[4];
-            xarr[0] = arr[start + 3];
-            xarr[1] = arr[start + 2];
-            xarr[2] = arr[start + 1];
-            xarr[3] = arr[start];
-            return BitConverter.ToInt32(xarr, 0);
+            return EndianBitConverter.Big.ToInt32(arr, start);
         }
         public static byte[] NtoA(short num)
         {
-            byte[] ret = BitConverter.GetBytes(num);
-            byte tmp = ret[1];
-            ret[1] = ret[0];
-            ret[0] = tmp;
-            return ret;
+            return EndianBitConverter.Big.GetBytes(num);;
         }
         public static void NinA(short num, byte[] arr, int start)
         {
             Util.NtoA(num).CopyTo(arr, start);
+        }
+
+        public static double AtoD(byte[] arr, int start)
+        {
+            return EndianBitConverter.Big.ToInt64(arr, start);
+        }
+
+        public static float AtoF(byte[] arr, int start)
+        {
+            return EndianBitConverter.Big.ToSingle(arr, start);
         }
 
         /*public static byte[] VtoA(Vector vec)

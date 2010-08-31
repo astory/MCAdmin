@@ -67,6 +67,7 @@
     <Compile Include="Commands\BanCommand.cs" />
     <Compile Include="Commands\BanipCommand.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CompassCommand.cs" />
     <Compile Include="Commands\RulesCommand.cs" />
     <Compile Include="Commands\MotdCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
@@ -154,6 +155,8 @@
     <Compile Include="Rcon.cs" />
     <Compile Include="ServerQuery.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="Utils\BigEndianBitConverter.cs" />
+    <Compile Include="Utils\EndianBitConverter.cs" />
     <EmbeddedResource Include="frmRankConfig.resx">
       <DependentUpon>frmRankConfig.cs</DependentUpon>
     </EmbeddedResource>
