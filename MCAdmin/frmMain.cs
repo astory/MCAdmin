@@ -19,6 +19,9 @@ namespace MCAdmin
     public partial class frmMain : Form
     {
         #region Header variables
+        static bool isOutOfDate_MCA = false;
+        static bool isOutOfDate_JAR = false;
+
         public List<IPEndPoint> logToAddr = new List<IPEndPoint>();
         Rcon serverRcon;
         ServerQuery serverQuery;
@@ -179,6 +182,7 @@ namespace MCAdmin
 
             commands.Add("version", new VersionCommand(this));
             commands.Add("compass", new CompassCommand(this));
+            commands.Add("time", new TimeCommand(this));
             #endregion
 
             #region Blocks <-> IDs init
@@ -401,6 +405,7 @@ namespace MCAdmin
             btnStop.Enabled = false;
             btnRestart.Enabled = false;
             btnKillServer.Enabled = false;
+            isOutOfDate_JAR = false;
 
             lblStatus.ForeColor = Color.Orange;
             lblStatus.Text = "Killing...";
@@ -924,7 +929,7 @@ namespace MCAdmin
             else
             {
                 isUpdate = __DownloadURLToAndDiff("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar.new", "minecraft_server.jar");
-                if (!isUpdate)
+                if (!isUpdate && !isOutOfDate_JAR)
                 {
                     AddRTLine(Color.Green, "JAR already up to date!\r\n", false);
                 }
@@ -941,6 +946,7 @@ namespace MCAdmin
                 }
                 else
                 {
+                    isOutOfDate_JAR = true;
                     AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false);
                 }
             }
@@ -952,7 +958,7 @@ namespace MCAdmin
             else
             {
                 isUpdate = __DownloadURLToAndDiff("http://mc.doridian.de/mcadmin/MCAdmin.exe", "mcadmin.exe.new", "mcadmin.exe");
-                if (!isUpdate)
+                if (!isUpdate && !isOutOfDate_MCA)
                 {
                     AddRTLine(Color.Green, "MCAdmin already up to date!\r\n", false);
                 }
@@ -977,6 +983,7 @@ namespace MCAdmin
 
                     if (File.Exists("MCAdmin.exe")) File.Move("MCAdmin.exe", "MCAdmin.exe.old");
                     File.Move("MCAdmin.exe.new", "MCAdmin.exe");
+                    isOutOfDate_MCA = true;
                     AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false);
                 }
             }
@@ -1229,6 +1236,7 @@ namespace MCAdmin
             btnStop.Enabled = false;
             btnRestart.Enabled = false;
             btnKillServer.Enabled = false;
+            isOutOfDate_JAR = false;
             if (minecraftServer != null && !minecraftServer.HasExited)
             {
                 try

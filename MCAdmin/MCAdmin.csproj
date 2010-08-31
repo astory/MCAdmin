@@ -76,6 +76,7 @@
     <Compile Include="Commands\KitCommand.cs" />
     <Compile Include="Commands\SetrankCommand.cs" />
     <Compile Include="Commands\SummonCommand.cs" />
+    <Compile Include="Commands\TimeCommand.cs" />
     <Compile Include="Commands\TpCommand.cs" />
     <Compile Include="Commands\UnbanCommand.cs" />
     <Compile Include="Commands\UnbanipCommand.cs" />

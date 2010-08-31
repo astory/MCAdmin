@@ -20,6 +20,8 @@ namespace MCAdmin
         bool connected = true;
         //bool moddedServer = false;
 
+        public long forcedtime = -1;
+
         public Player()
         {
 
@@ -253,12 +255,19 @@ namespace MCAdmin
                                     dat = ReceiveBytes(internalSock, packet_size);
                                     switch (packet_id)
                                     {
+                                        case 0x04:
+                                            if (forcedtime >= 0)
+                                            {
+                                                Util.LinA(forcedtime, dat, 0);
+                                            }
+                                            break;
                                         case 0x0B:
                                         case 0x0C:
                                         case 0x0D:
                                             __HandleMovementPacket(packet_id, dat);
                                             break;
                                     }
+                                    dat.CopyTo(fwcache_int, 1);
                                 }
 
                                 if (packet_size == -2)
@@ -412,6 +421,10 @@ namespace MCAdmin
                                                         else cmd.Run(this, cmdparts);
                                                     }
                                                     catch { this.SendChat("Command error!"); }
+                                                }
+                                                else
+                                                {
+                                                    this.SendChat("Unknown command!");
                                                 }
                                             }
                                             else if (msg[0] == '/')

@@ -17,17 +17,18 @@ namespace MCAdmin
         {
             return EndianBitConverter.Big.ToInt16(arr, start);
         }
-        public static int AtoI(byte[] arr, int start)
-        {
-            return EndianBitConverter.Big.ToInt32(arr, start);
-        }
         public static byte[] NtoA(short num)
         {
-            return EndianBitConverter.Big.GetBytes(num);;
+            return EndianBitConverter.Big.GetBytes(num); ;
         }
         public static void NinA(short num, byte[] arr, int start)
         {
             Util.NtoA(num).CopyTo(arr, start);
+        }
+
+        public static int AtoI(byte[] arr, int start)
+        {
+            return EndianBitConverter.Big.ToInt32(arr, start);
         }
 
         public static double AtoD(byte[] arr, int start)
@@ -38,6 +39,20 @@ namespace MCAdmin
         public static float AtoF(byte[] arr, int start)
         {
             return EndianBitConverter.Big.ToSingle(arr, start);
+        }
+
+        public static long AtoL(byte[] arr, int start)
+        {
+            return EndianBitConverter.Big.ToInt64(arr, start);
+        }
+
+        public static byte[] LtoA(long num)
+        {
+            return EndianBitConverter.Big.GetBytes(num);
+        }
+        public static void LinA(long num, byte[] arr, int start)
+        {
+            Util.LtoA(num).CopyTo(arr, start);
         }
 
         /*public static byte[] VtoA(Vector vec)
