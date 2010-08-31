@@ -35,17 +35,32 @@ namespace MCAdmin
         {
             return EndianBitConverter.Big.ToInt64(arr, start);
         }
+        public static byte[] DtoA(double num)
+        {
+            return EndianBitConverter.Big.GetBytes(num);
+        }
+        public static void DinA(double num, byte[] arr, int start)
+        {
+            Util.DtoA(num).CopyTo(arr, start);
+        }
 
         public static float AtoF(byte[] arr, int start)
         {
             return EndianBitConverter.Big.ToSingle(arr, start);
+        }
+        public static byte[] FtoA(float num)
+        {
+            return EndianBitConverter.Big.GetBytes(num);
+        }
+        public static void FinA(float num, byte[] arr, int start)
+        {
+            Util.FtoA(num).CopyTo(arr, start);
         }
 
         public static long AtoL(byte[] arr, int start)
         {
             return EndianBitConverter.Big.ToInt64(arr, start);
         }
-
         public static byte[] LtoA(long num)
         {
             return EndianBitConverter.Big.GetBytes(num);

@@ -68,6 +68,7 @@
     <Compile Include="Commands\BanipCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CompassCommand.cs" />
+    <Compile Include="Commands\FreezeCommand.cs" />
     <Compile Include="Commands\RulesCommand.cs" />
     <Compile Include="Commands\MotdCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />

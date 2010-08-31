@@ -18,8 +18,10 @@ namespace MCAdmin
         public string ip;
         MCFirewall fwl;
         bool connected = true;
+        
         //bool moddedServer = false;
 
+        public bool frozen = false;
         public long forcedtime = -1;
 
         public Player()
@@ -264,7 +266,7 @@ namespace MCAdmin
                                         case 0x0B:
                                         case 0x0C:
                                         case 0x0D:
-                                            __HandleMovementPacket(packet_id, dat);
+                                            __HandleMovementPacket(packet_id, dat, false);
                                             break;
                                     }
                                     dat.CopyTo(fwcache_int, 1);
@@ -462,7 +464,39 @@ namespace MCAdmin
                                         case 0x0B:
                                         case 0x0C:
                                         case 0x0D:
-                                            __HandleMovementPacket(packet_id, dat);
+                                            if (this.frozen)
+                                            {
+                                                Util.DinA(this.x, dat, 0);
+                                                Util.DinA(this.y, dat, 8);
+                                                Util.DinA(this.stance, dat, 16);
+                                                Util.DinA(this.z, dat, 24);
+                                                Util.FinA(this.rot, dat, 32);
+                                                Util.FinA(this.pitch, dat, 36);
+                                                this.SendPacket(0x0D, dat);
+                                                /*switch (packet_id)
+                                                {
+                                                    case 0x0B:
+                                                        Util.DinA(this.x, dat, 0);
+                                                        Util.DinA(this.y, dat, 8);
+                                                        Util.DinA(this.stance, dat, 16);
+                                                        Util.DinA(this.z, dat, 24);
+                                                        this.SendPacket(0x0B, dat);
+                                                        break;
+                                                    case 0x0C:
+                                                        Util.FinA(this.rot, dat, 0);
+                                                        Util.FinA(this.pitch, dat, 4);
+                                                        this.SendPacket(0x0C, dat);
+                                                        break;
+                                                    case 0x0D:
+                                                        
+                                                        break;
+                                                }*/
+                                                forwardpacket = false;
+                                            }
+                                            else
+                                            {
+                                                __HandleMovementPacket(packet_id, dat, true);
+                                            }
                                             break;
                                         case 0x0F:
                                             short blockid = Util.AtoN(dat, 0);
@@ -538,17 +572,17 @@ namespace MCAdmin
             this.Disconnect();
         }
 
-        public double x = 0; public double y = 0; public double z = 0;
+        public double x = 0; public double y = 0; public double z = 0; double stance = 0;
         public float rot = 0; public float pitch = 0;
 
-        private void __HandleMovementPacket(byte packet_id, byte[] data)
+        private void __HandleMovementPacket(byte packet_id, byte[] data, bool fromclient)
         {   
             switch (packet_id)
             {
                 case 0x0B:
                     x = Util.AtoD(data, 0);
                     y = Util.AtoD(data, 8);
-                    //Stance = Util.AtoD(data, 16);
+                    stance = Util.AtoD(data, 16);
                     z = Util.AtoD(data, 24);
                     break;
                 case 0x0C:
@@ -558,7 +592,7 @@ namespace MCAdmin
                 case 0x0D:
                     x = Util.AtoD(data, 0);
                     y = Util.AtoD(data, 8);
-                    //Stance = Util.AtoD(data, 16);
+                    stance = Util.AtoD(data, 16);
                     z = Util.AtoD(data, 24);
                     rot = Util.AtoF(data, 32);
                     pitch = Util.AtoF(data, 36);

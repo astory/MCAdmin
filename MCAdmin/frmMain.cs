@@ -183,6 +183,7 @@ namespace MCAdmin
             commands.Add("version", new VersionCommand(this));
             commands.Add("compass", new CompassCommand(this));
             commands.Add("time", new TimeCommand(this));
+            //commands.Add("freeze", new FreezeCommand(this));
             #endregion
 
             #region Blocks <-> IDs init

@@ -86,7 +86,7 @@ namespace MCAdmin.Commands
             {
                 rot = "W";
             }
-            ply.SendChat("Direction: " + rot + " (" + ((int)Math.Round(rotation)) + " degrees)");
+            parent.SendDirectedMessage(ply, "Direction: " + rot + " (" + ((int)Math.Round(rotation)) + " degrees)");
         }
 
         public override int reqlevel { get { return 0; } }
