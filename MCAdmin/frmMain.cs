@@ -619,7 +619,7 @@ namespace MCAdmin
             kits.Clear();
             if(!Directory.Exists("kits")) Directory.CreateDirectory("kits");
             Kit k;
-            foreach (string f in Directory.GetFiles("kits"))
+            foreach (string f in Directory.GetFiles("kits","*.kit"))
             {
                 string kn = f.Remove(f.Length - 4).Substring(5);
                 try

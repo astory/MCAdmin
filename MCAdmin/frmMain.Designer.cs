@@ -278,7 +278,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tbCommand.Location = new System.Drawing.Point(12, 450);
             this.tbCommand.Name = "tbCommand";
-            this.tbCommand.Size = new System.Drawing.Size(725, 20);
+            this.tbCommand.Size = new System.Drawing.Size(742, 20);
             this.tbCommand.TabIndex = 3;
             this.tbCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCommand_KeyDown);
             // 
@@ -315,9 +315,9 @@
             // 
             // btnRunCmd
             // 
-            this.btnRunCmd.Location = new System.Drawing.Point(743, 447);
+            this.btnRunCmd.Location = new System.Drawing.Point(760, 450);
             this.btnRunCmd.Name = "btnRunCmd";
-            this.btnRunCmd.Size = new System.Drawing.Size(86, 25);
+            this.btnRunCmd.Size = new System.Drawing.Size(69, 20);
             this.btnRunCmd.TabIndex = 10;
             this.btnRunCmd.Text = "Run";
             this.btnRunCmd.UseVisualStyleBackColor = true;
