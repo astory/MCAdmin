@@ -769,13 +769,67 @@ namespace MCAdmin
             this.SendChat(msg, true, colorCode);
         }
 
+        public string ParseVariableString(string str)
+        {
+            bool isInside = false;
+            string strOut = ""; string strTmp = "";
+            char c;
+            foreach (char cx in str)
+            {
+                if ((byte)cx == 253) c = '§';
+                else c = cx;
+
+                if (c == '%')
+                {
+                    if (!isInside)
+                    {
+                        isInside = true;
+                        strTmp = "";
+                    }
+                    else
+                    {
+                        switch (strTmp.ToLower())
+                        {
+                            case "name":
+                                strOut += name;
+                                break;
+                            case "ip":
+                                strOut += ip;
+                                break;
+                            case "rank":
+                                strOut += GetRank();
+                                break;
+                            case "tag":
+                                strOut += GetTag();
+                                break;
+                            default:
+                                strOut += strTmp;
+                                break;
+                        }
+                        isInside = false;
+                        strTmp = "";
+                    }
+                    continue;
+                }
+                if (!isInside)
+                {
+                    strOut += c;
+                }
+                else
+                {
+                    strTmp += c;
+                }
+            }
+            return strOut + strTmp;
+        }
+
         public virtual void ReadMsgFile(string file)
         {
             file = "messages/" + file + ".txt";
             if (!File.Exists(file)) return;
             foreach (string line in File.ReadAllLines(file))
             {
-                SendDirectedMessage(line.Replace("%name%", name).Replace("%ip%", ip).Replace("%rank%",GetRank()).Replace("%tag%",GetTag()));
+                SendDirectedMessage(ParseVariableString(line));
             }
         }
 
