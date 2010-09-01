@@ -422,11 +422,11 @@ namespace MCAdmin
                                                         if (!fwl.parent.PlyHasLevel(name, cmd.minlevel)) fwl.parent.SendPermissionDenied(this);
                                                         else cmd.Run(this, cmdparts);
                                                     }
-                                                    catch { this.SendChat("Command error!"); }
+                                                    catch { fwl.parent.SendDirectedMessage(this, "Command error!"); }
                                                 }
                                                 else
                                                 {
-                                                    this.SendChat("Unknown command!");
+                                                    fwl.parent.SendDirectedMessage(this, "Unknown command!");
                                                 }
                                             }
                                             else if (msg[0] == '/')

@@ -1396,10 +1396,10 @@ namespace MCAdmin
             {
                 SendServerCommand("save-off");
                 Thread.Sleep(1000);
-                string file = "backups/" + GetServerProperty("world-name", "world") + "-" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Minute.ToString().PadLeft(2, '0') + ".zip";
+                string file = "backups/" + GetServerProperty("level-name", "world") + "-" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Minute.ToString().PadLeft(2, '0') + ".zip";
                 ZipFile zip = ZipFile.Create(file);
                 zip.BeginUpdate();
-                __AddRecursive(zip, GetServerProperty("world-name", "world"));
+                __AddRecursive(zip, GetServerProperty("level-name", "world"));
                 zip.CommitUpdate();
                 zip.Close();
                 SendServerCommand("save-on");

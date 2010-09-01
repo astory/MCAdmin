@@ -69,7 +69,7 @@ namespace MCAdmin
 
             #region INFO REPLY
             string sname = "MCAdmin Server";
-            string smap = parent.GetServerProperty("world-name", "world");
+            string smap = parent.GetServerProperty("level-name", "world");
 
             string sdir = "mcadmin";
             string sdesc = "Minecraft Alpha";
