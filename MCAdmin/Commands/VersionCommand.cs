@@ -14,7 +14,7 @@ namespace MCAdmin.Commands
 
         public override void Run(Player ply, string[] cmdparts)
         {
-            parent.SendDirectedMessage(ply, "MCAdmin (c) 2010 by Doridian the blue haired fox :3");
+            ply.SendDirectedMessage("MCAdmin (c) 2010 by Doridian the blue haired fox :3");
         }
 
         public override int minlevel { get { return reqlevel; } set { } }

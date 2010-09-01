@@ -14,7 +14,7 @@ namespace MCAdmin.Commands
 
         public override void Run(Player ply, string[] cmdparts)
         {
-            if (parent.PlyGetRank(cmdparts[1]) != "banned") { parent.SendDirectedMessage(ply, "Player is not banned!"); return; }
+            if (parent.PlyGetRank(cmdparts[1]) != "banned") { ply.SendDirectedMessage("Player is not banned!"); return; }
             parent.PlySetRank(cmdparts[1], parent.GetServerProperty("default-rank","guest"));
             parent.SendServerMessage(ply.name + " unbanned " + cmdparts[1]);
         }

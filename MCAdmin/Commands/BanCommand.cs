@@ -14,7 +14,7 @@ namespace MCAdmin.Commands
 
         public override void Run(Player ply, string[] cmdparts)
         {
-            if (ply.GetLevel() <= parent.PlyGetLevel(cmdparts[1])) { parent.SendPermissionDenied(ply); return; }
+            if (ply.GetLevel() <= parent.PlyGetLevel(cmdparts[1])) { ply.SendPermissionDenied(); return; }
             Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 == null) { parent.PlySetRank(cmdparts[1], "banned"); parent.SendServerMessage(ply.name + " banned " + cmdparts[1]); return; }
             parent.PlySetRank(ply2.name, "banned");

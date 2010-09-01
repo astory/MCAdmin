@@ -800,21 +800,6 @@ namespace MCAdmin
         #endregion
 
         #region Server interface methods
-        public void SendPermissionDenied(Player ply)
-        {
-            SendDirectedMessage(ply, "Permission denied!", '4');
-        }
-
-        public void SendDirectedMessage(Player ply, string msg)
-        {
-            SendDirectedMessage(ply, msg, '5');
-        }
-
-        public void SendDirectedMessage(Player player, string msg, char colorCode)
-        {
-            player.SendChat(msg, true, colorCode);
-        }
-
         public void SendServerMessage(string msg)
         {
             SendServerMessage(msg, '5');

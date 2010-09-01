@@ -14,10 +14,10 @@ namespace MCAdmin.Commands
 
         public override void Run(Player ply, string[] cmdparts)
         {
-            if (ply.GetLevel() <= parent.PlyGetLevel(cmdparts[1])) { parent.SendPermissionDenied(ply); return; }
+            if (ply.GetLevel() <= parent.PlyGetLevel(cmdparts[1])) { ply.SendPermissionDenied(); return; }
             string rank = cmdparts[2].ToLower();
-            if (!parent.ranklevels.ContainsKey(rank)) { parent.SendDirectedMessage(ply, "Rank does not exist!"); return; }
-            if (parent.ranklevels[rank] >= ply.GetLevel()) { parent.SendPermissionDenied(ply); return; }
+            if (!parent.ranklevels.ContainsKey(rank)) { ply.SendDirectedMessage("Rank does not exist!"); return; }
+            if (parent.ranklevels[rank] >= ply.GetLevel()) { ply.SendPermissionDenied(); return; }
             parent.PlySetRank(cmdparts[1], rank);
             parent.SendServerMessage(ply.name + " set rank of " + cmdparts[1] + " to " + parent.PlyGetRank(cmdparts[1]));
         }

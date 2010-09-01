@@ -419,14 +419,14 @@ namespace MCAdmin
                                                     try
                                                     {
                                                         Command cmd = fwl.parent.commands[cmdstr];
-                                                        if (!fwl.parent.PlyHasLevel(name, cmd.minlevel)) fwl.parent.SendPermissionDenied(this);
+                                                        if (!fwl.parent.PlyHasLevel(name, cmd.minlevel)) SendPermissionDenied();
                                                         else cmd.Run(this, cmdparts);
                                                     }
-                                                    catch { fwl.parent.SendDirectedMessage(this, "Command error!"); }
+                                                    catch { SendDirectedMessage("Command error!"); }
                                                 }
                                                 else
                                                 {
-                                                    fwl.parent.SendDirectedMessage(this, "Unknown command!");
+                                                    SendDirectedMessage("Unknown command!");
                                                 }
                                             }
                                             else if (msg[0] == '/')
@@ -754,13 +754,28 @@ namespace MCAdmin
         #endregion
 
         #region Player methods
+        public void SendPermissionDenied()
+        {
+            SendDirectedMessage("Permission denied!", '4');
+        }
+
+        public void SendDirectedMessage(string msg)
+        {
+            SendDirectedMessage(msg, '5');
+        }
+
+        public void SendDirectedMessage(string msg, char colorCode)
+        {
+            this.SendChat(msg, true, colorCode);
+        }
+
         public virtual void ReadMsgFile(string file)
         {
             file = "messages/" + file + ".txt";
             if (!File.Exists(file)) return;
             foreach (string line in File.ReadAllLines(file, System.Text.Encoding.UTF8))
             {
-                fwl.parent.SendDirectedMessage(this, line.Replace("%name%", name).Replace("%ip%", ip).Replace("%rank%",GetRank()).Replace("%tag%",GetTag()));
+                SendDirectedMessage(line.Replace("%name%", name).Replace("%ip%", ip).Replace("%rank%",GetRank()).Replace("%tag%",GetTag()));
             }
         }
 

@@ -22,19 +22,19 @@ namespace MCAdmin.Commands
                 {
                     if (kv.Value.minlevel <= curlvl && kv.Key != "commands") str += "!" + kv.Key + ", ";
                 }
-                parent.SendDirectedMessage(ply, "Available commands: " + str.Remove(str.Length - 2));
-                parent.SendDirectedMessage(ply, "For more help use !help command");
-                parent.SendDirectedMessage(ply, "Do not type <> or [] around parameters.");
-                parent.SendDirectedMessage(ply, "<> means the parameter is required, [] that it is optional");
+                ply.SendDirectedMessage("Available commands: " + str.Remove(str.Length - 2));
+                ply.SendDirectedMessage("For more help use !help command");
+                ply.SendDirectedMessage("Do not type <> or [] around parameters.");
+                ply.SendDirectedMessage("<> means the parameter is required, [] that it is optional");
             }
             else
             {
                 string cmdStr = cmdparts[1].ToLower();
                 if (cmdStr[0] == '!' || cmdStr[0] == '/') cmdStr = cmdStr.Substring(1);
-                if (!parent.commands.ContainsKey(cmdStr)) { parent.SendDirectedMessage(ply, "Unknown command!"); return; }
+                if (!parent.commands.ContainsKey(cmdStr)) { ply.SendDirectedMessage("Unknown command!"); return; }
                 Command cmd = parent.commands[cmdStr];
-                parent.SendDirectedMessage(ply, cmd.Help);
-                parent.SendDirectedMessage(ply, "Usage: !" + cmdStr + " " + cmd.Usage);
+                ply.SendDirectedMessage(cmd.Help);
+                ply.SendDirectedMessage("Usage: !" + cmdStr + " " + cmd.Usage);
             }
         }
 

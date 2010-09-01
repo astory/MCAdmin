@@ -19,7 +19,7 @@ namespace MCAdmin.Commands
             Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 != null)
             {
-                if (ply.GetLevel() <= ply2.GetLevel()) { parent.SendPermissionDenied(ply); return; }
+                if (ply.GetLevel() <= ply2.GetLevel()) { ply.SendPermissionDenied(); return; }
                 ip = ply2.ip;
             }
             else
@@ -27,7 +27,7 @@ namespace MCAdmin.Commands
                 IPAddress xip;
                 if (!IPAddress.TryParse(cmdparts[1], out xip))
                 {
-                    parent.SendDirectedMessage(ply, "Player not found and parameter is no valid IP!");
+                    ply.SendDirectedMessage("Player not found and parameter is no valid IP!");
                     return;
                 }
                 ip = xip.ToString();

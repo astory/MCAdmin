@@ -22,17 +22,17 @@ namespace MCAdmin.Commands
                     if (plyn.name == null || plyn.name == "") continue;
                     str += plyn.name + ", ";
                 }
-                parent.SendDirectedMessage(ply, "Connected players: " + str.Remove(str.Length - 2));
+                ply.SendDirectedMessage("Connected players: " + str.Remove(str.Length - 2));
             }
             else
             {
                 Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
-                if (ply2 == null) { parent.SendDirectedMessage(ply, "Sorry, player could not be found!"); return; }
-                parent.SendDirectedMessage(ply, "Name: " + ply2.name);
-                parent.SendDirectedMessage(ply, "Rank: " + parent.PlyGetRank(ply2.name));
+                if (ply2 == null) { ply.SendDirectedMessage("Sorry, player could not be found!"); return; }
+                ply.SendDirectedMessage("Name: " + ply2.name);
+                ply.SendDirectedMessage("Rank: " + parent.PlyGetRank(ply2.name));
                 if (ply.GetLevel() >= 3)
                 {
-                    parent.SendDirectedMessage(ply, "IP: " + ply2.ip);
+                    ply.SendDirectedMessage("IP: " + ply2.ip);
                 }
             }
         }

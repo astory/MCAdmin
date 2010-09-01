@@ -19,9 +19,9 @@ namespace MCAdmin.Commands
             if (cmdparts.Length >= 4) giveto = parent.minecraftFirewall.FindPlayer(cmdparts[3]);
             if (cmdparts.Length >= 3) amt = Convert.ToInt32(cmdparts[2]);
             if (!giveto.GiveItem(cmdparts[1].Replace('_', ' '), amt))
-                parent.SendDirectedMessage(ply, "Item could not be given!");
+                ply.SendDirectedMessage("Item could not be given!");
             else
-                parent.SendDirectedMessage(ply, "Item given successfully!"); ;
+                ply.SendDirectedMessage("Item given successfully!"); ;
         }
 
         public override int reqlevel { get { return 3; } }

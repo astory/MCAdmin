@@ -15,7 +15,7 @@ namespace MCAdmin.Commands
         public override void Run(Player ply, string[] cmdparts)
         {
             Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
-            if (ply2 == null) { parent.SendDirectedMessage(ply, "Sorry, no player found!"); return; }
+            if (ply2 == null) { ply.SendDirectedMessage("Sorry, target could not be found!"); return; }
             if (cmdparts.Length < 3 || cmdparts[2].ToLower() == "on")
             {
                 ply2.frozen = true;
