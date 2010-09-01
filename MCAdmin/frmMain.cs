@@ -930,9 +930,10 @@ namespace MCAdmin
             else
             {
                 isUpdate = __DownloadURLToAndDiff("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar.new", "minecraft_server.jar");
-                if (!isUpdate && !isOutOfDate_JAR)
+                if (!isUpdate)
                 {
-                    AddRTLine(Color.Green, "JAR already up to date!\r\n", false);
+                    if (isOutOfDate_JAR) { AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false); }
+                    else { AddRTLine(Color.Green, "JAR already up to date!\r\n", false); }
                 }
                 else if (minecraftServer == null || btnStart.Enabled == true)
                 {
@@ -959,9 +960,10 @@ namespace MCAdmin
             else
             {
                 isUpdate = __DownloadURLToAndDiff("http://mc.doridian.de/mcadmin/MCAdmin.exe", "mcadmin.exe.new", "mcadmin.exe");
-                if (!isUpdate && !isOutOfDate_MCA)
+                if (!isUpdate)
                 {
-                    AddRTLine(Color.Green, "MCAdmin already up to date!\r\n", false);
+                    if (isOutOfDate_MCA) { AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false); }
+                    else { AddRTLine(Color.Green, "MCAdmin already up to date!\r\n", false); }
                 }
                 else
                 {
