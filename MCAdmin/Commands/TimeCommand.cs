@@ -52,7 +52,7 @@ namespace MCAdmin.Commands
             {
                 ply.forcedtime = (settime - 6) * 1000;
             }
-            ply.SendDirectedMessage("Forced you time to be: " + settime.ToString() + ":00");
+            ply.SendDirectedMessage("Forced your time to be: " + settime.ToString() + ":00");
         }
 
         public override int reqlevel { get { return 1; } }
