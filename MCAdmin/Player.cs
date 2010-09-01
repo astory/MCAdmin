@@ -773,7 +773,7 @@ namespace MCAdmin
         {
             file = "messages/" + file + ".txt";
             if (!File.Exists(file)) return;
-            foreach (string line in File.ReadAllLines(file, System.Text.Encoding.UTF8))
+            foreach (string line in File.ReadAllLines(file))
             {
                 SendDirectedMessage(line.Replace("%name%", name).Replace("%ip%", ip).Replace("%rank%",GetRank()).Replace("%tag%",GetTag()));
             }
