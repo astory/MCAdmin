@@ -146,7 +146,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmKitItemAddEdit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Add/Edit block to whitelist or blacklist";
+            this.Text = "Add/Edit item in kit";
             this.Activated += new System.EventHandler(this.frmKitCreate_Activated);
             this.Load += new System.EventHandler(this.frmKitItemAddEdit_Load);
             this.splitContainer2.Panel1.ResumeLayout(false);
