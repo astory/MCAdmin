@@ -61,6 +61,8 @@ namespace MCAdmin
             lvItems.Visible = extended;
             cbReqLevel.Visible = extended;
             splitContainer1.Visible = extended;
+            btnAddItem.Visible = extended;
+            btnDelItem.Visible = extended;
             //btnImport.Visible = extended;
         }
 
@@ -156,6 +158,11 @@ namespace MCAdmin
         {
             if (lvItems.SelectedItems.Count <= 0) return;
             new frmKitItemAddEdit(lvItems.SelectedItems[0]).ShowDialog(this);
+        }
+
+        private void btnKitShare_Click(object sender, EventArgs e)
+        {
+            new frmKitShare().ShowDialog(parent);
         }
     }
 }

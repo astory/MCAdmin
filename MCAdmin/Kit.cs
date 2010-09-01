@@ -36,14 +36,14 @@ namespace MCAdmin
             saved = true;
         }
 
-        public Kit(string m_name)
+        public Kit(string m_name, string m_file)
         {
             name = m_name.ToLower();
-            items = new Dictionary<int,int>();
+            items = new Dictionary<int, int>();
 
-            if (File.Exists(GetKitFile(name)))
+            if (File.Exists(m_file))
             {
-                Tag mainTag = Tag.Load(GetKitFile(name));
+                Tag mainTag = Tag.Load(m_file);
                 reqlevel = (int)mainTag["reqlevel"].Value;
 
                 foreach (Tag subTag in mainTag["items"])
@@ -60,12 +60,10 @@ namespace MCAdmin
             }
         }
 
-
-
-
-        public Kit(string m_name, string file)
+        public Kit(string m_name)
+            : this(m_name, GetKitFile(m_name))
         {
-            name = m_name;
+
         }
 
         public override string ToString()

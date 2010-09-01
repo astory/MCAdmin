@@ -45,6 +45,7 @@
             this.btnImport = new System.Windows.Forms.Button();
             this.btnAddItem = new System.Windows.Forms.Button();
             this.btnDelItem = new System.Windows.Forms.Button();
+            this.btnKitShare = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -67,7 +68,7 @@
             this.btnNewKit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNewKit.Location = new System.Drawing.Point(410, 12);
             this.btnNewKit.Name = "btnNewKit";
-            this.btnNewKit.Size = new System.Drawing.Size(98, 21);
+            this.btnNewKit.Size = new System.Drawing.Size(53, 21);
             this.btnNewKit.TabIndex = 1;
             this.btnNewKit.Text = "New";
             this.btnNewKit.UseVisualStyleBackColor = true;
@@ -190,9 +191,9 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(514, 12);
+            this.btnDelete.Location = new System.Drawing.Point(469, 12);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(98, 21);
+            this.btnDelete.Size = new System.Drawing.Size(57, 21);
             this.btnDelete.TabIndex = 14;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -217,6 +218,7 @@
             this.btnAddItem.TabIndex = 16;
             this.btnAddItem.Text = "+";
             this.btnAddItem.UseVisualStyleBackColor = true;
+            this.btnAddItem.Visible = false;
             this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
             // btnDelItem
@@ -227,13 +229,26 @@
             this.btnDelItem.TabIndex = 17;
             this.btnDelItem.Text = "-";
             this.btnDelItem.UseVisualStyleBackColor = true;
+            this.btnDelItem.Visible = false;
             this.btnDelItem.Click += new System.EventHandler(this.btnDelItem_Click);
+            // 
+            // btnKitShare
+            // 
+            this.btnKitShare.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnKitShare.Location = new System.Drawing.Point(532, 12);
+            this.btnKitShare.Name = "btnKitShare";
+            this.btnKitShare.Size = new System.Drawing.Size(80, 21);
+            this.btnKitShare.TabIndex = 18;
+            this.btnKitShare.Text = "Kit-Share";
+            this.btnKitShare.UseVisualStyleBackColor = true;
+            this.btnKitShare.Click += new System.EventHandler(this.btnKitShare_Click);
             // 
             // frmKits
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 457);
+            this.Controls.Add(this.btnKitShare);
             this.Controls.Add(this.btnDelItem);
             this.Controls.Add(this.btnAddItem);
             this.Controls.Add(this.btnImport);
@@ -278,5 +293,6 @@
         private System.Windows.Forms.Button btnDelItem;
         public System.Windows.Forms.ListView lvItems;
         private System.Windows.Forms.ColumnHeader chAmount;
+        private System.Windows.Forms.Button btnKitShare;
     }
 }

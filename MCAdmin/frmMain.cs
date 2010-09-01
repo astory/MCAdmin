@@ -629,7 +629,7 @@ namespace MCAdmin
                 catch (BadImageFormatException)
                 {
                     File.Delete("NBT.dll");
-                    __DownloadURLToFile("http://mc.doridian.de/mcadmin/NBT.dll", "NBT.dll");
+                    DownloadURLToFile("http://mc.doridian.de/mcadmin/NBT.dll", "NBT.dll");
                     try
                     {
                         k = new Kit(kn);
@@ -652,7 +652,7 @@ namespace MCAdmin
                     k = null;
                 }
                 if (k != null && k.saved) kits.Add(k);
-                else File.Delete("kits/" + f);
+                else File.Delete(f);
             }
         }
 
@@ -854,7 +854,7 @@ namespace MCAdmin
         #endregion
 
         #region Update checking
-        private bool __DownloadURLToFile(string url, string file)
+        public bool DownloadURLToFile(string url, string file)
         {
             try
             {
@@ -876,13 +876,20 @@ namespace MCAdmin
                 serverjar.Close();
                 hwres.Close();
             }
-            catch { return false; }
+            catch {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch { }
+                return false;
+            }
             return true;
         }
 
         private bool __DownloadURLToAndDiff(string url, string file, string compareto)
         {
-            if (!__DownloadURLToFile(url, file)) return false;
+            if (!DownloadURLToFile(url, file)) return false;
 
             if (File.Exists(file) && File.Exists(compareto) && FileCompare(file, compareto))
             {
@@ -912,8 +919,8 @@ namespace MCAdmin
         public void CheckUpdate()
         {
             AddRTLine(Color.Green, "Verifying existence of essential files...\r\n", false);
-            if (!File.Exists("NBT.dll")) { __DownloadURLToFile("http://mc.doridian.de/mcadmin/NBT.dll", "NBT.dll"); }
-            else if (!File.Exists("ICSharpCode.SharpZipLib.dll")) { __DownloadURLToFile("http://mc.doridian.de/mcadmin/ICSharpCode.SharpZipLib.dll", "ICSharpCode.SharpZipLib.dll"); }
+            if (!File.Exists("NBT.dll")) { DownloadURLToFile("http://mc.doridian.de/mcadmin/NBT.dll", "NBT.dll"); }
+            else if (!File.Exists("ICSharpCode.SharpZipLib.dll")) { DownloadURLToFile("http://mc.doridian.de/mcadmin/ICSharpCode.SharpZipLib.dll", "ICSharpCode.SharpZipLib.dll"); }
             AddRTLine(Color.Green, "Essential file validation completed!\r\n", false);
 
             if (Program.dontUpdate) { AddRTLine(Color.Green, "Update checking disabled!!!\r\n",false); return; }

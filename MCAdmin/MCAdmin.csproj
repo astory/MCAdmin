@@ -83,6 +83,12 @@
     <Compile Include="Commands\UnbanipCommand.cs" />
     <Compile Include="Commands\VersionCommand.cs" />
     <Compile Include="Commands\WhoCommand.cs" />
+    <Compile Include="frmKitShare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmKitShare.Designer.cs">
+      <DependentUpon>frmKitShare.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmRankConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +165,9 @@
     <Compile Include="Util.cs" />
     <Compile Include="Utils\BigEndianBitConverter.cs" />
     <Compile Include="Utils\EndianBitConverter.cs" />
+    <EmbeddedResource Include="frmKitShare.resx">
+      <DependentUpon>frmKitShare.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmRankConfig.resx">
       <DependentUpon>frmRankConfig.cs</DependentUpon>
     </EmbeddedResource>

@@ -315,6 +315,7 @@
             // 
             // btnRunCmd
             // 
+            this.btnRunCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRunCmd.Location = new System.Drawing.Point(760, 450);
             this.btnRunCmd.Name = "btnRunCmd";
             this.btnRunCmd.Size = new System.Drawing.Size(69, 20);
