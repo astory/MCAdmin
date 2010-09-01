@@ -54,6 +54,7 @@
             this.tmAutosave = new System.Windows.Forms.Timer(this.components);
             this.tmBackup = new System.Windows.Forms.Timer(this.components);
             this.tmUpdateStuff = new System.Windows.Forms.Timer(this.components);
+            this.btnRunCmd = new System.Windows.Forms.Button();
             this.gbStatus.SuspendLayout();
             this.gbManage.SuspendLayout();
             this.SuspendLayout();
@@ -275,9 +276,9 @@
             // 
             this.tbCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCommand.Location = new System.Drawing.Point(12, 447);
+            this.tbCommand.Location = new System.Drawing.Point(12, 450);
             this.tbCommand.Name = "tbCommand";
-            this.tbCommand.Size = new System.Drawing.Size(817, 20);
+            this.tbCommand.Size = new System.Drawing.Size(725, 20);
             this.tbCommand.TabIndex = 3;
             this.tbCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCommand_KeyDown);
             // 
@@ -312,11 +313,22 @@
             this.tmUpdateStuff.Interval = 1000;
             this.tmUpdateStuff.Tick += new System.EventHandler(this.tmUpdateStuff_Tick);
             // 
+            // btnRunCmd
+            // 
+            this.btnRunCmd.Location = new System.Drawing.Point(743, 447);
+            this.btnRunCmd.Name = "btnRunCmd";
+            this.btnRunCmd.Size = new System.Drawing.Size(86, 25);
+            this.btnRunCmd.TabIndex = 10;
+            this.btnRunCmd.Text = "Run";
+            this.btnRunCmd.UseVisualStyleBackColor = true;
+            this.btnRunCmd.Click += new System.EventHandler(this.btnRunCmd_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(841, 479);
+            this.Controls.Add(this.btnRunCmd);
             this.Controls.Add(this.lbPlayers);
             this.Controls.Add(this.tbCommand);
             this.Controls.Add(this.gbManage);
@@ -362,6 +374,7 @@
         public System.Windows.Forms.Button btnKillServer;
         public System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Button btnManageRanks;
+        private System.Windows.Forms.Button btnRunCmd;
     }
 }
 

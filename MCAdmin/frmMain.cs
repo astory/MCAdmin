@@ -1281,8 +1281,7 @@ namespace MCAdmin
         {
             if (e.KeyCode == Keys.Return)
             {
-                SendServerCommand(tbCommand.Text);
-                tbCommand.Text = "";
+                btnRunCmd_Click(null, null);
             }
         }
 
@@ -1426,6 +1425,12 @@ namespace MCAdmin
         private void btnBackup_Click(object sender, EventArgs e)
         {
             tmBackup_Tick(null, null);
+        }
+
+        private void btnRunCmd_Click(object sender, EventArgs e)
+        {
+            SendServerCommand(tbCommand.Text);
+            tbCommand.Text = "";
         }
     }
 }
