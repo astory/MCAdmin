@@ -629,7 +629,7 @@ namespace MCAdmin
                 catch (BadImageFormatException)
                 {
                     File.Delete("NBT.dll");
-                    DownloadURLToFile("http://mcadmin.eu/internal/NBT.dll", "NBT.dll");
+                    DownloadURLToFile("http://internal.mcadmin.eu/NBT.dll", "NBT.dll");
                     try
                     {
                         k = new Kit(kn);
@@ -904,8 +904,8 @@ namespace MCAdmin
         public void CheckUpdate()
         {
             AddRTLine(Color.Green, "Verifying existence of essential files...\r\n", false);
-            if (!File.Exists("NBT.dll")) { DownloadURLToFile("http://mcadmin.eu/internal/NBT.dll", "NBT.dll"); }
-            else if (!File.Exists("ICSharpCode.SharpZipLib.dll")) { DownloadURLToFile("http://mcadmin.eu/internal/ICSharpCode.SharpZipLib.dll", "ICSharpCode.SharpZipLib.dll"); }
+            if (!File.Exists("NBT.dll")) { DownloadURLToFile("http://internal.mcadmin.eu/NBT.dll", "NBT.dll"); }
+            else if (!File.Exists("ICSharpCode.SharpZipLib.dll")) { DownloadURLToFile("http://internal.mcadmin.eu/ICSharpCode.SharpZipLib.dll", "ICSharpCode.SharpZipLib.dll"); }
             AddRTLine(Color.Green, "Essential file validation completed!\r\n", false);
 
             if (Program.dontUpdate) { AddRTLine(Color.Green, "Update checking disabled!!!\r\n",false); return; }
@@ -951,7 +951,7 @@ namespace MCAdmin
             }
             else
             {
-                isUpdate = __DownloadURLToAndDiff("http://mcadmin.eu/internal/MCAdmin.exe", "mcadmin.exe.new", "mcadmin.exe");
+                isUpdate = __DownloadURLToAndDiff("http://internal.mcadmin.eu/MCAdmin.exe", "mcadmin.exe.new", "mcadmin.exe");
                 if (!isUpdate)
                 {
                     if (isOutOfDate_MCA) { AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false); }
