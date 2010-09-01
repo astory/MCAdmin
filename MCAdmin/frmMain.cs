@@ -1422,5 +1422,10 @@ namespace MCAdmin
         {
             new frmRankConfig().ShowDialog(this);
         }
+
+        private void btnBackup_Click(object sender, EventArgs e)
+        {
+            tmBackup_Tick(null, null);
+        }
     }
 }

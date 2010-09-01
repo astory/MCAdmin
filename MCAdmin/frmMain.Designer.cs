@@ -199,7 +199,7 @@
             this.btnBackup.TabIndex = 7;
             this.btnBackup.Text = "Backup NOW";
             this.btnBackup.UseVisualStyleBackColor = true;
-            this.btnBackup.Click += new System.EventHandler(this.tmBackup_Tick);
+            this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
             // 
             // btnCmdLevels
             // 
