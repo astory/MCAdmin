@@ -803,7 +803,7 @@ namespace MCAdmin
                                 strOut += GetTag();
                                 break;
                             default:
-                                strOut += strTmp;
+                                strOut += "%" + strTmp + "%";
                                 break;
                         }
                         isInside = false;
@@ -820,7 +820,7 @@ namespace MCAdmin
                     strTmp += c;
                 }
             }
-            return strOut + strTmp;
+            return strOut + ((isInside) ? ("%" + strTmp) : "");
         }
 
         public virtual void ReadMsgFile(string file)
