@@ -758,7 +758,10 @@ namespace MCAdmin
         {
             file = "messages/" + file + ".txt";
             if (!File.Exists(file)) return;
-            foreach (string line in File.ReadAllLines(file)) fwl.parent.SendDirectedMessage(this, line);
+            foreach (string line in File.ReadAllLines(file, System.Text.Encoding.UTF8))
+            {
+                fwl.parent.SendDirectedMessage(this, line.Replace("%name%", name).Replace("%ip%", ip).Replace("%rank%",GetRank()).Replace("%tag%",GetTag()));
+            }
         }
 
         public virtual bool GiveItem(string item, int amount)
