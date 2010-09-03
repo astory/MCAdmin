@@ -7,18 +7,13 @@ namespace MCAdmin.Commands
 {
     class HelpCommand : Command
     {
-        public HelpCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             if (cmdparts.Length <= 1)
             {
                 string str = "";
                 int curlvl = ply.GetLevel();
-                foreach (KeyValuePair<string, Command> kv in parent.commands)
+                foreach (KeyValuePair<string, Command> kv in Program.commands)
                 {
                     if (kv.Value.minlevel <= curlvl && kv.Key != "commands") str += "!" + kv.Key + ", ";
                 }
@@ -31,8 +26,8 @@ namespace MCAdmin.Commands
             {
                 string cmdStr = cmdparts[1].ToLower();
                 if (cmdStr[0] == '!' || cmdStr[0] == '/') cmdStr = cmdStr.Substring(1);
-                if (!parent.commands.ContainsKey(cmdStr)) { ply.SendDirectedMessage("Unknown command!"); return; }
-                Command cmd = parent.commands[cmdStr];
+                if (!Program.commands.ContainsKey(cmdStr)) { ply.SendDirectedMessage("Unknown command!"); return; }
+                Command cmd = Program.commands[cmdStr];
                 ply.SendDirectedMessage(cmd.Help);
                 ply.SendDirectedMessage("Usage: !" + cmdStr + " " + cmd.Usage);
             }

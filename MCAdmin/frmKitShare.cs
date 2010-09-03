@@ -54,7 +54,7 @@ namespace MCAdmin
         void LoadKitThread(object kitname_x)
         {
             string kitname = (string)kitname_x;
-            bool downloadsucc = parentparent.DownloadURLToFile("http://internal.mcadmin.eu/kitshare/kits/" + kitname + ".kit", "tmpkit.kit");
+            bool downloadsucc = Program.DownloadURLToFile("http://internal.mcadmin.eu/kitshare/kits/" + kitname + ".kit", "tmpkit.kit");
             Kit thiskit = null;
             if (downloadsucc)
             {
@@ -68,7 +68,7 @@ namespace MCAdmin
                 {
                     foreach (KeyValuePair<int, int> kv in thiskit.items)
                     {
-                        lvItems.Items.Add(new ListViewItem(new string[] { kv.Key.ToString(), parentparent.blockIDEnum[kv.Key], kv.Value.ToString() }));
+                        lvItems.Items.Add(new ListViewItem(new string[] { kv.Key.ToString(), Program.blockIDEnum[kv.Key], kv.Value.ToString() }));
                     }
                     btnDownload.Enabled = true;
                     lvItems.Enabled = true;
@@ -128,8 +128,8 @@ namespace MCAdmin
         void KitDownloader(object kitname_x)
         {
             string kitname = (string)kitname_x;
-            parentparent.DownloadURLToFile("http://internal.mcadmin.eu/kitshare/kits/" + kitname + ".kit", Kit.GetKitFile(kitname));
-            parentparent.LoadKits();
+            Program.DownloadURLToFile("http://internal.mcadmin.eu/kitshare/kits/" + kitname + ".kit", Kit.GetKitFile(kitname));
+            Program.LoadKits();
             MessageBox.Show("Download complete!");
         }
     }

@@ -7,17 +7,12 @@ namespace MCAdmin.Commands
 {
     class WhoCommand : Command
     {
-        public WhoCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             if (cmdparts.Length <= 1)
             {
                 string str = "";
-                foreach (Player plyn in parent.minecraftFirewall.players)
+                foreach (Player plyn in Program.minecraftFirewall.players)
                 {
                     if (plyn.name == null || plyn.name == "") continue;
                     str += plyn.name + ", ";
@@ -26,10 +21,10 @@ namespace MCAdmin.Commands
             }
             else
             {
-                Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
+                Player ply2 = Program.minecraftFirewall.FindPlayer(cmdparts[1]);
                 if (ply2 == null) { ply.SendDirectedMessage("Sorry, player could not be found!"); return; }
                 ply.SendDirectedMessage("Name: " + ply2.name);
-                ply.SendDirectedMessage("Rank: " + parent.PlyGetRank(ply2.name));
+                ply.SendDirectedMessage("Rank: " + Program.PlyGetRank(ply2.name));
                 if (ply.GetLevel() >= 3)
                 {
                     ply.SendDirectedMessage("IP: " + ply2.ip);

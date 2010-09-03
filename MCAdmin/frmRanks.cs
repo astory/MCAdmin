@@ -22,19 +22,19 @@ namespace MCAdmin
         private void frmRanks_Load(object sender, EventArgs e)
         {
             parent = (frmMain)this.Owner;
-            foreach (KeyValuePair<string, string> kv in parent.plyranks)
+            foreach (KeyValuePair<string, string> kv in Program.plyranks)
             {
                 lvRanks.Items.Add(new ListViewItem(new string[] { kv.Key, kv.Value }));
             }
 
-            foreach (string rankname in parent.ranklevels.Keys)
+            foreach (string rankname in Program.ranklevels.Keys)
             {
                 cbRank.Items.Add(rankname);
             }
 
-            if (parent.minecraftFirewall != null)
+            if (Program.minecraftFirewall != null)
             {
-                foreach (Player ply in parent.minecraftFirewall.players)
+                foreach (Player ply in Program.minecraftFirewall.players)
                 {
                     if (ply.name == null || ply.name == "") continue;
                     cbPlayer.Items.Add(ply.name);
@@ -92,12 +92,12 @@ namespace MCAdmin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            parent.plyranks.Clear();
+            Program.plyranks.Clear();
             foreach (ListViewItem lvi in lvRanks.Items)
             {
-                parent.plyranks.Add(lvi.SubItems[0].Text, lvi.SubItems[1].Text);
+                Program.plyranks.Add(lvi.SubItems[0].Text, lvi.SubItems[1].Text);
             }
-            parent.SaveRanks();
+            Program.SaveRanks();
             this.Close();
         }
     }

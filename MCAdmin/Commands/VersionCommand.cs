@@ -7,11 +7,6 @@ namespace MCAdmin.Commands
 {
     class VersionCommand : Command
     {
-        public VersionCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             ply.SendDirectedMessage("MCAdmin (c) 2010 by Doridian the blue haired fox :3");

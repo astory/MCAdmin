@@ -7,16 +7,11 @@ namespace MCAdmin.Commands
 {
     class GiveCommand : Command
     {
-        public GiveCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             Player giveto = ply;
             int amt = 1;
-            if (cmdparts.Length >= 4) giveto = parent.minecraftFirewall.FindPlayer(cmdparts[3]);
+            if (cmdparts.Length >= 4) giveto = Program.minecraftFirewall.FindPlayer(cmdparts[3]);
             if (cmdparts.Length >= 3) amt = Convert.ToInt32(cmdparts[2]);
             if (!giveto.GiveItem(cmdparts[1].Replace('_', ' '), amt))
                 ply.SendDirectedMessage("Item could not be given!");

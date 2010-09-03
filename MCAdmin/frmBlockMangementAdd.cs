@@ -43,7 +43,7 @@ namespace MCAdmin
             }
             catch
             {
-                if (parentparent.ranklevels.ContainsKey(item.ToLower())) return parentparent.ranklevels[item.ToLower()];
+                if (Program.ranklevels.ContainsKey(item.ToLower())) return Program.ranklevels[item.ToLower()];
             }
             return 0;
         }
@@ -59,12 +59,12 @@ namespace MCAdmin
             }
             catch
             {
-                if(parentparent.blockEnum.ContainsKey(cbItem.Text))
+                if(Program.blockEnum.ContainsKey(cbItem.Text))
                 {
-                    item = parentparent.blockEnum[cbItem.Text];
+                    item = Program.blockEnum[cbItem.Text];
                 }
             }
-            if (item < 0 || !parentparent.blockIDEnum.ContainsKey(item)) { MessageBox.Show("Invalid item!", "MCAdmin Kit manager", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
+            if (item < 0 || !Program.blockIDEnum.ContainsKey(item)) { MessageBox.Show("Invalid item!", "MCAdmin Kit manager", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
             string item_s = item.ToString();
             string rank = __cbGetInt(cbRank.Text).ToString();
 
@@ -74,12 +74,12 @@ namespace MCAdmin
                 {
                     if (lvi.SubItems[0].Text == item_s) { MessageBox.Show("Block already in list!", "MCAdmin Block list manager", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
                 }
-                parent.lvBlocks.Items.Add(new ListViewItem(new string[] { item_s, parentparent.blockIDEnum[item], rank }));
+                parent.lvBlocks.Items.Add(new ListViewItem(new string[] { item_s, Program.blockIDEnum[item], rank }));
             }
             else
             {
                 boundItem.SubItems[0].Text = item_s;
-                boundItem.SubItems[1].Text = parentparent.blockIDEnum[item];
+                boundItem.SubItems[1].Text = Program.blockIDEnum[item];
                 boundItem.SubItems[2].Text = rank;
             }
             this.Close();
@@ -94,15 +94,15 @@ namespace MCAdmin
         {
             parentparent = (frmMain)this.Owner.Owner;
             parent = (frmBlocksMangement)this.Owner;
-            foreach (string item in parentparent.blockEnum.Keys)
+            foreach (string item in Program.blockEnum.Keys)
             {
                 cbItem.Items.Add(item);
             }
-            foreach (KeyValuePair<string, int> kv in parentparent.ranklevels)
+            foreach (KeyValuePair<string, int> kv in Program.ranklevels)
             {
                 if (kv.Key == "banned") continue;
                 cbRank.Items.Add(kv.Value.ToString() + " (" + kv.Key + ")");
-                if (kv.Key == parentparent.GetServerProperty("default-rank","guest")) { cbRankDef = cbRank.Items.Count - 1; }
+                if (kv.Key == Program.GetServerProperty("default-rank","guest")) { cbRankDef = cbRank.Items.Count - 1; }
                 if (boundItem != null && kv.Value.ToString() == boundItem.SubItems[2].Text) { cbRank.SelectedIndex = cbRank.Items.Count - 1; }
             }
             if (boundItem != null)

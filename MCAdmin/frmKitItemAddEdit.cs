@@ -41,12 +41,12 @@ namespace MCAdmin
             }
             catch
             {
-                if(parentparent.blockEnum.ContainsKey(cbItem.Text))
+                if(Program.blockEnum.ContainsKey(cbItem.Text))
                 {
-                    item = parentparent.blockEnum[cbItem.Text];
+                    item = Program.blockEnum[cbItem.Text];
                 }
             }
-            if (item < 0 || !parentparent.blockIDEnum.ContainsKey(item)) { MessageBox.Show("Invalid item!", "MCAdmin Kit manager", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
+            if (item < 0 || !Program.blockIDEnum.ContainsKey(item)) { MessageBox.Show("Invalid item!", "MCAdmin Kit manager", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
             string item_s = item.ToString();
             if (boundItem == null)
             {
@@ -54,12 +54,12 @@ namespace MCAdmin
                 {
                     if (lvi.SubItems[0].Text == item_s) { MessageBox.Show("Item already in kit!", "MCAdmin Kit manager", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
                 }
-                parent.lvItems.Items.Add(new ListViewItem(new string[] { item_s, parentparent.blockIDEnum[item], numAmount.Value.ToString() }));
+                parent.lvItems.Items.Add(new ListViewItem(new string[] { item_s, Program.blockIDEnum[item], numAmount.Value.ToString() }));
             }
             else
             {
                 boundItem.SubItems[0].Text = item_s;
-                boundItem.SubItems[1].Text = parentparent.blockIDEnum[item];
+                boundItem.SubItems[1].Text = Program.blockIDEnum[item];
                 boundItem.SubItems[2].Text = numAmount.Value.ToString();
             }
             this.Close();
@@ -74,7 +74,7 @@ namespace MCAdmin
         {
             parentparent = (frmMain)this.Owner.Owner;
             parent = (frmKits)this.Owner;
-            foreach (string item in parentparent.blockEnum.Keys)
+            foreach (string item in Program.blockEnum.Keys)
             {
                 cbItem.Items.Add(item);
             }

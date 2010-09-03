@@ -121,80 +121,65 @@ namespace MCAdmin
                                         response = "Commands: exec, stop, start, restart, kill, save, backup, status";
                                         break;
                                     case "exec":
-                                        rcon.parent.SendServerCommand(param);
+                                        Program.SendServerCommand(param);
                                         response = "Ran command \"" + param + "\" on the server!";
                                         break;
                                     case "stop":
-                                        rcon.parent.btnStop.Invoke(new MethodInvoker(delegate()
-                                        {
-                                            if (!rcon.parent.btnStop.Enabled) return;
-                                            rcon.parent.btnStop_Click(null, null);
-                                        }));
+                                        Program.StopServer();
                                         response = "Server stopped!";
                                         break;
                                     case "start":
-                                        rcon.parent.btnStart.Invoke(new MethodInvoker(delegate()
-                                        {
-                                            if (!rcon.parent.btnStart.Enabled) return;
-                                            rcon.parent.btnStart_Click(null, null);
-                                        }));
+                                        Program.StartServer();
                                         response = "Server started!";
                                         break;
                                     case "restart":
-                                        rcon.parent.btnRestart.Invoke(new MethodInvoker(delegate()
-                                        {
-                                            if (!rcon.parent.btnRestart.Enabled) return;
-                                            rcon.parent.btnRestart_Click(null, null);
-                                        }));
+                                        Program.StopServer();
+                                        Program.StartServer();
                                         response = "Server restarted!";
                                         break;
                                     case "kill":
-                                        rcon.parent.btnKillServer.Invoke(new MethodInvoker(delegate()
-                                        {
-                                            if (!rcon.parent.btnKillServer.Enabled) return;
-                                            rcon.parent.frmMain_FormClosed(null, null);
-                                        }));
+                                        Program.KillServer();
                                         response = "Server KILL'd!";
                                         break;
                                     case "save":
-                                        rcon.parent.tmAutosave_Tick(null, null);
+                                        Program.tmAutosave_Tick(null, null);
                                         response = "Save initiated!";
                                         break;
                                     case "backup":
-                                        rcon.parent.tmBackup_Tick(null, null);
+                                        Program.tmBackup_Tick(null, null);
                                         response = "Backup initiated!";
                                         break;
                                     case "status":
-                                        response = rcon.parent.lblStatus.Text;
+                                        //response = Program.serverStatus;
                                         break;
                                     case "say":
-                                        rcon.parent.SendServerMessage("RCon: " + param, '2');
-                                        rcon.parent.SendLogMsg("\"Console<9999><Console><RCon>\" say \"" + param + "\"");
+                                        Program.SendServerMessage("RCon: " + param, '2');
+                                        Program.SendLogMsg("\"Console<9999><Console><RCon>\" say \"" + param + "\"");
                                         break;
 
                                     case "logaddress_add":
                                         IPEndPoint ipep = __TryGetIp(param);
-                                        rcon.parent.logToAddr.Add(ipep);
+                                        Program.logToAddr.Add(ipep);
                                         response = "Added " + param + " to log broadcast!";
 
-                                        rcon.parent.SendLogMsg("rcon from \"" + ip + "\": command \"logaddress_add \"" + param + "\"\"\n");
+                                        Program.SendLogMsg("rcon from \"" + ip + "\": command \"logaddress_add \"" + param + "\"\"\n");
                                         break;
                                     case "logaddress_del":
                                         IPEndPoint ipep2 = __TryGetIp(param);
-                                        rcon.parent.logToAddr.Remove(ipep2);
+                                        Program.logToAddr.Remove(ipep2);
                                         response = "Removed " + param + " from log broadcast!";
 
-                                        rcon.parent.SendLogMsg("rcon from \"" + ip + "\": command \"logaddress_del \"" + param + "\"\"\n");
+                                        Program.SendLogMsg("rcon from \"" + ip + "\": command \"logaddress_del \"" + param + "\"\"\n");
                                         break;
                                     case "logaddress_list":
                                         response = "Log broadcast list:\n";
-                                        foreach (IPEndPoint ipep3 in rcon.parent.logToAddr)
+                                        foreach (IPEndPoint ipep3 in Program.logToAddr)
                                         {
                                             response += ipep3.ToString() + "\n";
                                         }
                                         break;
                                     case "logaddress_delall":
-                                        rcon.parent.logToAddr.Clear();
+                                        Program.logToAddr.Clear();
                                         response = "Removed ALL IPs from log broadcast!";
                                         break;
                                     case "log":
@@ -202,10 +187,10 @@ namespace MCAdmin
                                         break;
 
                                     default:
-                                        if (rcon.parent.commands.ContainsKey(cmd))
+                                        if (Program.commands.ContainsKey(cmd))
                                         {
                                             ply.request_id = recvd.request_id;
-                                            rcon.parent.commands[cmd].Run(ply, str.Split(new char[] {' '}));
+                                            Program.commands[cmd].Run(ply, str.Split(new char[] {' '}));
                                             response = "";
                                         }
                                         break;
@@ -215,8 +200,8 @@ namespace MCAdmin
 
                             if (response != null && response.Length > 0)
                             {
-                                rcon.parent.AddRTLine(Color.Orange, "RCon from " + ip + ": " + recvd.string1 + "\r\n", true);
-                                rcon.parent.AddRTLine(Color.Orange, "RCon response: " + response + "\r\n", true);
+                                Program.AddRTLine(Color.Orange, "RCon from " + ip + ": " + recvd.string1 + "\r\n", true);
+                                Program.AddRTLine(Color.Orange, "RCon response: " + response + "\r\n", true);
 
                                 new RconPacket(this, RconPacketType.SERVERDATA_RESPONSE_VALUE, recvd.request_id, response + "\n", "").Send();
                             }
@@ -383,15 +368,13 @@ namespace MCAdmin
     class Rcon
     {
         public List<RconConnection> rconConnections = new List<RconConnection>();
-        public frmMain parent;
         TcpListener externalListener;
         string ip; int port; public string password;
-        public Rcon(frmMain m_parent)
+        public Rcon()
         {
-            parent = m_parent;
-            ip = parent.GetServerProperty("server-ip-real", "0.0.0.0");
-            port = Convert.ToInt32(parent.GetServerProperty("rcon-port", "25567"));
-            password = parent.GetServerProperty("rcon-pass", "changeme");
+            ip = Program.GetServerProperty("server-ip-real", "0.0.0.0");
+            port = Convert.ToInt32(Program.GetServerProperty("rcon-port", "25567"));
+            password = Program.GetServerProperty("rcon-pass", "changeme");
             externalListener = new TcpListener(IPAddress.Parse(ip), port);
             externalListener.Server.SendTimeout = 500;
             externalListener.Server.ReceiveTimeout = 500;

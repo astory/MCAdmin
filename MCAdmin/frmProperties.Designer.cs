@@ -59,6 +59,7 @@
             this.lblRCONPort = new System.Windows.Forms.Label();
             this.tbRCONPass = new System.Windows.Forms.TextBox();
             this.lblRCONPass = new System.Windows.Forms.Label();
+            this.btnAutoDetect = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -184,7 +185,7 @@
             this.cbIP.FormattingEnabled = true;
             this.cbIP.Location = new System.Drawing.Point(86, 5);
             this.cbIP.Name = "cbIP";
-            this.cbIP.Size = new System.Drawing.Size(361, 21);
+            this.cbIP.Size = new System.Drawing.Size(277, 21);
             this.cbIP.TabIndex = 10;
             this.cbIP.TextChanged += new System.EventHandler(this.event_RefreshPreview);
             // 
@@ -391,11 +392,22 @@
             this.lblRCONPass.TabIndex = 29;
             this.lblRCONPass.Text = "Pass:";
             // 
+            // btnAutoDetect
+            // 
+            this.btnAutoDetect.Location = new System.Drawing.Point(369, 5);
+            this.btnAutoDetect.Name = "btnAutoDetect";
+            this.btnAutoDetect.Size = new System.Drawing.Size(78, 21);
+            this.btnAutoDetect.TabIndex = 30;
+            this.btnAutoDetect.Text = "Auto-detect";
+            this.btnAutoDetect.UseVisualStyleBackColor = true;
+            this.btnAutoDetect.Click += new System.EventHandler(this.btnAutoDetect_Click);
+            // 
             // frmProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 496);
+            this.Controls.Add(this.btnAutoDetect);
             this.Controls.Add(this.lblRCONPass);
             this.Controls.Add(this.tbRCONPass);
             this.Controls.Add(this.lblRCONPort);
@@ -471,5 +483,6 @@
         private System.Windows.Forms.Label lblRCONPort;
         private System.Windows.Forms.TextBox tbRCONPass;
         private System.Windows.Forms.Label lblRCONPass;
+        private System.Windows.Forms.Button btnAutoDetect;
     }
 }

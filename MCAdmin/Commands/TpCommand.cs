@@ -7,17 +7,12 @@ namespace MCAdmin.Commands
 {
     class TpCommand : Command
     {
-        public TpCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
-            Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
+            Player ply2 = Program.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 == null) { ply.SendDirectedMessage("Sorry, target could not be found!"); return; }
-            parent.SendServerCommand("tp " + ply.name + " " + ply2.name);
-            parent.SendServerMessage(ply.name + " teleported to " + ply2.name);
+            Program.SendServerCommand("tp " + ply.name + " " + ply2.name);
+            Program.SendServerMessage(ply.name + " teleported to " + ply2.name);
         }
 
         public override int reqlevel { get { return 1; } }

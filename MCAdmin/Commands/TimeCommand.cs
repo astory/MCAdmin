@@ -7,11 +7,6 @@ namespace MCAdmin.Commands
 {
     class TimeCommand : Command
     {
-        public TimeCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             if (cmdparts.Length < 2 || cmdparts[1].ToLower() == "normal")

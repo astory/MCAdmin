@@ -29,13 +29,13 @@ namespace MCAdmin
         {
             SetExtended(false);
             parent = (frmMain)this.Owner;
-            foreach (KeyValuePair<string, int> kv in parent.ranklevels)
+            foreach (KeyValuePair<string, int> kv in Program.ranklevels)
             {
                 if (kv.Key == "banned") continue;
                 cbReqLevel.Items.Add(kv.Value.ToString() + " (" + kv.Key + ")");
-                if (kv.Key == parent.GetServerProperty("default-rank", "guest")) { cbReqLevelDef = cbReqLevel.Items.Count - 1; cbReqLevel.SelectedIndex = cbReqLevelDef; }
+                if (kv.Key == Program.GetServerProperty("default-rank", "guest")) { cbReqLevelDef = cbReqLevel.Items.Count - 1; cbReqLevel.SelectedIndex = cbReqLevelDef; }
             }
-            foreach (Kit k in parent.kits)
+            foreach (Kit k in Program.kits)
             {
                 cbKit.Items.Add(k);
             }
@@ -75,7 +75,7 @@ namespace MCAdmin
             }
             catch
             {
-                if (parent.ranklevels.ContainsKey(item.ToLower())) return parent.ranklevels[item.ToLower()];
+                if (Program.ranklevels.ContainsKey(item.ToLower())) return Program.ranklevels[item.ToLower()];
             }
             return 0;
         }
@@ -92,7 +92,7 @@ namespace MCAdmin
             }
             foreach(KeyValuePair<int,int> kv in kit.items)
             {
-                lvItems.Items.Add(new ListViewItem(new string[] { kv.Key.ToString(), parent.blockIDEnum[kv.Key], kv.Value.ToString() }));
+                lvItems.Items.Add(new ListViewItem(new string[] { kv.Key.ToString(), Program.blockIDEnum[kv.Key], kv.Value.ToString() }));
             }
             SetExtended(true);
         }
@@ -102,10 +102,10 @@ namespace MCAdmin
             if (cbKit.SelectedIndex < 0) return;
             Kit kit = (Kit)cbKit.SelectedItem;
             cbKit.Items.RemoveAt(cbKit.SelectedIndex);
-            if (parent.kits.Contains(kit))
+            if (Program.kits.Contains(kit))
             {
-                parent.kits.Remove(kit);
-                parent.SaveKits();
+                Program.kits.Remove(kit);
+                Program.SaveKits();
             }
             SetExtended(false);
         }
@@ -132,9 +132,9 @@ namespace MCAdmin
                 kit.items.Add(Convert.ToInt32(lvi.SubItems[0].Text), Convert.ToInt32(lvi.SubItems[2].Text));
             }
 
-            if (parent.kits.Contains(kit)) parent.kits.Remove(kit);
-            parent.kits.Add(kit);
-            parent.SaveKits();
+            if (Program.kits.Contains(kit)) Program.kits.Remove(kit);
+            Program.kits.Add(kit);
+            Program.SaveKits();
             SetExtended(false);
             cbKit.Text = "";
             cbKit.SelectedItem = null;

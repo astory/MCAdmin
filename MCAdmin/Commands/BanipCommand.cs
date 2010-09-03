@@ -8,15 +8,10 @@ namespace MCAdmin.Commands
 {
     class BanipCommand : Command
     {
-        public BanipCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             string ip = "";
-            Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
+            Player ply2 = Program.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 != null)
             {
                 if (ply.GetLevel() <= ply2.GetLevel()) { ply.SendPermissionDenied(); return; }
@@ -32,9 +27,9 @@ namespace MCAdmin.Commands
                 }
                 ip = xip.ToString();
             }
-            parent.SendServerMessage(ply.name + " ip-banned " + ip);
-            parent.BanIP(ip);
-            parent.minecraftFirewall.EnforceBans();
+            Program.SendServerMessage(ply.name + " ip-banned " + ip);
+            Program.BanIP(ip);
+            Program.minecraftFirewall.EnforceBans();
         }
 
         public override int reqlevel { get { return 3; } }

@@ -13,16 +13,14 @@ namespace MCAdmin
         TcpListener externalListener;
         public List<Player> players = new List<Player>();
 
-        public frmMain parent;
-        public MCFirewall(frmMain m_parent)
+        public MCFirewall()
         {
-            parent = m_parent;
             string ip = ""; int port = 0;
-            ip = parent.GetServerProperty("server-ip-real","0.0.0.0");
-            port = Convert.ToInt32(parent.GetServerProperty("server-port-real","25565"));
-            intport = Convert.ToInt32(parent.GetServerProperty("server-port","25566"));
+            ip = Program.GetServerProperty("server-ip-real","0.0.0.0");
+            port = Convert.ToInt32(Program.GetServerProperty("server-port-real","25565"));
+            intport = Convert.ToInt32(Program.GetServerProperty("server-port","25566"));
 
-            parent.LoadBannedIPs();
+            Program.LoadBannedIPs();
 
             externalListener = new TcpListener(IPAddress.Parse(ip),port);
             externalListener.Server.SendTimeout = 500;
@@ -82,7 +80,7 @@ namespace MCAdmin
             Player[] plys = players.ToArray();
             foreach (Player ply in plys)
             {
-                if (parent.bannedIPs.Contains(ply.ip)) ply.Disconnect("You're banned!");
+                if (Program.bannedIPs.Contains(ply.ip)) ply.Disconnect("You're banned!");
             }
         }
 

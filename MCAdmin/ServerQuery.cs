@@ -32,14 +32,12 @@ namespace MCAdmin
 
     class ServerQuery
     {
-        public frmMain parent;
         public UdpClient externalListener;
         string ip; int port;
-        public ServerQuery(frmMain m_parent)
+        public ServerQuery()
         {
-            parent = m_parent;
-            ip = parent.GetServerProperty("server-ip-real", "0.0.0.0");
-            port = Convert.ToInt32(parent.GetServerProperty("rcon-port", "25567"));
+            ip = Program.GetServerProperty("server-ip-real", "0.0.0.0");
+            port = Convert.ToInt32(Program.GetServerProperty("rcon-port", "25567"));
             externalListener = new UdpClient(new IPEndPoint(IPAddress.Parse(ip),port));
             receiverThread = new Thread(new ThreadStart(ReceiverThread));
             receiverThread.Start();
@@ -69,7 +67,7 @@ namespace MCAdmin
 
             #region INFO REPLY
             string sname = "MCAdmin Server";
-            string smap = parent.GetServerProperty("level-name", "world");
+            string smap = Program.GetServerProperty("level-name", "world");
 
             string sdir = "mcadmin";
             string sdesc = "Minecraft Alpha";
@@ -118,7 +116,7 @@ namespace MCAdmin
 
             inforeply[xpos] = 0;
             xpos++;
-            inforeply[xpos] = (parent.GetServerProperty("online-mode", "true").ToLower() == "true") ? (byte)1 : (byte)0;
+            inforeply[xpos] = (Program.GetServerProperty("online-mode", "true").ToLower() == "true") ? (byte)1 : (byte)0;
             xpos++;
             System.Text.Encoding.ASCII.GetBytes(sver).CopyTo(inforeply, xpos);
             xpos += 1 + sver.Length;
@@ -135,11 +133,11 @@ namespace MCAdmin
 
             #region RULES REPLY
             byte[] playerreply = GetPackBasic(ServerQueryResponses.A2S_RULES, 1400);
-            short rulecount = (short)(parent.serverProperties.Count - 1);
+            short rulecount = (short)(Program.serverProperties.Count - 1);
             xpos = 5;
             BitConverter.GetBytes(rulecount).CopyTo(playerreply, xpos);
             xpos += 2;
-            foreach (KeyValuePair<string, string> kvp in parent.serverProperties)
+            foreach (KeyValuePair<string, string> kvp in Program.serverProperties)
             {
                 if (kvp.Key == "rcon-pass") continue;
                 System.Text.Encoding.ASCII.GetBytes(kvp.Key).CopyTo(playerreply, xpos);
@@ -169,7 +167,7 @@ namespace MCAdmin
                         case ServerQueryRequests.A2S_INFO:
                             if (buff[24] == 0 && System.Text.Encoding.ASCII.GetString(buff, 5, 19) == "Source Engine Query")
                             {
-                                if (parent.minecraftFirewall != null) { inforeply[inforeply_posplys] = (byte)parent.minecraftFirewall.players.Count; }
+                                if (Program.minecraftFirewall != null) { inforeply[inforeply_posplys] = (byte)Program.minecraftFirewall.players.Count; }
                                 else { inforeply[inforeply_posplys] = 0; }
                                 externalListener.Send(inforeply, inforeply.Length, endpoint);
                             }
@@ -177,13 +175,13 @@ namespace MCAdmin
                         case ServerQueryRequests.A2S_PLAYER:
                             if (buff[5] != 0xCE || buff[6] != 0xDC || buff[7] != 0xED || buff[8] != 0x42) { externalListener.Send(challengereply, challengereply.Length, endpoint); break; }
                             xpos = 5;
-                            if (parent.minecraftFirewall != null) { playerreply[xpos] = (byte)parent.minecraftFirewall.players.Count; }
+                            if (Program.minecraftFirewall != null) { playerreply[xpos] = (byte)Program.minecraftFirewall.players.Count; }
                             else { playerreply[xpos] = 0; }
                             
                             if(playerreply[xpos] <= 0) { externalListener.Send(playerreply, 6, endpoint); break; }
                             xpos++;
 
-                            foreach (Player ply in parent.minecraftFirewall.players)
+                            foreach (Player ply in Program.minecraftFirewall.players)
                             {
                                 xpos++; //ID is always 0 :P
                                 System.Text.Encoding.ASCII.GetBytes(ply.name).CopyTo(playerreply, xpos);

@@ -7,11 +7,6 @@ namespace MCAdmin.Commands
 {
     class MotdCommand : Command
     {
-        public MotdCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             ply.ReadMsgFile("motd");

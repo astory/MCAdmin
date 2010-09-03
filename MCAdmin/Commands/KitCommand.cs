@@ -7,18 +7,13 @@ namespace MCAdmin.Commands
 {
     class KitCommand : Command
     {
-        public KitCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             if (cmdparts.Length <= 1)
             {
                 string strkits = "";
                 int prank = ply.GetLevel();
-                foreach (Kit k in parent.kits)
+                foreach (Kit k in Program.kits)
                 {
                     if (prank >= k.reqlevel) strkits += k.name + ", ";
                 }
@@ -28,11 +23,11 @@ namespace MCAdmin.Commands
             else
             {
                 Player giveto = ply;
-                if (cmdparts.Length >= 3) giveto = parent.minecraftFirewall.FindPlayer(cmdparts[2]);
+                if (cmdparts.Length >= 3) giveto = Program.minecraftFirewall.FindPlayer(cmdparts[2]);
                 if (giveto == null) { ply.SendDirectedMessage("Player not found!"); return; }
                 string kitname = cmdparts[1].ToLower();
                 Kit kit = null;
-                foreach (Kit k in parent.kits)
+                foreach (Kit k in Program.kits)
                 {
                     if (k.name == kitname)
                     {

@@ -7,17 +7,12 @@ namespace MCAdmin.Commands
 {
     class SummonCommand : Command
     {
-        public SummonCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
-            Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
+            Player ply2 = Program.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 == null) { ply.SendDirectedMessage("Sorry, target could not be found!"); return; }
-            parent.SendServerCommand("tp " + ply2.name + " " + ply.name);
-            parent.SendServerMessage(ply.name + " summoned " + ply2.name);
+            Program.SendServerCommand("tp " + ply2.name + " " + ply.name);
+            Program.SendServerMessage(ply.name + " summoned " + ply2.name);
         }
 
         public override int reqlevel { get { return 3; } }

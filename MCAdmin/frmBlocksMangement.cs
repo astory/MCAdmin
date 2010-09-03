@@ -34,11 +34,11 @@ namespace MCAdmin
         private void frmBlocksMangement_Load(object sender, EventArgs e)
         {
             parent = (frmMain)this.Owner;
-            parent.LoadBlockList();
-            rbWhitelist.Checked = parent.blockLevelsIsWhitelist;
-            foreach (KeyValuePair<int, int> kvp in parent.blockLevels)
+            Program.LoadBlockList();
+            rbWhitelist.Checked = Program.blockLevelsIsWhitelist;
+            foreach (KeyValuePair<int, int> kvp in Program.blockLevels)
             {
-                lvBlocks.Items.Add(new ListViewItem(new string[] { kvp.Key.ToString(), parent.blockIDEnum[kvp.Key], kvp.Value.ToString() }));
+                lvBlocks.Items.Add(new ListViewItem(new string[] { kvp.Key.ToString(), Program.blockIDEnum[kvp.Key], kvp.Value.ToString() }));
             }
         }
 
@@ -49,13 +49,13 @@ namespace MCAdmin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            parent.blockLevels.Clear();
+            Program.blockLevels.Clear();
             foreach (ListViewItem lvi in lvBlocks.Items)
             {
-                parent.blockLevels.Add(Convert.ToInt32(lvi.SubItems[0].Text), Convert.ToInt32(lvi.SubItems[2].Text));
+                Program.blockLevels.Add(Convert.ToInt32(lvi.SubItems[0].Text), Convert.ToInt32(lvi.SubItems[2].Text));
             }
-            parent.blockLevelsIsWhitelist = rbWhitelist.Checked;
-            parent.SaveBlockList();
+            Program.blockLevelsIsWhitelist = rbWhitelist.Checked;
+            Program.SaveBlockList();
             this.Close();
         }
 

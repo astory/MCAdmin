@@ -21,9 +21,9 @@ namespace MCAdmin
         private void frmIPBans_Load(object sender, EventArgs e)
         {
             parent = (frmMain)this.Owner;
-            parent.LoadBannedIPs();
+            Program.LoadBannedIPs();
 
-            foreach (string str in parent.bannedIPs)
+            foreach (string str in Program.bannedIPs)
                 lbIPBans.Items.Add(str);
         }
 
@@ -34,12 +34,12 @@ namespace MCAdmin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            parent.bannedIPs.Clear();
+            Program.bannedIPs.Clear();
 
             foreach (object item in lbIPBans.Items)
-                parent.bannedIPs.Add((string)item);
+                Program.bannedIPs.Add((string)item);
 
-            parent.SaveBannedIPs();
+            Program.SaveBannedIPs();
             this.Close();
         }
 

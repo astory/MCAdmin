@@ -49,10 +49,7 @@
             this.btnRankConfig = new System.Windows.Forms.Button();
             this.btnProperties = new System.Windows.Forms.Button();
             this.tbCommand = new System.Windows.Forms.TextBox();
-            this.tmUpdate = new System.Windows.Forms.Timer(this.components);
             this.lbPlayers = new System.Windows.Forms.ListBox();
-            this.tmAutosave = new System.Windows.Forms.Timer(this.components);
-            this.tmBackup = new System.Windows.Forms.Timer(this.components);
             this.tmUpdateStuff = new System.Windows.Forms.Timer(this.components);
             this.btnRunCmd = new System.Windows.Forms.Button();
             this.gbStatus.SuspendLayout();
@@ -190,7 +187,7 @@
             this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Save NOW";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.tmAutosave_Tick);
+            this.btnSave.Click += new System.EventHandler(Program.tmAutosave_Tick);
             // 
             // btnBackup
             // 
@@ -282,12 +279,6 @@
             this.tbCommand.TabIndex = 3;
             this.tbCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCommand_KeyDown);
             // 
-            // tmUpdate
-            // 
-            this.tmUpdate.Enabled = true;
-            this.tmUpdate.Interval = 3600000;
-            this.tmUpdate.Tick += new System.EventHandler(this.tmUpdate_Tick);
-            // 
             // lbPlayers
             // 
             this.lbPlayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -299,19 +290,10 @@
             this.lbPlayers.Size = new System.Drawing.Size(172, 349);
             this.lbPlayers.TabIndex = 4;
             // 
-            // tmAutosave
-            // 
-            this.tmAutosave.Tick += new System.EventHandler(this.tmAutosave_Tick);
-            // 
-            // tmBackup
-            // 
-            this.tmBackup.Tick += new System.EventHandler(this.tmBackup_Tick);
-            // 
             // tmUpdateStuff
             // 
             this.tmUpdateStuff.Enabled = true;
             this.tmUpdateStuff.Interval = 1000;
-            this.tmUpdateStuff.Tick += new System.EventHandler(this.tmUpdateStuff_Tick);
             // 
             // btnRunCmd
             // 
@@ -355,16 +337,12 @@
         private System.Windows.Forms.Label lblStatusDesc;
         private System.Windows.Forms.GroupBox gbManage;
         private System.Windows.Forms.TextBox tbCommand;
-        private System.Windows.Forms.Button btnProperties;
         private System.Windows.Forms.Button btnRankConfig;
         private System.Windows.Forms.Button btnManageKits;
         private System.Windows.Forms.Button btnReloadKits;
-        private System.Windows.Forms.Timer tmUpdate;
         private System.Windows.Forms.Button btnIPBans;
         private System.Windows.Forms.Button btnLimitedBlocks;
-        private System.Windows.Forms.Timer tmAutosave;
         private System.Windows.Forms.Button btnCmdLevels;
-        private System.Windows.Forms.Timer tmBackup;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnBackup;
         private System.Windows.Forms.ListBox lbPlayers;
@@ -376,6 +354,7 @@
         public System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Button btnManageRanks;
         private System.Windows.Forms.Button btnRunCmd;
+        public System.Windows.Forms.Button btnProperties;
     }
 }
 

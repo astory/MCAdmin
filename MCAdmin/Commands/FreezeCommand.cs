@@ -7,24 +7,19 @@ namespace MCAdmin.Commands
 {
     class FreezeCommand : Command
     {
-        public FreezeCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
-            Player ply2 = parent.minecraftFirewall.FindPlayer(cmdparts[1]);
+            Player ply2 = Program.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 == null) { ply.SendDirectedMessage("Sorry, target could not be found!"); return; }
             if (cmdparts.Length < 3 || cmdparts[2].ToLower() == "on")
             {
                 ply2.frozen = true;
-                parent.SendServerMessage(ply.name + " froze " + ply2.name + "!");
+                Program.SendServerMessage(ply.name + " froze " + ply2.name + "!");
             }
             else
             {
                 ply2.frozen = false;
-                parent.SendServerMessage(ply.name + " un-froze " + ply2.name + "!");
+                Program.SendServerMessage(ply.name + " un-froze " + ply2.name + "!");
             }
         }
 

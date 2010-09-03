@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Net;
+using System.Runtime.InteropServices;
+using MiscUtil.Conversion;
+using System.Net.Sockets;
 
 namespace MCAdmin
 {
@@ -26,28 +29,28 @@ namespace MCAdmin
         {
             parent = (frmMain)this.Owner;
 
-            parent.ReloadServerProperties();
+            Program.ReloadServerProperties();
 
-            tbPort.Text = parent.GetServerProperty("server-port-real","25565");
-            tbLevel.Text = parent.GetServerProperty("level-name","world");
-            tbIntPort.Text = parent.GetServerProperty("server-port", "25566");
-            numMemory.Value = Convert.ToInt32(parent.GetServerProperty("assigned-memory", "1024"));
-            numAS.Value = Convert.ToInt32(parent.GetServerProperty("autosave-delay", "60"));
-            numBackup.Value = Convert.ToInt32(parent.GetServerProperty("backup-delay", "120"));
+            tbPort.Text = Program.GetServerProperty("server-port-real","25565");
+            tbLevel.Text = Program.GetServerProperty("level-name","world");
+            tbIntPort.Text = Program.GetServerProperty("server-port", "25566");
+            numMemory.Value = Convert.ToInt32(Program.GetServerProperty("assigned-memory", "1024"));
+            numAS.Value = Convert.ToInt32(Program.GetServerProperty("autosave-delay", "60"));
+            numBackup.Value = Convert.ToInt32(Program.GetServerProperty("backup-delay", "120"));
 
-            tbRCONPass.Text = parent.GetServerProperty("rcon-pass", "changeme");
-            tbRCONPort.Text = parent.GetServerProperty("rcon-port", "25567");
-            cbRCONEnable.Checked = (parent.GetServerProperty("rcon-enable", "false").ToLower() == "true");
+            tbRCONPass.Text = Program.GetServerProperty("rcon-pass", "changeme");
+            tbRCONPort.Text = Program.GetServerProperty("rcon-port", "25567");
+            cbRCONEnable.Checked = (Program.GetServerProperty("rcon-enable", "false").ToLower() == "true");
 
-            foreach (string rankname in parent.ranklevels.Keys)
+            foreach (string rankname in Program.ranklevels.Keys)
             {
                 cbDefRank.Items.Add(rankname);
             }
-            cbDefRank.Text = parent.GetServerProperty("default-rank", "guest");
+            cbDefRank.Text = Program.GetServerProperty("default-rank", "guest");
 
             cbIP.Items.Add("0.0.0.0");
 
-            cbOnline.Checked = (parent.GetServerProperty("online-mode", "true").ToLower() == "true");
+            cbOnline.Checked = (Program.GetServerProperty("online-mode", "true").ToLower() == "true");
 
             foreach(NetworkInterface iface in  NetworkInterface.GetAllNetworkInterfaces())
             {
@@ -62,7 +65,7 @@ namespace MCAdmin
             }
 
 
-            cbIP.Text = parent.GetServerProperty("server-ip-real", "0.0.0.0");
+            cbIP.Text = Program.GetServerProperty("server-ip-real", "0.0.0.0");
             if (cbIP.Text == "") cbIP.Text = "0.0.0.0";
 
             cbRCONEnable_CheckedChanged(null, null);
@@ -76,7 +79,7 @@ namespace MCAdmin
                 return;
             }
             File.WriteAllText("server.properties", tbPreview.Text);
-            parent.ReloadServerProperties();
+            Program.ReloadServerProperties();
             this.Close();
         }
 
@@ -119,6 +122,22 @@ namespace MCAdmin
             tbRCONPass.Enabled = cbRCONEnable.Checked;
             tbRCONPort.Enabled = cbRCONEnable.Checked;
             RefreshPreview();
+        }
+
+        private void btnAutoDetect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Socket testsock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                testsock.ReceiveTimeout = 1000;
+                testsock.SendTimeout = 1000;
+                testsock.Connect("mcadmin.eu", 80);
+                string iptouse = IPAddress.Parse(((IPEndPoint)testsock.LocalEndPoint).Address.ToString()).ToString();
+                testsock.Close();
+                cbIP.Text = iptouse;
+                MessageBox.Show("Auto-detect completed!\nBest interface: " + iptouse);
+            }
+            catch { MessageBox.Show("Sorry, error during auto-detection :("); }
         }
     }
 }

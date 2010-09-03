@@ -7,16 +7,11 @@ namespace MCAdmin.Commands
 {
     class UnbanCommand : Command
     {
-        public UnbanCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
-            if (parent.PlyGetRank(cmdparts[1]) != "banned") { ply.SendDirectedMessage("Player is not banned!"); return; }
-            parent.PlySetRank(cmdparts[1], parent.GetServerProperty("default-rank","guest"));
-            parent.SendServerMessage(ply.name + " unbanned " + cmdparts[1]);
+            if (Program.PlyGetRank(cmdparts[1]) != "banned") { ply.SendDirectedMessage("Player is not banned!"); return; }
+            Program.PlySetRank(cmdparts[1], Program.GetServerProperty("default-rank","guest"));
+            Program.SendServerMessage(ply.name + " unbanned " + cmdparts[1]);
         }
 
         public override int reqlevel { get { return 3; } }

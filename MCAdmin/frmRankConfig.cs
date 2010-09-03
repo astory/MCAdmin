@@ -23,9 +23,9 @@ namespace MCAdmin
         {
             parent = (frmMain)this.Owner;
             string tmptag = "";
-            foreach (KeyValuePair<string, int> kv in parent.ranklevels)
+            foreach (KeyValuePair<string, int> kv in Program.ranklevels)
             {
-                if (parent.ranktags.ContainsKey(kv.Key)) tmptag = parent.ranktags[kv.Key];
+                if (Program.ranktags.ContainsKey(kv.Key)) tmptag = Program.ranktags[kv.Key];
                 else tmptag = "";
                 lvRanks.Items.Add(new ListViewItem(new string[] { kv.Key, kv.Value.ToString(), tmptag }));
             }
@@ -83,17 +83,17 @@ namespace MCAdmin
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            parent.ranklevels.Clear();
-            parent.ranktags.Clear();
+            Program.ranklevels.Clear();
+            Program.ranktags.Clear();
             foreach (ListViewItem lvi in lvRanks.Items)
             {
-                parent.ranklevels.Add(lvi.SubItems[0].Text, Convert.ToInt32(lvi.SubItems[1].Text));
-                parent.ranktags.Add(lvi.SubItems[0].Text, lvi.SubItems[2].Text);
+                Program.ranklevels.Add(lvi.SubItems[0].Text, Convert.ToInt32(lvi.SubItems[1].Text));
+                Program.ranktags.Add(lvi.SubItems[0].Text, lvi.SubItems[2].Text);
             }
-            parent.SaveRankLevels();
+            Program.SaveRankLevels();
 
-            parent.SaveRanks();
-            parent.LoadRanks();
+            Program.SaveRanks();
+            Program.LoadRanks();
 
             this.Close();
         }

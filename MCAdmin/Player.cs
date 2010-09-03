@@ -35,11 +35,11 @@ namespace MCAdmin
             externalSock = ext;
 
             ip = IPAddress.Parse(((IPEndPoint)externalSock.RemoteEndPoint).Address.ToString()).ToString();
-            if (ip == "72.52.102.33" || ip == "77.92.75.135") { fwl.parent.AddRTLine(Color.Black, "Heartbeat from ServerChecker: IP = " + ip + "\r\n", true); this.Disconnect(false); return; }
+            if (ip == "72.52.102.33" || ip == "77.92.75.135") { Program.AddRTLine(Color.Black, "Heartbeat from ServerChecker: IP = " + ip + "\r\n", true); this.Disconnect(false); return; }
 
-            if (fwl.parent.bannedIPs.Contains(ip)) { this.Disconnect("You're banned!"); return; }
+            if (Program.bannedIPs.Contains(ip)) { this.Disconnect("You're banned!"); return; }
 
-            foreach (string bannedIP in fwl.parent.bannedIPs)
+            foreach (string bannedIP in Program.bannedIPs)
             {
                 if (bannedIP[bannedIP.Length - 1] == '.') //Is a range ban^^
                 {
@@ -65,7 +65,7 @@ namespace MCAdmin
             externalThread.Start();
             pingThread.Start();
 
-            fwl.parent.AddRTLine(Color.Black, "IP " + ip + " connected!\r\n", true);
+            Program.AddRTLine(Color.Black, "IP " + ip + " connected!\r\n", true);
         }
 
         Thread internalThread;
@@ -207,12 +207,12 @@ namespace MCAdmin
                                                 string xnam = msg.Substring(2, xpos - 2).Trim();
                                                 if (msg.EndsWith(" joined the game."))
                                                 {
-                                                    SendChat("§2[+] §ePlayer " + fwl.parent.PlyGetTag(xnam) + xnam + "§e connected");
+                                                    SendChat("§2[+] §ePlayer " + Program.PlyGetTag(xnam) + xnam + "§e connected");
                                                     forwardpacket = false;
                                                 }
                                                 else if (msg.EndsWith(" left the game."))
                                                 {
-                                                    SendChat("§4[-] §ePlayer " + fwl.parent.PlyGetTag(xnam) + xnam + "§e disconnected");
+                                                    SendChat("§4[-] §ePlayer " + Program.PlyGetTag(xnam) + xnam + "§e disconnected");
                                                     forwardpacket = false;
                                                 }
                                             }
@@ -240,7 +240,7 @@ namespace MCAdmin
                                             {
                                                 case "established":
                                                     moddedServer = true;
-                                                    fwl.parent.AddRTLine(Color.Purple, "MODDED SERVER DETECTED!\r\n", false);
+                                                    Program.AddRTLine(Color.Purple, "MODDED SERVER DETECTED!\r\n", false);
                                                     break;
                                                 case "location":
                                                     break;
@@ -274,7 +274,7 @@ namespace MCAdmin
 
                                 if (packet_size == -2)
                                 {
-                                    fwl.parent.AddRTLine(Color.Orange, "Invalid packet ID: " + ((int)packet_id) + "\r\n", false);
+                                    Program.AddRTLine(Color.Orange, "Invalid packet ID: " + ((int)packet_id) + "\r\n", false);
                                     ReceiveBytes(internalSock, 1024);
                                     invalidRecvd = true;
                                 }
@@ -389,11 +389,11 @@ namespace MCAdmin
                                         case 0x01:
                                             ReceiveBytes(externalSock, 4);
                                             name = ReceiveString(externalSock);
-                                            fwl.parent.AddRTLine(Color.Black, "IP " + this.ip + " logged in as " + name + "!\r\n", true);
+                                            Program.AddRTLine(Color.Black, "IP " + this.ip + " logged in as " + name + "!\r\n", true);
                                             if (Util.ContainsInvalidChars(name, true)) { this.Disconnect("Don't use hax, fag :3"); return; }
-                                            if (fwl.parent.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
+                                            if (Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
 
-                                            fwl.parent.worldIsDirty = true;
+                                            Program.worldIsDirty = true;
 
                                             ReceiveString(externalSock);
 
@@ -414,12 +414,12 @@ namespace MCAdmin
                                             {
                                                 string[] cmdparts = msg.Remove(0, 1).Split(' ');
                                                 string cmdstr = cmdparts[0].ToLower();
-                                                if (fwl.parent.commands.ContainsKey(cmdstr))
+                                                if (Program.commands.ContainsKey(cmdstr))
                                                 {
                                                     try
                                                     {
-                                                        Command cmd = fwl.parent.commands[cmdstr];
-                                                        if (!fwl.parent.PlyHasLevel(name, cmd.minlevel)) SendPermissionDenied();
+                                                        Command cmd = Program.commands[cmdstr];
+                                                        if (!Program.PlyHasLevel(name, cmd.minlevel)) SendPermissionDenied();
                                                         else cmd.Run(this, cmdparts);
                                                     }
                                                     catch { SendDirectedMessage("Command error!"); }
@@ -435,8 +435,8 @@ namespace MCAdmin
                                             }
                                             else
                                             {
-                                                fwl.parent.AddRTLine(Color.Black, "<" + name + "> " + msg + "\r\n", true);
-                                                fwl.parent.SendLogMsg("\"" + name + "<" + GetLevel() + "><" + name + "><" + GetRank() + ">\" say \"" + msg + "\"");
+                                                Program.AddRTLine(Color.Black, "<" + name + "> " + msg + "\r\n", true);
+                                                Program.SendLogMsg("\"" + name + "<" + GetLevel() + "><" + name + "><" + GetRank() + ">\" say \"" + msg + "\"");
                                                 string cmsg = GetTag() + this.name + ":§f " + msg;
                                                 foreach(Player ply in fwl.players)
                                                 {
@@ -504,24 +504,24 @@ namespace MCAdmin
                                             {
                                                 blockid = 62;
                                             }
-                                            else if (fwl.parent.blockLevels.ContainsKey(blockid))
+                                            else if (Program.blockLevels.ContainsKey(blockid))
                                             {
-                                                int lev = fwl.parent.PlyGetLevel(name);
-                                                if (lev < fwl.parent.blockLevels[blockid])
+                                                int lev = Program.PlyGetLevel(name);
+                                                if (lev < Program.blockLevels[blockid])
                                                 {
                                                     string blockname;
-                                                    if (fwl.parent.blockIDEnum.ContainsKey(blockid)) blockname = fwl.parent.blockIDEnum[blockid];
+                                                    if (Program.blockIDEnum.ContainsKey(blockid)) blockname = Program.blockIDEnum[blockid];
                                                     else blockname = "UNKNOWN ID " + blockid.ToString();
-                                                    fwl.parent.SendServerMessage(name + " tried to spawn illegal block " + blockname);
+                                                    Program.SendServerMessage(name + " tried to spawn illegal block " + blockname);
                                                     forwardpacket = false;
                                                 }
                                             }
-                                            else if (fwl.parent.blockLevelsIsWhitelist && fwl.parent.PlyGetLevel(name) < 4)
+                                            else if (Program.blockLevelsIsWhitelist && Program.PlyGetLevel(name) < 4)
                                             {
                                                 string blockname;
-                                                if (fwl.parent.blockIDEnum.ContainsKey(blockid)) blockname = fwl.parent.blockIDEnum[blockid];
+                                                if (Program.blockIDEnum.ContainsKey(blockid)) blockname = Program.blockIDEnum[blockid];
                                                 else blockname = "UNKNOWN ID " + blockid.ToString();
-                                                fwl.parent.SendServerMessage(name + " tried to spawn illegal block " + blockname);
+                                                Program.SendServerMessage(name + " tried to spawn illegal block " + blockname);
                                                 forwardpacket = false;
                                             }
                                             Util.NinA(blockid, dat, 0);
@@ -531,8 +531,8 @@ namespace MCAdmin
                                 }
                                 if (packet_size == -2)
                                 {
-                                    fwl.parent.SendServerMessage("Client \"" + name + "\" (IP: "+ip+") sent unknown packet. Kicked!", '4');
-                                    fwl.parent.AddRTLine(Color.Orange, "Invalid packet ID: " + ((int)packet_id) + "\r\n", false);
+                                    Program.SendServerMessage("Client \"" + name + "\" (IP: "+ip+") sent unknown packet. Kicked!", '4');
+                                    Program.AddRTLine(Color.Orange, "Invalid packet ID: " + ((int)packet_id) + "\r\n", false);
                                     //internalSock.Send(fwcache_ext);
                                     //invalidRecvd = true;
                                     //dat = new byte[256];
@@ -694,7 +694,7 @@ namespace MCAdmin
         }
         public virtual void Disconnect(string reason)
         {
-            fwl.parent.AddRTLine(Color.Black, this.name + " (IP: " + this.ip + ") disconnected (Message: " + reason + ")!\r\n", true);
+            Program.AddRTLine(Color.Black, this.name + " (IP: " + this.ip + ") disconnected (Message: " + reason + ")!\r\n", true);
             if (!connected) return;
             try
             {
@@ -733,7 +733,7 @@ namespace MCAdmin
         public virtual void Disconnect(bool doprint)
         {
             if (!connected) return;
-            if(doprint) fwl.parent.AddRTLine(Color.Black, this.name + "(IP: " + this.ip + ") disconnected!\r\n", true);
+            if(doprint) Program.AddRTLine(Color.Black, this.name + "(IP: " + this.ip + ") disconnected!\r\n", true);
             connected = false;
             try
             {
@@ -842,9 +842,9 @@ namespace MCAdmin
             catch
             {
                 item = item.ToLower();
-                if (fwl.parent.blockEnum.ContainsKey(item))
+                if (Program.blockEnum.ContainsKey(item))
                 {
-                    return GiveItem(fwl.parent.blockEnum[item], amount);
+                    return GiveItem(Program.blockEnum[item], amount);
                 }
             }
             return false;
@@ -862,34 +862,34 @@ namespace MCAdmin
             }
             else
             {
-                fwl.parent.SendServerCommand("give " + this.name + " " + itemid.ToString() + " " + amount.ToString());
+                Program.SendServerCommand("give " + this.name + " " + itemid.ToString() + " " + amount.ToString());
             }
             return true;
         }
 
         public virtual string GetTag()
         {
-            return fwl.parent.PlyGetTag(name);
+            return Program.PlyGetTag(name);
         }
 
         public virtual void SetRank(string rank)
         {
-            fwl.parent.PlySetRank(name, rank);
+            Program.PlySetRank(name, rank);
         }
 
         public virtual string GetRank()
         {
-            return fwl.parent.PlyGetRank(name);
+            return Program.PlyGetRank(name);
         }
 
         public virtual int GetLevel()
         {
-            return fwl.parent.PlyGetLevel(name);
+            return Program.PlyGetLevel(name);
         }
 
         public virtual bool HasLevel(int level)
         {
-            return fwl.parent.PlyHasLevel(name, level);
+            return Program.PlyHasLevel(name, level);
         }
         #endregion
     }

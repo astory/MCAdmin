@@ -30,9 +30,9 @@ namespace MCAdmin
         {
             foreach (KeyValuePair<string, ComboBox> kvp in curRanks)
             {
-                parent.commands[kvp.Key].minlevel = __cbGetInt(kvp.Value.Text);
+                Program.commands[kvp.Key].minlevel = __cbGetInt(kvp.Value.Text);
             }
-            parent.SaveCommandLevels();
+            Program.SaveCommandLevels();
             this.Close();
         }
 
@@ -45,7 +45,7 @@ namespace MCAdmin
             }
             catch
             {
-                if (parent.ranklevels.ContainsKey(item.ToLower())) return parent.ranklevels[item.ToLower()];
+                if (Program.ranklevels.ContainsKey(item.ToLower())) return Program.ranklevels[item.ToLower()];
             }
             return 0;
         }
@@ -55,7 +55,7 @@ namespace MCAdmin
             parent = (frmMain)this.Owner;
             int ypos = 0;
 
-            foreach (KeyValuePair<string, Command> kvp in parent.commands)
+            foreach (KeyValuePair<string, Command> kvp in Program.commands)
             {
                 Label lblCommand = new Label();
                 lblCommand.Text = kvp.Key;
@@ -69,7 +69,7 @@ namespace MCAdmin
                 cbCommandRank.Location = new Point(60, ypos);
                 cbCommandRank.Size = new Size(400, 25);
                 cbCommandRank.DropDownStyle = ComboBoxStyle.DropDownList;
-                foreach (KeyValuePair<string, int> kv in parent.ranklevels)
+                foreach (KeyValuePair<string, int> kv in Program.ranklevels)
                 {
                     if (kv.Key == "banned") continue;
                     cbCommandRank.Items.Add(kv.Value.ToString() + " (" + kv.Key + ")");

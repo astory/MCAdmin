@@ -7,16 +7,6 @@ namespace MCAdmin.Commands
 {
     class RulesCommand : Command
     {
-        public RulesCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
-        public override void Run(Player ply, string[] cmdparts)
-        {
-            ply.ReadMsgFile("rules");
-        }
-
         public override int reqlevel { get { return 0; } }
 
         public override string Help { get { return "Displays the rules file"; } }

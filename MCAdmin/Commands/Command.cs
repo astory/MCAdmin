@@ -7,14 +7,9 @@ namespace MCAdmin.Commands
 {
     public class Command
     {
-        protected frmMain parent;
         public Command()
         {
             //throw new NotImplementedException();
-        }
-        public Command(frmMain baseFrm)
-        {
-            parent = baseFrm;
         }
         public virtual void Run(Player ply, string[] cmdparts)
         {

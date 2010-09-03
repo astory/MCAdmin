@@ -7,11 +7,6 @@ namespace MCAdmin.Commands
 {
     class CompassCommand : Command
     {
-        public CompassCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             double rotation = ply.rot % 360.0;

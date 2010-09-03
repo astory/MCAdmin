@@ -7,16 +7,11 @@ namespace MCAdmin.Commands
 {
     class UnbanipCommand : Command
     {
-        public UnbanipCommand(frmMain baseFrm)
-        {
-            parent = baseFrm;
-        }
-
         public override void Run(Player ply, string[] cmdparts)
         {
             string ip = cmdparts[1];
-            parent.UnbanIP(ip);
-            parent.SendServerMessage(ply.name + " un-ip-banned " + ip);
+            Program.UnbanIP(ip);
+            Program.SendServerMessage(ply.name + " un-ip-banned " + ip);
         }
 
         public override int reqlevel { get { return 3; } }
