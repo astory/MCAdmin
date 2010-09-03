@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.Zip;
 using MCAdmin.Commands;
 using Microsoft.Win32;
+using System.Runtime.InteropServices;
 
 namespace MCAdmin
 {
@@ -221,19 +222,20 @@ namespace MCAdmin
                     }
                     catch (BadImageFormatException)
                     {
-                        MessageBox.Show("Restart me!");
-                        Application.Exit();
+                        AddRTLine(Color.Red, "Restart me!\r\n", false);
+                        if (consoleOnly) Console.In.ReadLine();
+                        Environment.Exit(0);
                         return;
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show("Error loading kit " + kn + ": \r\n\r\n" + e.ToString());
+                        AddRTLine(Color.Red, "Error loading kit " + kn + ": \r\n\r\n" + e.ToString(), false);
                         k = null;
                     }
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Error loading kit " + kn + ": \r\n\r\n" + e.ToString());
+                    AddRTLine(Color.Red, "Error loading kit " + kn + ": \r\n\r\n" + e.ToString(), false);
                     k = null;
                 }
                 if (k != null && k.saved) kits.Add(k);
@@ -689,11 +691,14 @@ namespace MCAdmin
                         if (msg == "Done! For help, type \"help\" or \"?\"")
                         {
                             minecraftFirewall = new MCFirewall();
-                            mainFrm.lblStatus.Invoke(new MethodInvoker(delegate()
+                            if (!consoleOnly)
                             {
-                                mainFrm.lblStatus.ForeColor = Color.Green;
-                                mainFrm.lblStatus.Text = "Running";
-                            }));
+                                mainFrm.lblStatus.Invoke(new MethodInvoker(delegate()
+                                {
+                                    mainFrm.lblStatus.ForeColor = Color.Green;
+                                    mainFrm.lblStatus.Text = "Running";
+                                }));
+                            }
                             serverFullyOnline = true;
                         }
                         break;
@@ -1049,6 +1054,16 @@ namespace MCAdmin
         }
         #endregion
 
+        [DllImport("kernel32")]
+        public static extern IntPtr GetConsoleWindow();
+
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+
+        static string lineBorder = "=";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -1056,31 +1071,66 @@ namespace MCAdmin
         [STAThread]
         static void Main(string[] args)
         {
+            lineBorder = "=".PadLeft(Console.BufferWidth, '=');
+
             foreach (string arg in args)
             {
-                if (arg.ToLower().Contains("noupdate")) dontUpdate = true;
-                else if (arg.ToLower().Contains("nojarupdate")) dontUpdateJAR = true;
-                else if (arg.ToLower().Contains("noexeupdate")) dontUpdateMCAdmin = true;
+                string argtl = arg.Trim().ToLower();
+                if (argtl.Contains("noupdate")) dontUpdate = true;
+                else if (argtl.Contains("nojarupdate")) dontUpdateJAR = true;
+                else if (argtl.Contains("noexeupdate")) dontUpdateMCAdmin = true;
+                else if (argtl.Contains("console")) consoleOnly = true;
             }
+
+            Console.Title = "MCAdmin (c) by Doridian 2010";
+
+            Console.Out.WriteLine("Welcome to MCAdmin!");
+            Console.Out.Write(lineBorder);
+            Console.Out.WriteLine("You can use \"start\" to start the server, \"stop\" to stop the server, \"kill\" to kill the server, \"exit\" to exit MCAdmin. Any other commands gets forwarded to the server console.");
+            Console.Out.WriteLine(lineBorder);
 
             new Thread(new ThreadStart(BootThread)).Start();
 
             if (!consoleOnly)
             {
+                try
+                {
+                    IntPtr conWnd = GetConsoleWindow();
+                    if (conWnd != IntPtr.Zero)
+                    {
+                        ShowWindow(conWnd, 0);
+                    }
+                }
+                catch { }
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 mainFrm = new frmMain();
+
+                Application.Run(mainFrm);
+                return;
             }
 
-            Application.Run(mainFrm);
+            frmMainReady = true;
+
+            while (true)
+            {
+                string line = Console.In.ReadLine().Trim();
+                string ltl = line.ToLower();
+                if (ltl == "start") StartServer();
+                else if (ltl == "stop") StopServer();
+                else if (ltl == "kill") KillServer();
+                else if (ltl == "exit") Environment.Exit(0);
+                else SendServerCommand(line);
+            }
         }
 
         public static bool frmMainReady = false;
 
         static void BootThread()
         {
-            while(!frmMainReady) Thread.Sleep(1000);
+            while(!frmMainReady) Thread.Sleep(100);
 
             tmAutosave = new System.Windows.Forms.Timer();
             tmAutosave.Enabled = false;
@@ -1112,8 +1162,9 @@ namespace MCAdmin
 
             if (!FindJava())
             {
-                MessageBox.Show("JAVA JRE could not be found!", "MCAdmin error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
+                AddRTLine(Color.Red, "JAVA JRE could not be found!", false);
+                if (consoleOnly) Console.In.ReadLine();
+                Environment.Exit(0);
             }
 
             AddRTLine(Color.Green, "Found JAVA JRE at: " + javaExecutable + "\r\n", false);
