@@ -187,7 +187,6 @@
             this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Save NOW";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(Program.tmAutosave_Tick);
             // 
             // btnBackup
             // 

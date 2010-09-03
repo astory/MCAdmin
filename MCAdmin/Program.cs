@@ -865,6 +865,7 @@ namespace MCAdmin
             {
                 mainFrm.AddRTLine(col, line);
             }
+
             try
             {
                 if (dolog) File.AppendAllText("MCAdmin.log", line);
@@ -1062,6 +1063,8 @@ namespace MCAdmin
                 else if (arg.ToLower().Contains("noexeupdate")) dontUpdateMCAdmin = true;
             }
 
+            new Thread(new ThreadStart(BootThread)).Start();
+
             if (!consoleOnly)
             {
                 Application.EnableVisualStyles();
@@ -1069,6 +1072,15 @@ namespace MCAdmin
 
                 mainFrm = new frmMain();
             }
+
+            Application.Run(mainFrm);
+        }
+
+        public static bool frmMainReady = false;
+
+        static void BootThread()
+        {
+            while(!frmMainReady) Thread.Sleep(1000);
 
             tmAutosave = new System.Windows.Forms.Timer();
             tmAutosave.Enabled = false;
@@ -1343,7 +1355,6 @@ namespace MCAdmin
 
             CheckUpdate(true);
 
-            Application.Run(mainFrm);
         }
     }
 }

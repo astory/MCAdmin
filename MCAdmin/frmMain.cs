@@ -35,6 +35,8 @@ namespace MCAdmin
             SetStartEnabledInt = new SetStartEnabledDelegate(SetStartEnabledMethod);
 
             if (!File.Exists("minecraft_server.jar")) btnStart.Enabled = false;
+
+            Program.frmMainReady = true;
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -72,7 +74,7 @@ namespace MCAdmin
             try
             {
                 if (rtServer.InvokeRequired)
-                    rtServer.Invoke(AddRTLineInt, new object[] { color, line });
+                    rtServer.BeginInvoke(AddRTLineInt, new object[] { color, line });
                 else
                     AddRTLineMethod(color, line);
             }
@@ -190,6 +192,11 @@ namespace MCAdmin
                 if (ply.name == null || ply.name == "") continue;
                 lbPlayers.Items.Add(ply.name);
             }
+        }
+
+        private void rtServer_ControlAdded(object sender, ControlEventArgs e)
+        {
+
         }
     }
 }
