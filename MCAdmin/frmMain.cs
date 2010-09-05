@@ -182,10 +182,5 @@ namespace MCAdmin
                 lbPlayers.Items.Add(ply.name);
             }
         }
-
-        private void rtServer_ControlAdded(object sender, ControlEventArgs e)
-        {
-
-        }
     }
 }

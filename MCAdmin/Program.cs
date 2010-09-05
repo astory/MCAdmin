@@ -224,6 +224,7 @@ namespace MCAdmin
                     {
                         AddRTLine(Color.Red, "Restart me!\r\n", false);
                         if (consoleOnly) Console.In.ReadLine();
+                        KillServer();
                         Environment.Exit(0);
                         return;
                     }
@@ -1121,7 +1122,7 @@ namespace MCAdmin
                 if (ltl == "start") StartServer();
                 else if (ltl == "stop") StopServer();
                 else if (ltl == "kill") KillServer();
-                else if (ltl == "exit") Environment.Exit(0);
+                else if (ltl == "exit") { KillServer(); Environment.Exit(0); }
                 else SendServerCommand(line);
             }
         }
@@ -1164,6 +1165,7 @@ namespace MCAdmin
             {
                 AddRTLine(Color.Red, "JAVA JRE could not be found!", false);
                 if (consoleOnly) Console.In.ReadLine();
+                KillServer();
                 Environment.Exit(0);
             }
 
