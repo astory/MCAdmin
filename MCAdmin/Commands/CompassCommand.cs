@@ -81,6 +81,8 @@ namespace MCAdmin.Commands
             {
                 rot = "W";
             }
+            rotation -= 90;
+            if (rotation < 0) rotation = 360 + rotation;
             ply.SendDirectedMessage("Direction: " + rot + " (" + ((int)Math.Round(rotation)) + " degrees)");
         }
 
