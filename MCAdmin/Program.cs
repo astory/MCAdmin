@@ -1120,15 +1120,19 @@ namespace MCAdmin
 
             while (true)
             {
-                string line = Console.In.ReadLine().Trim();
-                string[] ltls = line.Split(splitter);
-                string ltl = ltls[0].ToLower();
-                if (ltl == "start") StartServer();
-                else if (ltl == "stop") StopServer();
-                else if (ltl == "kill") KillServer();
-                else if (ltl == "exit") { KillServer(); Environment.Exit(0); }
-                else if (commands.ContainsKey(ltl)) commands[ltl].Run(ply, ltls);
-                else SendServerCommand(line);
+                try
+                {
+                    string line = Console.In.ReadLine().Trim();
+                    string[] ltls = line.Split(splitter);
+                    string ltl = ltls[0].ToLower();
+                    if (ltl == "start") StartServer();
+                    else if (ltl == "stop") StopServer();
+                    else if (ltl == "kill") KillServer();
+                    else if (ltl == "exit") { KillServer(); Environment.Exit(0); }
+                    else if (commands.ContainsKey(ltl)) commands[ltl].Run(ply, ltls);
+                    else SendServerCommand(line);
+                }
+                catch { Console.Out.WriteLine("Command error!"); }
             }
         }
 
@@ -1142,7 +1146,7 @@ namespace MCAdmin
 
             public override void SendChat(string msg, bool doprefix, char colorCode)
             {
-                Console.Out.WriteLine(msg);
+                AddRTLine(Color.Black, msg + "\r\n", false);
             }
 
             public override void SendPacket(byte packet_id, byte[] data) { }
