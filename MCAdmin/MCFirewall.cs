@@ -12,6 +12,7 @@ namespace MCAdmin
         public int intport = 0;
         TcpListener externalListener;
         public List<Player> players = new List<Player>();
+        public long forcedtime = -1;
 
         public MCFirewall()
         {

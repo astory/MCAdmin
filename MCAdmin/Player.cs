@@ -262,6 +262,10 @@ namespace MCAdmin
                                             {
                                                 Util.LinA(forcedtime, dat, 0);
                                             }
+                                            else if (fwl.forcedtime >= 0)
+                                            {
+                                                Util.LinA(fwl.forcedtime, dat, 0);
+                                            }
                                             break;
                                         case 0x0B:
                                         case 0x0C:

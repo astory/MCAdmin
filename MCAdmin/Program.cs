@@ -1266,7 +1266,9 @@ namespace MCAdmin
 
             commands.Add("version", new VersionCommand());
             commands.Add("compass", new CompassCommand());
+
             commands.Add("time", new TimeCommand());
+            commands.Add("servertime", new ServertimeCommand());
             //commands.Add("freeze", new FreezeCommand(this));
             #endregion
 

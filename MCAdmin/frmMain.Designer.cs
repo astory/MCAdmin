@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.rtServer = new System.Windows.Forms.RichTextBox();
             this.gbStatus = new System.Windows.Forms.GroupBox();
             this.btnKillServer = new System.Windows.Forms.Button();
@@ -316,6 +317,7 @@
             this.Controls.Add(this.gbManage);
             this.Controls.Add(this.gbStatus);
             this.Controls.Add(this.rtServer);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MCAdmin (c) by Doridian 2010";

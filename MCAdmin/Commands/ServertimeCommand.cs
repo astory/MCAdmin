@@ -5,14 +5,14 @@ using System.Text;
 
 namespace MCAdmin.Commands
 {
-    class TimeCommand : Command
+    class ServertimeCommand : Command
     {
         public override void Run(Player ply, string[] cmdparts)
         {
             if (cmdparts.Length < 2 || cmdparts[1].ToLower() == "normal")
             {
-                ply.forcedtime = -1;
-                ply.SendDirectedMessage("Reset your time back to normal!");
+                Program.minecraftFirewall.forcedtime = -1;
+                Program.SendServerMessage(ply.name + " reset time back to normal!");
                 return;
             }
             int settime = -1;
@@ -41,18 +41,18 @@ namespace MCAdmin.Commands
             if (settime < 0 || settime > 23) { ply.SendDirectedMessage("Invalid time entered!"); return; }
             if (settime < 6)
             {
-                ply.forcedtime = (18 + settime) * 1000;
+                Program.minecraftFirewall.forcedtime = (18 + settime) * 1000;
             }
             else
             {
-                ply.forcedtime = (settime - 6) * 1000;
+                Program.minecraftFirewall.forcedtime = (settime - 6) * 1000;
             }
-            ply.SendDirectedMessage("Forced your time to be: " + settime.ToString() + ":00");
+            Program.SendServerMessage(ply.name + " forced time to be: " + settime.ToString() + ":00");
         }
 
-        public override int reqlevel { get { return 1; } }
+        public override int reqlevel { get { return 3; } }
 
-        public override string Help { get { return "Forces/fixes current time *clientside*."; } }
+        public override string Help { get { return "Forces/fixes current time *serverside*."; } }
         public override string Usage { get { return "<night/day/morning/afternoon/normal/0-23>"; } }
     }
 }

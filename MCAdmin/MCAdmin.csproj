@@ -81,6 +81,7 @@
     <Compile Include="Commands\GiveCommand.cs" />
     <Compile Include="Commands\KickCommand.cs" />
     <Compile Include="Commands\KitCommand.cs" />
+    <Compile Include="Commands\ServertimeCommand.cs" />
     <Compile Include="Commands\SetrankCommand.cs" />
     <Compile Include="Commands\SummonCommand.cs" />
     <Compile Include="Commands\TimeCommand.cs" />
