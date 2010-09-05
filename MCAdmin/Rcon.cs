@@ -159,14 +159,14 @@ namespace MCAdmin
 
                                     case "logaddress_add":
                                         IPEndPoint ipep = __TryGetIp(param);
-                                        Program.logToAddr.Add(ipep);
+                                        if (!Program.logToAddr.Contains(ipep)) Program.logToAddr.Add(ipep);
                                         response = "Added " + param + " to log broadcast!";
 
                                         Program.SendLogMsg("rcon from \"" + ip + "\": command \"logaddress_add \"" + param + "\"\"\n");
                                         break;
                                     case "logaddress_del":
                                         IPEndPoint ipep2 = __TryGetIp(param);
-                                        Program.logToAddr.Remove(ipep2);
+                                        if (Program.logToAddr.Contains(ipep2)) Program.logToAddr.Remove(ipep2);
                                         response = "Removed " + param + " from log broadcast!";
 
                                         Program.SendLogMsg("rcon from \"" + ip + "\": command \"logaddress_del \"" + param + "\"\"\n");
