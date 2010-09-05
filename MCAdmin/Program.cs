@@ -1115,16 +1115,80 @@ namespace MCAdmin
 
             frmMainReady = true;
 
+            PlayerConsole ply = new PlayerConsole();
+            char[] splitter = new char[] { ' ' };
+
             while (true)
             {
                 string line = Console.In.ReadLine().Trim();
-                string ltl = line.ToLower();
+                string[] ltls = line.Split(splitter);
+                string ltl = ltls[0].ToLower();
                 if (ltl == "start") StartServer();
                 else if (ltl == "stop") StopServer();
                 else if (ltl == "kill") KillServer();
                 else if (ltl == "exit") { KillServer(); Environment.Exit(0); }
+                else if (commands.ContainsKey(ltl)) commands[ltl].Run(ply, ltls);
                 else SendServerCommand(line);
             }
+        }
+
+        internal class PlayerConsole : Player
+        {
+            public PlayerConsole()
+            {
+                name = "Console";
+                ip = "127.0.0.1";
+            }
+
+            public override void SendChat(string msg, bool doprefix, char colorCode)
+            {
+                Console.Out.WriteLine(msg);
+            }
+
+            public override void SendPacket(byte packet_id, byte[] data) { }
+
+            public override void Disconnect(bool doprint) { }
+            public override void Disconnect(string reason) { }
+
+            public override void Disconnect() { }
+
+            ~PlayerConsole() { }
+
+            #region Player methods
+            public override void ReadMsgFile(string file) { }
+
+            public override bool GiveItem(string item, int amount)
+            {
+                return false;
+            }
+
+            public override bool GiveItem(int itemid, int amount)
+            {
+                return false;
+            }
+
+            public override string GetTag()
+            {
+                return "§2";
+            }
+
+            public override void SetRank(string rank) { }
+
+            public override string GetRank()
+            {
+                return "Console";
+            }
+
+            public override int GetLevel()
+            {
+                return 9999;
+            }
+
+            public override bool HasLevel(int level)
+            {
+                return true;
+            }
+            #endregion
         }
 
         public static bool frmMainReady = false;
