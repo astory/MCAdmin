@@ -95,7 +95,7 @@ namespace MCAdmin
 
             inforeply_posplys = xpos - 1;
 
-            inforeply[xpos] = 24;
+            inforeply[xpos] = (byte)Convert.ToInt32(Program.GetServerProperty("max-players", "20"));
             xpos++;
             inforeply[xpos] = 0;
             xpos++;

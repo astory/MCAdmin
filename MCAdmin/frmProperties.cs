@@ -37,6 +37,7 @@ namespace MCAdmin
             numMemory.Value = Convert.ToInt32(Program.GetServerProperty("assigned-memory", "1024"));
             numAS.Value = Convert.ToInt32(Program.GetServerProperty("autosave-delay", "60"));
             numBackup.Value = Convert.ToInt32(Program.GetServerProperty("backup-delay", "120"));
+            numMaxPlayers.Value = Convert.ToInt32(Program.GetServerProperty("max-players", "20"));
 
             tbRCONPass.Text = Program.GetServerProperty("rcon-pass", "changeme");
             tbRCONPort.Text = Program.GetServerProperty("rcon-port", "25567");
@@ -90,7 +91,7 @@ namespace MCAdmin
 
         public void RefreshPreview()
         {
-            tbPreview.Text = "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=" + cbIP.Text + "\r\nserver-port=" + tbIntPort.Text + "\r\nserver-port-real=" + tbPort.Text + "\r\nlevel-name=" + tbLevel.Text + "\r\nassigned-memory=" + numMemory.Value.ToString() + "\r\nonline-mode=" + ((cbOnline.Checked) ? "true" : "false") + "\r\ndefault-rank=" + cbDefRank.Text + "\r\nautosave-delay=" + numAS.Value.ToString() + "\r\nbackup-delay=" + numBackup.Value.ToString() + "\r\nrcon-enable="+((cbRCONEnable.Checked) ? "true" : "false")+"\r\nrcon-port="+tbRCONPort.Text+"\r\nrcon-pass="+tbRCONPass.Text;
+            tbPreview.Text = "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=" + cbIP.Text + "\r\nserver-port=" + tbIntPort.Text + "\r\nserver-port-real=" + tbPort.Text + "\r\nlevel-name=" + tbLevel.Text + "\r\nassigned-memory=" + numMemory.Value.ToString() + "\r\nonline-mode=" + ((cbOnline.Checked) ? "true" : "false") + "\r\nmax-players="+numMaxPlayers.Value.ToString()+"\r\ndefault-rank=" + cbDefRank.Text + "\r\nautosave-delay=" + numAS.Value.ToString() + "\r\nbackup-delay=" + numBackup.Value.ToString() + "\r\nrcon-enable="+((cbRCONEnable.Checked) ? "true" : "false")+"\r\nrcon-port="+tbRCONPort.Text+"\r\nrcon-pass="+tbRCONPass.Text;
         }
 
         private void ShowToolTipError(Control ctrl, string title, string text)
