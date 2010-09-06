@@ -922,7 +922,7 @@ namespace MCAdmin
             if (!consoleOnly)
             {
                 mainFrm.btnStart.Enabled = true;
-                //mainFrm.btnProperties.Enabled = true;
+                mainFrm.btnProperties.Enabled = true;
                 mainFrm.lblStatus.ForeColor = Color.Red;
                 mainFrm.lblStatus.Text = "Stopped";
             }
@@ -949,7 +949,7 @@ namespace MCAdmin
             if (!consoleOnly)
             {
                 mainFrm.btnStart.Enabled = false;
-                //mainFrm.btnProperties.Enabled = false;
+                mainFrm.btnProperties.Enabled = false;
             }
 
             ProcessStartInfo psi = new ProcessStartInfo(javaExecutable, "-Xmx" + memAssigned + "M -Xms" + memAssigned + "M -jar minecraft_server.jar nogui");
@@ -1021,7 +1021,7 @@ namespace MCAdmin
             if (!consoleOnly)
             {
                 mainFrm.btnStart.Enabled = true;
-                //mainFrm.btnProperties.Enabled = true;
+                mainFrm.btnProperties.Enabled = true;
                 mainFrm.lblStatus.ForeColor = Color.Red;
                 mainFrm.lblStatus.Text = "Stopped";
             }
