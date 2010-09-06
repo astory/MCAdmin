@@ -294,6 +294,7 @@
             // 
             this.tmUpdateStuff.Enabled = true;
             this.tmUpdateStuff.Interval = 1000;
+            this.tmUpdateStuff.Tick += new System.EventHandler(this.tmUpdateStuff_Tick);
             // 
             // btnRunCmd
             // 

@@ -11,14 +11,13 @@ namespace MCAdmin.Commands
         {
             if (cmdparts.Length <= 1)
             {
-                string strkits = "";
+                string str = "";
                 int prank = ply.GetLevel();
                 foreach (Kit k in Program.kits)
                 {
-                    if (prank >= k.reqlevel) strkits += k.name + ", ";
+                    if (prank >= k.reqlevel) str += k.name + ", ";
                 }
-                if (strkits.Length > 0) ply.SendDirectedMessage("Available kits: " + strkits.Remove(strkits.Length - 2));
-                else ply.SendDirectedMessage("No kits available for you.");
+                ply.SendDirectedMessage("Available kits: " + ((str.Length > 2) ? str.Remove(str.Length - 2) : "None"));
             }
             else
             {

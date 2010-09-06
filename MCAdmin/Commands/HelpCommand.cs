@@ -17,7 +17,7 @@ namespace MCAdmin.Commands
                 {
                     if (kv.Value.minlevel <= curlvl && kv.Key != "commands") str += "!" + kv.Key + ", ";
                 }
-                ply.SendDirectedMessage("Available commands: " + str.Remove(str.Length - 2));
+                ply.SendDirectedMessage("Available commands: " + ((str.Length > 2) ? str.Remove(str.Length - 2) : "None"));
                 ply.SendDirectedMessage("For more help use !help command");
                 ply.SendDirectedMessage("Do not type <> or [] around parameters.");
                 ply.SendDirectedMessage("<> means the parameter is required, [] that it is optional");
@@ -32,6 +32,8 @@ namespace MCAdmin.Commands
                 ply.SendDirectedMessage("Usage: !" + cmdStr + " " + cmd.Usage);
             }
         }
+
+        public override int minlevel { get { return reqlevel; } set { } }
 
         public override int reqlevel { get { return 0; } }
 
