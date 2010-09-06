@@ -355,7 +355,11 @@ namespace MCAdmin
             ply = ply.ToLower(); rank = rank.ToLower();
             if (rank == GetServerProperty("default-rank", "guest"))
             {
-                if (plyranks.ContainsKey(ply)) plyranks.Remove(ply);
+                if (plyranks.ContainsKey(ply))
+                {
+                    plyranks.Remove(ply);
+                    SaveRanks();
+                }
                 return;
             }
             if (plyranks.ContainsKey(ply)) plyranks[ply] = rank;
