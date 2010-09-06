@@ -174,13 +174,17 @@ namespace MCAdmin
 
         private void tmUpdateStuff_Tick(object sender, EventArgs e)
         {
-            lbPlayers.Items.Clear();
-            if (Program.minecraftServer == null || Program.minecraftServer.HasExited || !Program.serverFullyOnline) return;
-            foreach (Player ply in Program.minecraftFirewall.players)
+            try
             {
-                if (ply.name == null || ply.name == "") continue;
-                lbPlayers.Items.Add(ply.name);
+                lbPlayers.Items.Clear();
+                if (Program.minecraftServer == null || Program.minecraftServer.HasExited || !Program.serverFullyOnline) return;
+                foreach (Player ply in Program.minecraftFirewall.players)
+                {
+                    if (ply.name == null || ply.name == "") continue;
+                    lbPlayers.Items.Add(ply.name);
+                }
             }
+            catch { }
         }
     }
 }
