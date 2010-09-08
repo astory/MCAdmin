@@ -755,7 +755,7 @@ namespace MCAdmin
         public static void tmBackup_Tick(object x)
         {
             if ((!worldIsDirty) && (minecraftFirewall == null || minecraftFirewall.players.Count <= 0)) return;
-            worldIsDirty = false;
+            if(minecraftFirewall != null && minecraftFirewall.players.Count > 0) worldIsDirty = false;
             new Thread(new ThreadStart(BackupThread)).Start();
         }
 
