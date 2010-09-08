@@ -51,9 +51,9 @@ namespace MCAdmin
 
         public static bool worldIsDirty = false;
 
-        static System.Windows.Forms.Timer tmBackup;
-        static System.Windows.Forms.Timer tmAutosave;
-        static System.Windows.Forms.Timer tmCheckUpdate;
+        static System.Threading.Timer tmBackup;
+        static System.Threading.Timer tmAutosave;
+        static System.Threading.Timer tmCheckUpdate;
         
         #endregion
 
@@ -468,38 +468,6 @@ namespace MCAdmin
             AddRTLine(Color.Green, "Checking for updates...\r\n", false);
 
             bool isUpdate;
-            if (Program.dontUpdateJAR)
-            {
-                AddRTLine(Color.Green, "JAR update checking disabled.\r\n", false);
-            }
-            else
-            {
-                isUpdate = __DownloadURLToAndDiff("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar.new", "minecraft_server.jar");
-                if (!isUpdate)
-                {
-                    if (isOutOfDate_JAR) { AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false); }
-                    else { AddRTLine(Color.Green, "JAR already up to date!\r\n", false); }
-                }
-                else if (minecraftServer == null)
-                {
-                    try
-                    {
-                        if (File.Exists("minecraft_server.jar")) File.Delete("minecraft_server.jar");
-                        File.Move("minecraft_server.jar.new", "minecraft_server.jar");
-                    }
-                    catch { }
-                    if (!consoleOnly)
-                    {
-                        mainFrm.btnStart.Invoke(mainFrm.SetStartEnabledInt, true);
-                    }
-                    AddRTLine(Color.Green, "JAR update applied.\r\n", false);
-                }
-                else
-                {
-                    isOutOfDate_JAR = true;
-                    AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false);
-                }
-            }
 
             if (Program.dontUpdateMCAdmin)
             {
@@ -536,6 +504,39 @@ namespace MCAdmin
                     File.Move("MCAdmin.exe.new", "MCAdmin.exe");
                     isOutOfDate_MCA = true;
                     AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false);
+                }
+            }
+
+            if (Program.dontUpdateJAR)
+            {
+                AddRTLine(Color.Green, "JAR update checking disabled.\r\n", false);
+            }
+            else
+            {
+                isUpdate = __DownloadURLToAndDiff("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar.new", "minecraft_server.jar");
+                if (!isUpdate)
+                {
+                    if (isOutOfDate_JAR) { AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false); }
+                    else { AddRTLine(Color.Green, "JAR already up to date!\r\n", false); }
+                }
+                else if (minecraftServer == null)
+                {
+                    try
+                    {
+                        if (File.Exists("minecraft_server.jar")) File.Delete("minecraft_server.jar");
+                        File.Move("minecraft_server.jar.new", "minecraft_server.jar");
+                    }
+                    catch { }
+                    if (!consoleOnly)
+                    {
+                        mainFrm.btnStart.Invoke(mainFrm.SetStartEnabledInt, true);
+                    }
+                    AddRTLine(Color.Green, "JAR update applied.\r\n", false);
+                }
+                else
+                {
+                    isOutOfDate_JAR = true;
+                    AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false);
                 }
             }
 
@@ -618,23 +619,23 @@ namespace MCAdmin
             int delay = Convert.ToInt32(GetServerProperty("autosave-delay", "60"));
             if (delay <= 0)
             {
-                tmAutosave.Enabled = false;
+                tmAutosave.Change(Timeout.Infinite, Timeout.Infinite);
             }
             else
             {
-                tmAutosave.Interval = delay * 60 * 1000;
-                tmAutosave.Enabled = true;
+                delay *= 60 * 1000;
+                tmAutosave.Change(delay, delay);
             }
 
             delay = Convert.ToInt32(GetServerProperty("backup-delay", "120"));
             if (delay <= 0)
             {
-                tmBackup.Enabled = false;
+                tmBackup.Change(Timeout.Infinite, Timeout.Infinite);
             }
             else
             {
-                tmBackup.Interval = delay * 60 * 1000;
-                tmBackup.Enabled = true;
+                delay *= 60 * 1000;
+                tmBackup.Change(delay, delay);
             }
 
             logToAddr.Clear();
@@ -728,12 +729,12 @@ namespace MCAdmin
         #endregion
 
         #region Timer stuff
-        private static void tmUpdate_Tick(object sender, EventArgs e)
+        private static void tmUpdate_Tick(object x)
         {
             CheckUpdate(true);
         }
 
-        public static void tmBackup_Tick(object sender, EventArgs e)
+        public static void tmBackup_Tick(object x)
         {
             if ((!worldIsDirty) && (minecraftFirewall == null || minecraftFirewall.players.Count <= 0)) return;
             worldIsDirty = false;
@@ -772,7 +773,7 @@ namespace MCAdmin
 
         static object randomSaver = new object();
 
-        public static void tmAutosave_Tick(object sender, EventArgs e)
+        public static void tmAutosave_Tick(object x)
         {
             new Thread(new ThreadStart(AutosaveThread)).Start();
         }
@@ -1205,18 +1206,11 @@ namespace MCAdmin
         {
             while(!frmMainReady) Thread.Sleep(100);
 
-            tmAutosave = new System.Windows.Forms.Timer();
-            tmAutosave.Enabled = false;
-            tmAutosave.Tick += new EventHandler(tmAutosave_Tick);
+            tmAutosave = new System.Threading.Timer(new TimerCallback(tmAutosave_Tick));
 
-            tmBackup = new System.Windows.Forms.Timer();
-            tmBackup.Enabled = false;
-            tmBackup.Tick += new EventHandler(tmBackup_Tick);
+            tmBackup = new System.Threading.Timer(new TimerCallback(tmBackup_Tick));
 
-            tmCheckUpdate = new System.Windows.Forms.Timer();
-            tmCheckUpdate.Interval = 3600000;
-            tmCheckUpdate.Enabled = true;
-            tmCheckUpdate.Tick += new EventHandler(tmUpdate_Tick);
+            tmCheckUpdate = new System.Threading.Timer(new TimerCallback(tmUpdate_Tick));
 
 
             if (!File.Exists("server.properties") || !File.ReadAllText("server.properties").Contains("server-port-real"))

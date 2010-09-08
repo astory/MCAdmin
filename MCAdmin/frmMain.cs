@@ -163,7 +163,7 @@ namespace MCAdmin
 
         private void btnBackup_Click(object sender, EventArgs e)
         {
-            Program.tmBackup_Tick(null,null);
+            Program.tmBackup_Tick(null);
         }
 
         private void btnRunCmd_Click(object sender, EventArgs e)

@@ -142,11 +142,11 @@ namespace MCAdmin
                                         response = "Server KILL'd!";
                                         break;
                                     case "save":
-                                        Program.tmAutosave_Tick(null, null);
+                                        Program.tmAutosave_Tick(null);
                                         response = "Save initiated!";
                                         break;
                                     case "backup":
-                                        Program.tmBackup_Tick(null, null);
+                                        Program.tmBackup_Tick(null);
                                         response = "Backup initiated!";
                                         break;
                                     case "status":
