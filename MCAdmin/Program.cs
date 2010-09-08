@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 namespace MCAdmin
 {
     static class Program
-    {
+    {   
         public static frmMain mainFrm;
         public static bool dontUpdate = false;
         public static bool dontUpdateMCAdmin = false;
@@ -22,6 +22,8 @@ namespace MCAdmin
         public static bool consoleOnly = false;
 
         #region Header variables
+        public static bool isStuffInProgress = false;
+
         static bool isOutOfDate_MCA = false;
         static bool isOutOfDate_JAR = false;
 
@@ -475,7 +477,7 @@ namespace MCAdmin
             }
             else
             {
-                isUpdate = __DownloadURLToAndDiff("http://internal.mcadmin.eu/MCAdmin.exe", "mcadmin.exe.new", "mcadmin.exe");
+                isUpdate = __DownloadURLToAndDiff("http://internal.mcadmin.eu/MCAdmin.exe", "MCAdmin.exe.new", "MCAdmin.exe");
                 if (!isUpdate)
                 {
                     if (isOutOfDate_MCA) { AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false); }
@@ -597,6 +599,22 @@ namespace MCAdmin
         #endregion
 
         #region Server properties management
+        public static string GetServerPropertyText()
+        {
+            string contentX = "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\n";
+            foreach (KeyValuePair<string, string> kvp in serverProperties)
+            {
+                contentX += kvp.Key + "=" + kvp.Value + "\r\n";
+            }
+            return contentX;
+        }
+        public static void SaveServerProperties()
+        {
+            if (serverProperties.Count > 0)
+            {
+                File.WriteAllText("server.properties", GetServerPropertyText());
+            }
+        }
         public static Dictionary<string, string> serverProperties = new Dictionary<string, string>();
         public static void ReloadServerProperties()
         {
@@ -760,12 +778,7 @@ namespace MCAdmin
             {
                 SendServerCommand("save-off");
                 Thread.Sleep(1000);
-                string file = "backups/" + GetServerProperty("level-name", "world") + "-" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Minute.ToString().PadLeft(2, '0') + ".zip";
-                ZipFile zip = ZipFile.Create(file);
-                zip.BeginUpdate();
-                __AddRecursive(zip, GetServerProperty("level-name", "world"));
-                zip.CommitUpdate();
-                zip.Close();
+                new FastZip().CreateZip("backups/" + GetServerProperty("level-name", "world") + "_" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Minute.ToString().PadLeft(2, '0') + ".zip", GetServerProperty("level-name", "world"), true, "");
                 SendServerCommand("save-on");
                 Thread.Sleep(100);
             }
@@ -894,12 +907,15 @@ namespace MCAdmin
 
             if (!consoleOnly)
             {
-                mainFrm.btnStop.Enabled = false;
-                mainFrm.btnRestart.Enabled = false;
-                mainFrm.btnKillServer.Enabled = false;
+                mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
+                {
+                    mainFrm.btnStop.Enabled = false;
+                    mainFrm.btnRestart.Enabled = false;
+                    mainFrm.btnKillServer.Enabled = false;
 
-                mainFrm.lblStatus.ForeColor = Color.Orange;
-                mainFrm.lblStatus.Text = "Killing...";
+                    mainFrm.lblStatus.ForeColor = Color.Orange;
+                    mainFrm.lblStatus.Text = "Killing...";
+                }));
             }
 
             if (minecraftServer != null && !minecraftServer.HasExited)
@@ -926,10 +942,13 @@ namespace MCAdmin
 
             if (!consoleOnly)
             {
-                mainFrm.btnStart.Enabled = true;
-                mainFrm.btnProperties.Enabled = true;
-                mainFrm.lblStatus.ForeColor = Color.Red;
-                mainFrm.lblStatus.Text = "Stopped";
+                mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
+                {
+                    mainFrm.btnStart.Enabled = true;
+                    mainFrm.btnProperties.Enabled = true;
+                    mainFrm.lblStatus.ForeColor = Color.Red;
+                    mainFrm.lblStatus.Text = "Stopped";
+                }));
             }
         }
 
@@ -953,8 +972,11 @@ namespace MCAdmin
             string memAssigned = GetServerProperty("assigned-memory", "1024");
             if (!consoleOnly)
             {
-                mainFrm.btnStart.Enabled = false;
-                mainFrm.btnProperties.Enabled = false;
+                mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
+                {
+                    mainFrm.btnStart.Enabled = false;
+                    mainFrm.btnProperties.Enabled = false;
+                }));
             }
 
             ProcessStartInfo psi = new ProcessStartInfo(javaExecutable, "-Xmx" + memAssigned + "M -Xms" + memAssigned + "M -jar minecraft_server.jar nogui");
@@ -979,12 +1001,15 @@ namespace MCAdmin
 
             if (!consoleOnly)
             {
-                mainFrm.btnStop.Enabled = true;
-                mainFrm.btnRestart.Enabled = true;
-                mainFrm.btnKillServer.Enabled = true;
+                mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
+                {
+                    mainFrm.btnStop.Enabled = true;
+                    mainFrm.btnRestart.Enabled = true;
+                    mainFrm.btnKillServer.Enabled = true;
 
-                mainFrm.lblStatus.ForeColor = Color.Yellow;
-                mainFrm.lblStatus.Text = "Starting...";
+                    mainFrm.lblStatus.ForeColor = Color.Yellow;
+                    mainFrm.lblStatus.Text = "Starting...";
+                }));
             }
         }
 
@@ -993,11 +1018,14 @@ namespace MCAdmin
             AddRTLine(Color.Black, "Server stopped!\r\n", true);
             if (!consoleOnly)
             {
-                mainFrm.lblStatus.ForeColor = Color.Orange;
-                mainFrm.lblStatus.Text = "Stopping...";
-                mainFrm.btnStop.Enabled = false;
-                mainFrm.btnRestart.Enabled = false;
-                mainFrm.btnKillServer.Enabled = false;
+                mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
+                {
+                    mainFrm.lblStatus.ForeColor = Color.Orange;
+                    mainFrm.lblStatus.Text = "Stopping...";
+                    mainFrm.btnStop.Enabled = false;
+                    mainFrm.btnRestart.Enabled = false;
+                    mainFrm.btnKillServer.Enabled = false;
+                }));
             }
             isOutOfDate_JAR = false;
             if (minecraftServer != null && !minecraftServer.HasExited)
@@ -1025,10 +1053,13 @@ namespace MCAdmin
             serverFullyOnline = false;
             if (!consoleOnly)
             {
-                mainFrm.btnStart.Enabled = true;
-                mainFrm.btnProperties.Enabled = true;
-                mainFrm.lblStatus.ForeColor = Color.Red;
-                mainFrm.lblStatus.Text = "Stopped";
+                mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
+                {
+                    mainFrm.btnStart.Enabled = true;
+                    mainFrm.btnProperties.Enabled = true;
+                    mainFrm.lblStatus.ForeColor = Color.Red;
+                    mainFrm.lblStatus.Text = "Stopped";
+                }));
             }
         }
         #endregion
@@ -1267,6 +1298,9 @@ namespace MCAdmin
 
             commands.Add("time", new TimeCommand());
             commands.Add("servertime", new ServertimeCommand());
+
+            commands.Add("backup", new BackupCommand());
+            commands.Add("changelevel", new ChangelevelCommand());
             //commands.Add("freeze", new FreezeCommand(this));
             #endregion
 

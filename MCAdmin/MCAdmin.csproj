@@ -73,8 +73,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\BackupCommand.cs" />
     <Compile Include="Commands\BanCommand.cs" />
     <Compile Include="Commands\BanipCommand.cs" />
+    <Compile Include="Commands\ChangelevelCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CompassCommand.cs" />
     <Compile Include="Commands\FreezeCommand.cs" />

@@ -617,7 +617,7 @@ namespace MCAdmin
 
         public virtual void SendChat(string msg, bool doprefix, char colorCode)
         {
-            SendPacket(0x03, Util.StoA("§" + colorCode + ((doprefix) ? "[MCAdmin] " : "") + msg));
+            SendPacket(0x03, Util.StoA("§" + colorCode + ((doprefix) ? "[MCAdmin]§f " : "") + msg));
         }
 
         Thread pingThread;
