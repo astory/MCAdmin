@@ -101,6 +101,12 @@
     <Compile Include="frmKitShare.Designer.cs">
       <DependentUpon>frmKitShare.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMasterServerConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMasterServerConfig.Designer.cs">
+      <DependentUpon>frmMasterServerConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmRankConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,8 @@
     <Compile Include="frmRanks.Designer.cs">
       <DependentUpon>frmRanks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Heartbeats\MasterBans.cs" />
+    <Compile Include="Heartbeats\MasterList.cs" />
     <Compile Include="Kit.cs" />
     <Compile Include="MCFirewall.cs" />
     <Compile Include="Player.cs" />
@@ -179,6 +187,9 @@
     <Compile Include="Utils\EndianBitConverter.cs" />
     <EmbeddedResource Include="frmKitShare.resx">
       <DependentUpon>frmKitShare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMasterServerConfig.resx">
+      <DependentUpon>frmMasterServerConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRankConfig.resx">
       <DependentUpon>frmRankConfig.cs</DependentUpon>

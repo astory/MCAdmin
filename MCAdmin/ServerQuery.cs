@@ -66,7 +66,7 @@ namespace MCAdmin
             #endregion
 
             #region INFO REPLY
-            string sname = "MCAdmin Server";
+            string sname = Program.GetServerProperty("server-name", "MCAdmin Server");
             string smap = Program.GetServerProperty("level-name", "world");
 
             string sdir = "mcadmin";

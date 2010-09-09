@@ -186,5 +186,15 @@ namespace MCAdmin
             }
             catch { }
         }
+
+        private void btnMasterServerConfig_Click(object sender, EventArgs e)
+        {
+            new frmMasterServerConfig().ShowDialog(this);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            Program.tmAutosave_Tick(null);
+        }
     }
 }

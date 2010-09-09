@@ -34,6 +34,7 @@ namespace MCAdmin
             tbPort.Text = Program.GetServerProperty("server-port-real","25565");
             tbLevel.Text = Program.GetServerProperty("level-name","world");
             tbIntPort.Text = Program.GetServerProperty("server-port", "25566");
+            tbSrvName.Text = Program.GetServerProperty("server-name", "MCAdmin Server");
             numMemory.Value = Convert.ToInt32(Program.GetServerProperty("assigned-memory", "1024"));
             numAS.Value = Convert.ToInt32(Program.GetServerProperty("autosave-delay", "60"));
             numBackup.Value = Convert.ToInt32(Program.GetServerProperty("backup-delay", "120"));
@@ -91,7 +92,7 @@ namespace MCAdmin
 
         public void RefreshPreview()
         {
-            tbPreview.Text = "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=" + cbIP.Text + "\r\nserver-port=" + tbIntPort.Text + "\r\nserver-port-real=" + tbPort.Text + "\r\nlevel-name=" + tbLevel.Text + "\r\nassigned-memory=" + numMemory.Value.ToString() + "\r\nonline-mode=" + ((cbOnline.Checked) ? "true" : "false") + "\r\nmax-players="+numMaxPlayers.Value.ToString()+"\r\ndefault-rank=" + cbDefRank.Text + "\r\nautosave-delay=" + numAS.Value.ToString() + "\r\nbackup-delay=" + numBackup.Value.ToString() + "\r\nrcon-enable="+((cbRCONEnable.Checked) ? "true" : "false")+"\r\nrcon-port="+tbRCONPort.Text+"\r\nrcon-pass="+tbRCONPass.Text;
+            tbPreview.Text = "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=" + cbIP.Text + "\r\nserver-port=" + tbIntPort.Text + "\r\nserver-port-real=" + tbPort.Text + "\r\nlevel-name=" + tbLevel.Text + "\r\nassigned-memory=" + numMemory.Value.ToString() + "\r\nonline-mode=" + ((cbOnline.Checked) ? "true" : "false") + "\r\nmax-players="+numMaxPlayers.Value.ToString()+"\r\ndefault-rank=" + cbDefRank.Text + "\r\nautosave-delay=" + numAS.Value.ToString() + "\r\nbackup-delay=" + numBackup.Value.ToString() + "\r\nrcon-enable="+((cbRCONEnable.Checked) ? "true" : "false")+"\r\nrcon-port="+tbRCONPort.Text+"\r\nrcon-pass="+tbRCONPass.Text+"\r\nserver-name="+tbSrvName.Text;
         }
 
         private void ShowToolTipError(Control ctrl, string title, string text)
@@ -106,7 +107,7 @@ namespace MCAdmin
         {
             if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
-                ShowToolTipError(tbIntPort, "Invalid input", "Port may only consist of numbers");
+                ShowToolTipError((Control)sender, "Invalid input", "Port may only consist of numbers");
                 e.Handled = true;
             }
         }

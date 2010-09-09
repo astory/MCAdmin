@@ -62,6 +62,8 @@
             this.btnAutoDetect = new System.Windows.Forms.Button();
             this.numMaxPlayers = new System.Windows.Forms.NumericUpDown();
             this.lblMaxPlayers = new System.Windows.Forms.Label();
+            this.lblSrvName = new System.Windows.Forms.Label();
+            this.tbSrvName = new System.Windows.Forms.TextBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -104,7 +106,7 @@
             // 
             this.tbLevel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbLevel.Location = new System.Drawing.Point(86, 58);
+            this.tbLevel.Location = new System.Drawing.Point(86, 84);
             this.tbLevel.Name = "tbLevel";
             this.tbLevel.Size = new System.Drawing.Size(361, 20);
             this.tbLevel.TabIndex = 4;
@@ -113,7 +115,7 @@
             // lblLevel
             // 
             this.lblLevel.AutoSize = true;
-            this.lblLevel.Location = new System.Drawing.Point(9, 61);
+            this.lblLevel.Location = new System.Drawing.Point(9, 87);
             this.lblLevel.Name = "lblLevel";
             this.lblLevel.Size = new System.Drawing.Size(65, 13);
             this.lblLevel.TabIndex = 5;
@@ -125,11 +127,12 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPreview.BackColor = System.Drawing.Color.White;
-            this.tbPreview.Location = new System.Drawing.Point(9, 263);
+            this.tbPreview.Location = new System.Drawing.Point(9, 289);
             this.tbPreview.Multiline = true;
             this.tbPreview.Name = "tbPreview";
             this.tbPreview.ReadOnly = true;
-            this.tbPreview.Size = new System.Drawing.Size(435, 180);
+            this.tbPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbPreview.Size = new System.Drawing.Size(435, 154);
             this.tbPreview.TabIndex = 6;
             // 
             // splitContainer1
@@ -215,7 +218,7 @@
             // lblXmxXms
             // 
             this.lblXmxXms.AutoSize = true;
-            this.lblXmxXms.Location = new System.Drawing.Point(6, 139);
+            this.lblXmxXms.Location = new System.Drawing.Point(6, 165);
             this.lblXmxXms.Name = "lblXmxXms";
             this.lblXmxXms.Size = new System.Drawing.Size(128, 13);
             this.lblXmxXms.TabIndex = 13;
@@ -223,7 +226,7 @@
             // 
             // numMemory
             // 
-            this.numMemory.Location = new System.Drawing.Point(140, 137);
+            this.numMemory.Location = new System.Drawing.Point(140, 163);
             this.numMemory.Maximum = new decimal(new int[] {
             4096,
             0,
@@ -247,7 +250,7 @@
             // lblRecMem
             // 
             this.lblRecMem.AutoSize = true;
-            this.lblRecMem.Location = new System.Drawing.Point(236, 139);
+            this.lblRecMem.Location = new System.Drawing.Point(236, 165);
             this.lblRecMem.Name = "lblRecMem";
             this.lblRecMem.Size = new System.Drawing.Size(153, 13);
             this.lblRecMem.TabIndex = 15;
@@ -256,7 +259,7 @@
             // cbOnline
             // 
             this.cbOnline.AutoSize = true;
-            this.cbOnline.Location = new System.Drawing.Point(6, 215);
+            this.cbOnline.Location = new System.Drawing.Point(6, 241);
             this.cbOnline.Name = "cbOnline";
             this.cbOnline.Size = new System.Drawing.Size(158, 17);
             this.cbOnline.TabIndex = 16;
@@ -267,7 +270,7 @@
             // lblDefRank
             // 
             this.lblDefRank.AutoSize = true;
-            this.lblDefRank.Location = new System.Drawing.Point(9, 87);
+            this.lblDefRank.Location = new System.Drawing.Point(9, 113);
             this.lblDefRank.Name = "lblDefRank";
             this.lblDefRank.Size = new System.Drawing.Size(68, 13);
             this.lblDefRank.TabIndex = 17;
@@ -279,7 +282,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.cbDefRank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDefRank.FormattingEnabled = true;
-            this.cbDefRank.Location = new System.Drawing.Point(86, 84);
+            this.cbDefRank.Location = new System.Drawing.Point(86, 110);
             this.cbDefRank.Name = "cbDefRank";
             this.cbDefRank.Size = new System.Drawing.Size(361, 21);
             this.cbDefRank.TabIndex = 18;
@@ -288,7 +291,7 @@
             // lblASPrefix
             // 
             this.lblASPrefix.AutoSize = true;
-            this.lblASPrefix.Location = new System.Drawing.Point(6, 165);
+            this.lblASPrefix.Location = new System.Drawing.Point(6, 191);
             this.lblASPrefix.Name = "lblASPrefix";
             this.lblASPrefix.Size = new System.Drawing.Size(81, 13);
             this.lblASPrefix.TabIndex = 19;
@@ -296,7 +299,7 @@
             // 
             // numAS
             // 
-            this.numAS.Location = new System.Drawing.Point(93, 163);
+            this.numAS.Location = new System.Drawing.Point(93, 189);
             this.numAS.Maximum = new decimal(new int[] {
             4096,
             0,
@@ -310,7 +313,7 @@
             // lblASSuffix
             // 
             this.lblASSuffix.AutoSize = true;
-            this.lblASSuffix.Location = new System.Drawing.Point(186, 165);
+            this.lblASSuffix.Location = new System.Drawing.Point(186, 191);
             this.lblASSuffix.Name = "lblASSuffix";
             this.lblASSuffix.Size = new System.Drawing.Size(109, 13);
             this.lblASSuffix.TabIndex = 21;
@@ -319,7 +322,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(186, 191);
+            this.label1.Location = new System.Drawing.Point(186, 217);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 24;
@@ -327,7 +330,7 @@
             // 
             // numBackup
             // 
-            this.numBackup.Location = new System.Drawing.Point(93, 189);
+            this.numBackup.Location = new System.Drawing.Point(93, 215);
             this.numBackup.Maximum = new decimal(new int[] {
             4096,
             0,
@@ -341,7 +344,7 @@
             // lblBackup
             // 
             this.lblBackup.AutoSize = true;
-            this.lblBackup.Location = new System.Drawing.Point(6, 191);
+            this.lblBackup.Location = new System.Drawing.Point(6, 217);
             this.lblBackup.Name = "lblBackup";
             this.lblBackup.Size = new System.Drawing.Size(73, 13);
             this.lblBackup.TabIndex = 22;
@@ -350,7 +353,7 @@
             // cbRCONEnable
             // 
             this.cbRCONEnable.AutoSize = true;
-            this.cbRCONEnable.Location = new System.Drawing.Point(6, 240);
+            this.cbRCONEnable.Location = new System.Drawing.Point(6, 266);
             this.cbRCONEnable.Name = "cbRCONEnable";
             this.cbRCONEnable.Size = new System.Drawing.Size(131, 17);
             this.cbRCONEnable.TabIndex = 25;
@@ -360,7 +363,7 @@
             // 
             // tbRCONPort
             // 
-            this.tbRCONPort.Location = new System.Drawing.Point(178, 237);
+            this.tbRCONPort.Location = new System.Drawing.Point(178, 263);
             this.tbRCONPort.Name = "tbRCONPort";
             this.tbRCONPort.Size = new System.Drawing.Size(80, 20);
             this.tbRCONPort.TabIndex = 26;
@@ -370,7 +373,7 @@
             // lblRCONPort
             // 
             this.lblRCONPort.AutoSize = true;
-            this.lblRCONPort.Location = new System.Drawing.Point(143, 241);
+            this.lblRCONPort.Location = new System.Drawing.Point(143, 267);
             this.lblRCONPort.Name = "lblRCONPort";
             this.lblRCONPort.Size = new System.Drawing.Size(29, 13);
             this.lblRCONPort.TabIndex = 27;
@@ -380,7 +383,7 @@
             // 
             this.tbRCONPass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbRCONPass.Location = new System.Drawing.Point(303, 237);
+            this.tbRCONPass.Location = new System.Drawing.Point(303, 263);
             this.tbRCONPass.Name = "tbRCONPass";
             this.tbRCONPass.Size = new System.Drawing.Size(138, 20);
             this.tbRCONPass.TabIndex = 28;
@@ -389,7 +392,7 @@
             // lblRCONPass
             // 
             this.lblRCONPass.AutoSize = true;
-            this.lblRCONPass.Location = new System.Drawing.Point(264, 240);
+            this.lblRCONPass.Location = new System.Drawing.Point(264, 266);
             this.lblRCONPass.Name = "lblRCONPass";
             this.lblRCONPass.Size = new System.Drawing.Size(33, 13);
             this.lblRCONPass.TabIndex = 29;
@@ -407,7 +410,7 @@
             // 
             // numMaxPlayers
             // 
-            this.numMaxPlayers.Location = new System.Drawing.Point(86, 111);
+            this.numMaxPlayers.Location = new System.Drawing.Point(86, 137);
             this.numMaxPlayers.Maximum = new decimal(new int[] {
             255,
             0,
@@ -431,17 +434,38 @@
             // lblMaxPlayers
             // 
             this.lblMaxPlayers.AutoSize = true;
-            this.lblMaxPlayers.Location = new System.Drawing.Point(6, 113);
+            this.lblMaxPlayers.Location = new System.Drawing.Point(6, 139);
             this.lblMaxPlayers.Name = "lblMaxPlayers";
             this.lblMaxPlayers.Size = new System.Drawing.Size(70, 13);
             this.lblMaxPlayers.TabIndex = 31;
             this.lblMaxPlayers.Text = "Max. Players:";
+            // 
+            // lblSrvName
+            // 
+            this.lblSrvName.AutoSize = true;
+            this.lblSrvName.Location = new System.Drawing.Point(9, 61);
+            this.lblSrvName.Name = "lblSrvName";
+            this.lblSrvName.Size = new System.Drawing.Size(70, 13);
+            this.lblSrvName.TabIndex = 34;
+            this.lblSrvName.Text = "Server name:";
+            // 
+            // tbSrvName
+            // 
+            this.tbSrvName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSrvName.Location = new System.Drawing.Point(86, 58);
+            this.tbSrvName.Name = "tbSrvName";
+            this.tbSrvName.Size = new System.Drawing.Size(361, 20);
+            this.tbSrvName.TabIndex = 33;
+            this.tbSrvName.TextChanged += new System.EventHandler(this.event_RefreshPreview);
             // 
             // frmProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 496);
+            this.Controls.Add(this.lblSrvName);
+            this.Controls.Add(this.tbSrvName);
             this.Controls.Add(this.numMaxPlayers);
             this.Controls.Add(this.lblMaxPlayers);
             this.Controls.Add(this.btnAutoDetect);
@@ -524,5 +548,7 @@
         private System.Windows.Forms.Button btnAutoDetect;
         private System.Windows.Forms.NumericUpDown numMaxPlayers;
         private System.Windows.Forms.Label lblMaxPlayers;
+        private System.Windows.Forms.Label lblSrvName;
+        private System.Windows.Forms.TextBox tbSrvName;
     }
 }

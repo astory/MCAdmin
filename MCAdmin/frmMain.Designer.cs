@@ -53,6 +53,7 @@
             this.lbPlayers = new System.Windows.Forms.ListBox();
             this.tmUpdateStuff = new System.Windows.Forms.Timer(this.components);
             this.btnRunCmd = new System.Windows.Forms.Button();
+            this.btnMasterServerConfig = new System.Windows.Forms.Button();
             this.gbStatus.SuspendLayout();
             this.gbManage.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +68,7 @@
             this.rtServer.Location = new System.Drawing.Point(12, 92);
             this.rtServer.Name = "rtServer";
             this.rtServer.ReadOnly = true;
-            this.rtServer.Size = new System.Drawing.Size(639, 349);
+            this.rtServer.Size = new System.Drawing.Size(741, 349);
             this.rtServer.TabIndex = 0;
             this.rtServer.Text = "";
             this.rtServer.WordWrap = false;
@@ -153,6 +154,7 @@
             // 
             this.gbManage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbManage.Controls.Add(this.btnMasterServerConfig);
             this.gbManage.Controls.Add(this.btnManageRanks);
             this.gbManage.Controls.Add(this.btnSave);
             this.gbManage.Controls.Add(this.btnBackup);
@@ -165,16 +167,16 @@
             this.gbManage.Controls.Add(this.btnProperties);
             this.gbManage.Location = new System.Drawing.Point(263, 12);
             this.gbManage.Name = "gbManage";
-            this.gbManage.Size = new System.Drawing.Size(566, 74);
+            this.gbManage.Size = new System.Drawing.Size(668, 74);
             this.gbManage.TabIndex = 2;
             this.gbManage.TabStop = false;
             this.gbManage.Text = "Server management";
             // 
             // btnManageRanks
             // 
-            this.btnManageRanks.Location = new System.Drawing.Point(98, 43);
+            this.btnManageRanks.Location = new System.Drawing.Point(116, 43);
             this.btnManageRanks.Name = "btnManageRanks";
-            this.btnManageRanks.Size = new System.Drawing.Size(86, 25);
+            this.btnManageRanks.Size = new System.Drawing.Size(104, 25);
             this.btnManageRanks.TabIndex = 9;
             this.btnManageRanks.Text = "Rank config";
             this.btnManageRanks.UseVisualStyleBackColor = true;
@@ -182,18 +184,19 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(282, 43);
+            this.btnSave.Location = new System.Drawing.Point(336, 43);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(86, 25);
+            this.btnSave.Size = new System.Drawing.Size(104, 25);
             this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Save NOW";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnBackup
             // 
-            this.btnBackup.Location = new System.Drawing.Point(282, 19);
+            this.btnBackup.Location = new System.Drawing.Point(336, 19);
             this.btnBackup.Name = "btnBackup";
-            this.btnBackup.Size = new System.Drawing.Size(86, 25);
+            this.btnBackup.Size = new System.Drawing.Size(104, 25);
             this.btnBackup.TabIndex = 7;
             this.btnBackup.Text = "Backup NOW";
             this.btnBackup.UseVisualStyleBackColor = true;
@@ -201,9 +204,9 @@
             // 
             // btnCmdLevels
             // 
-            this.btnCmdLevels.Location = new System.Drawing.Point(466, 19);
+            this.btnCmdLevels.Location = new System.Drawing.Point(446, 43);
             this.btnCmdLevels.Name = "btnCmdLevels";
-            this.btnCmdLevels.Size = new System.Drawing.Size(86, 49);
+            this.btnCmdLevels.Size = new System.Drawing.Size(104, 25);
             this.btnCmdLevels.TabIndex = 6;
             this.btnCmdLevels.Text = "Command levels";
             this.btnCmdLevels.UseVisualStyleBackColor = true;
@@ -211,9 +214,9 @@
             // 
             // btnLimitedBlocks
             // 
-            this.btnLimitedBlocks.Location = new System.Drawing.Point(374, 19);
+            this.btnLimitedBlocks.Location = new System.Drawing.Point(446, 19);
             this.btnLimitedBlocks.Name = "btnLimitedBlocks";
-            this.btnLimitedBlocks.Size = new System.Drawing.Size(86, 49);
+            this.btnLimitedBlocks.Size = new System.Drawing.Size(104, 25);
             this.btnLimitedBlocks.TabIndex = 5;
             this.btnLimitedBlocks.Text = "Limited blocks";
             this.btnLimitedBlocks.UseVisualStyleBackColor = true;
@@ -223,7 +226,7 @@
             // 
             this.btnIPBans.Location = new System.Drawing.Point(6, 43);
             this.btnIPBans.Name = "btnIPBans";
-            this.btnIPBans.Size = new System.Drawing.Size(86, 25);
+            this.btnIPBans.Size = new System.Drawing.Size(104, 25);
             this.btnIPBans.TabIndex = 4;
             this.btnIPBans.Text = "IP bans";
             this.btnIPBans.UseVisualStyleBackColor = true;
@@ -231,9 +234,9 @@
             // 
             // btnReloadKits
             // 
-            this.btnReloadKits.Location = new System.Drawing.Point(190, 43);
+            this.btnReloadKits.Location = new System.Drawing.Point(226, 43);
             this.btnReloadKits.Name = "btnReloadKits";
-            this.btnReloadKits.Size = new System.Drawing.Size(86, 25);
+            this.btnReloadKits.Size = new System.Drawing.Size(104, 25);
             this.btnReloadKits.TabIndex = 3;
             this.btnReloadKits.Text = "Reload kits";
             this.btnReloadKits.UseVisualStyleBackColor = true;
@@ -241,9 +244,9 @@
             // 
             // btnManageKits
             // 
-            this.btnManageKits.Location = new System.Drawing.Point(190, 19);
+            this.btnManageKits.Location = new System.Drawing.Point(226, 19);
             this.btnManageKits.Name = "btnManageKits";
-            this.btnManageKits.Size = new System.Drawing.Size(86, 25);
+            this.btnManageKits.Size = new System.Drawing.Size(104, 25);
             this.btnManageKits.TabIndex = 2;
             this.btnManageKits.Text = "Edit kits";
             this.btnManageKits.UseVisualStyleBackColor = true;
@@ -251,9 +254,9 @@
             // 
             // btnRankConfig
             // 
-            this.btnRankConfig.Location = new System.Drawing.Point(98, 19);
+            this.btnRankConfig.Location = new System.Drawing.Point(116, 19);
             this.btnRankConfig.Name = "btnRankConfig";
-            this.btnRankConfig.Size = new System.Drawing.Size(86, 25);
+            this.btnRankConfig.Size = new System.Drawing.Size(104, 25);
             this.btnRankConfig.TabIndex = 1;
             this.btnRankConfig.Text = "Player ranks";
             this.btnRankConfig.UseVisualStyleBackColor = true;
@@ -263,7 +266,7 @@
             // 
             this.btnProperties.Location = new System.Drawing.Point(6, 19);
             this.btnProperties.Name = "btnProperties";
-            this.btnProperties.Size = new System.Drawing.Size(86, 25);
+            this.btnProperties.Size = new System.Drawing.Size(104, 25);
             this.btnProperties.TabIndex = 0;
             this.btnProperties.Text = "Server props.";
             this.btnProperties.UseVisualStyleBackColor = true;
@@ -275,7 +278,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tbCommand.Location = new System.Drawing.Point(12, 450);
             this.tbCommand.Name = "tbCommand";
-            this.tbCommand.Size = new System.Drawing.Size(742, 20);
+            this.tbCommand.Size = new System.Drawing.Size(844, 20);
             this.tbCommand.TabIndex = 3;
             this.tbCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCommand_KeyDown);
             // 
@@ -285,7 +288,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lbPlayers.FormattingEnabled = true;
             this.lbPlayers.IntegralHeight = false;
-            this.lbPlayers.Location = new System.Drawing.Point(657, 92);
+            this.lbPlayers.Location = new System.Drawing.Point(759, 92);
             this.lbPlayers.Name = "lbPlayers";
             this.lbPlayers.Size = new System.Drawing.Size(172, 349);
             this.lbPlayers.TabIndex = 4;
@@ -299,7 +302,7 @@
             // btnRunCmd
             // 
             this.btnRunCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRunCmd.Location = new System.Drawing.Point(760, 450);
+            this.btnRunCmd.Location = new System.Drawing.Point(862, 450);
             this.btnRunCmd.Name = "btnRunCmd";
             this.btnRunCmd.Size = new System.Drawing.Size(69, 20);
             this.btnRunCmd.TabIndex = 10;
@@ -307,11 +310,21 @@
             this.btnRunCmd.UseVisualStyleBackColor = true;
             this.btnRunCmd.Click += new System.EventHandler(this.btnRunCmd_Click);
             // 
+            // btnMasterServerConfig
+            // 
+            this.btnMasterServerConfig.Location = new System.Drawing.Point(556, 19);
+            this.btnMasterServerConfig.Name = "btnMasterServerConfig";
+            this.btnMasterServerConfig.Size = new System.Drawing.Size(104, 49);
+            this.btnMasterServerConfig.TabIndex = 10;
+            this.btnMasterServerConfig.Text = "Master server config";
+            this.btnMasterServerConfig.UseVisualStyleBackColor = true;
+            this.btnMasterServerConfig.Click += new System.EventHandler(this.btnMasterServerConfig_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(841, 479);
+            this.ClientSize = new System.Drawing.Size(943, 479);
             this.Controls.Add(this.btnRunCmd);
             this.Controls.Add(this.lbPlayers);
             this.Controls.Add(this.tbCommand);
@@ -357,6 +370,7 @@
         private System.Windows.Forms.Button btnManageRanks;
         private System.Windows.Forms.Button btnRunCmd;
         public System.Windows.Forms.Button btnProperties;
+        private System.Windows.Forms.Button btnMasterServerConfig;
     }
 }
 

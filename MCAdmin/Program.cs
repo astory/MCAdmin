@@ -48,6 +48,7 @@ namespace MCAdmin
         public static string javaExecutable;
 
         public static bool serverFullyOnline;
+        public static string serverStatus = "Stopped";
 
         public static MCFirewall minecraftFirewall;
 
@@ -56,7 +57,66 @@ namespace MCAdmin
         static System.Threading.Timer tmBackup;
         static System.Threading.Timer tmAutosave;
         static System.Threading.Timer tmCheckUpdate;
-        
+
+        static System.Threading.Timer tmHeartbeat;
+        #endregion
+
+        #region MasterList management
+        public static bool mlistEnable = true;
+        public static bool mlistSendNames = true;
+        public static bool mlistSendRanks = true;
+
+        public static bool mbansEnable = true;
+        public static bool mbansSubmit = true;
+
+        public static void LoadMasterConfig()
+        {
+            if (File.Exists("master-config.txt"))
+            {
+                string[] lines = File.ReadAllLines("master-config.txt");
+                char[] splitter = new char[] { '=' };
+                foreach (string line in lines)
+                {
+                    string[] infos = line.ToLower().Split(splitter, 2);
+                    if (infos.Length != 2) continue;
+                    bool val = (infos[1] == "true");
+                    switch (infos[0].ToLower())
+                    {
+                        case "list-enable":
+                            mlistEnable = val;
+                            break;
+                        case "list-send-names":
+                            mlistSendNames = val;
+                            break;
+                        case "list-send-ranks":
+                            mlistSendRanks = val;
+                            break;
+                        case "bans-enable":
+                            mbansEnable = val;
+                            break;
+                        case "bans-submit":
+                            mbansSubmit = val;
+                            break;
+                    }
+                }
+            }
+        }
+
+        public static void SaveMasterConfig()
+        {
+            FileStream fs = File.OpenWrite("master-config.txt");
+            StreamWriter sw = new StreamWriter(fs);
+
+            sw.WriteLine("list-enable=" + mlistEnable.ToString());
+            sw.WriteLine("list-send-names=" + mlistSendNames.ToString());
+            sw.WriteLine("list-send-ranks=" + mlistSendRanks.ToString());
+
+            sw.WriteLine("bans-enable=" + mbansEnable.ToString());
+            sw.WriteLine("bans-submit=" + mbansSubmit.ToString());
+
+            sw.Close();
+            fs.Close();
+        }
         #endregion
 
         #region Ranks level management
@@ -400,7 +460,7 @@ namespace MCAdmin
                 HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(url);
                 hwr.Proxy = null;
                 HttpWebResponse hwres = (HttpWebResponse)hwr.GetResponse();
-                if (hwres.StatusCode != HttpStatusCode.OK) return false;
+                if (hwres.StatusCode != HttpStatusCode.OK) { hwres.Close(); return false; }
                 Stream str = hwres.GetResponseStream();
                 if (File.Exists(file)) File.Delete(file);
                 FileStream serverjar = File.OpenWrite(file);
@@ -628,7 +688,7 @@ namespace MCAdmin
                     int pos = line.IndexOf('=');
                     if (pos <= 0) continue;
                     string name = line.Substring(0, pos).Trim().ToLower();
-                    string value = line.Substring(pos + 1).Trim().ToLower();
+                    string value = line.Substring(pos + 1).Trim();
                     if (serverProperties.ContainsKey(name)) serverProperties[name] = value;
                     else serverProperties.Add(name, value);
                 }
@@ -713,6 +773,8 @@ namespace MCAdmin
                         if (msg == "Done! For help, type \"help\" or \"?\"")
                         {
                             minecraftFirewall = new MCFirewall();
+
+                            serverStatus = "Running";
                             if (!consoleOnly)
                             {
                                 mainFrm.lblStatus.Invoke(new MethodInvoker(delegate()
@@ -895,6 +957,7 @@ namespace MCAdmin
             serverFullyOnline = false;
             isOutOfDate_JAR = false;
 
+            serverStatus = "Killing...";
             if (!consoleOnly)
             {
                 mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
@@ -930,6 +993,7 @@ namespace MCAdmin
                 minecraftServer.WaitForExit();
             }
 
+            serverStatus = "Stopped";
             if (!consoleOnly)
             {
                 mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
@@ -989,6 +1053,7 @@ namespace MCAdmin
             minecraftServer.BeginOutputReadLine();
             minecraftServer.BeginErrorReadLine();
 
+            serverStatus = "Starting...";
             if (!consoleOnly)
             {
                 mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
@@ -1006,8 +1071,10 @@ namespace MCAdmin
         public static void StopServer()
         {
             AddRTLine(Color.Black, "Server stopped!\r\n", true);
+
+            serverStatus = "Stopping...";
             if (!consoleOnly)
-            {
+            {    
                 mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
                 {
                     mainFrm.lblStatus.ForeColor = Color.Orange;
@@ -1041,8 +1108,10 @@ namespace MCAdmin
                 minecraftServer.WaitForExit();
             }
             serverFullyOnline = false;
+
+            serverStatus = "Stopped";
             if (!consoleOnly)
-            {
+            {    
                 mainFrm.btnStop.Invoke(new MethodInvoker(delegate()
                 {
                     mainFrm.btnStart.Enabled = true;
@@ -1078,6 +1147,14 @@ namespace MCAdmin
         public static void SaveBannedIPs()
         {
             File.WriteAllLines("banned-ips-real.txt", bannedIPs.ToArray());
+        }
+        #endregion
+
+        #region Master Heartbeats
+        static void tmHeartbeat_Tick(object x)
+        {
+            if (mlistEnable) new Thread(new ThreadStart(Heartbeats.MasterList.Pump)).Start();
+            if (mbansEnable) new Thread(new ThreadStart(Heartbeats.MasterBans.Pump)).Start();
         }
         #endregion
 
@@ -1231,6 +1308,8 @@ namespace MCAdmin
             tmBackup = new System.Threading.Timer(new TimerCallback(tmBackup_Tick));
             tmCheckUpdate = new System.Threading.Timer(new TimerCallback(tmUpdate_Tick));
 
+            tmHeartbeat = new System.Threading.Timer(new TimerCallback(tmHeartbeat_Tick));
+
             if (!File.Exists("server.properties") || !File.ReadAllText("server.properties").Contains("server-port-real"))
             {
                 File.WriteAllText("server.properties", "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=0.0.0.0\r\nserver-port=25566\r\nserver-port-real=25565\r\nlevel-name=world\r\nonline-mode=true\r\ndefault-rank=guest\r\nautosave-delay=60\r\nbackup-delay=120");
@@ -1254,6 +1333,8 @@ namespace MCAdmin
             }
 
             AddRTLine(Color.Green, "Found JAVA JRE at: " + javaExecutable + "\r\n", false);
+
+            LoadMasterConfig();
 
             LoadRankLevels();
 
@@ -1497,6 +1578,7 @@ namespace MCAdmin
 
             //CheckUpdate(true);
             tmCheckUpdate.Change(0, 60 * 60 * 1000);
+            tmHeartbeat.Change(0, 5 * 1000);
         }
     }
 }
