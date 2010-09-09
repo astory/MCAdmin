@@ -764,7 +764,11 @@ namespace MCAdmin
             {
                 SendServerCommand("save-off");
                 Thread.Sleep(1000);
-                new FastZip().CreateZip("backups/" + GetServerProperty("level-name", "world") + "_" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Minute.ToString().PadLeft(2, '0') + ".zip", GetServerProperty("level-name", "world"), true, "");
+                try
+                {
+                    new FastZip().CreateZip("backups/" + GetServerProperty("level-name", "world") + "_" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + "-" + DateTime.Now.Minute.ToString().PadLeft(2, '0') + ".zip", GetServerProperty("level-name", "world"), true, "");
+                }
+                catch { }
                 SendServerCommand("save-on");
                 Thread.Sleep(100);
             }
