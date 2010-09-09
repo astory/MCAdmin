@@ -1496,7 +1496,7 @@ namespace MCAdmin
             catch { }
 
             //CheckUpdate(true);
-            tmCheckUpdate.Change(0, 60000);
+            tmCheckUpdate.Change(0, 60 * 60 * 1000);
         }
     }
 }
