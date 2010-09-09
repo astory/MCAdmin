@@ -69,8 +69,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BackupCommand.cs" />
@@ -175,6 +175,7 @@
     </Compile>
     <Compile Include="Heartbeats\MasterBans.cs" />
     <Compile Include="Heartbeats\MasterList.cs" />
+    <Compile Include="Heartbeats\PostRequest.cs" />
     <Compile Include="Kit.cs" />
     <Compile Include="MCFirewall.cs" />
     <Compile Include="Player.cs" />

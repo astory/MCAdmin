@@ -39,6 +39,7 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.gbManage = new System.Windows.Forms.GroupBox();
+            this.btnMasterServerConfig = new System.Windows.Forms.Button();
             this.btnManageRanks = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnBackup = new System.Windows.Forms.Button();
@@ -53,7 +54,6 @@
             this.lbPlayers = new System.Windows.Forms.ListBox();
             this.tmUpdateStuff = new System.Windows.Forms.Timer(this.components);
             this.btnRunCmd = new System.Windows.Forms.Button();
-            this.btnMasterServerConfig = new System.Windows.Forms.Button();
             this.gbStatus.SuspendLayout();
             this.gbManage.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +68,7 @@
             this.rtServer.Location = new System.Drawing.Point(12, 92);
             this.rtServer.Name = "rtServer";
             this.rtServer.ReadOnly = true;
-            this.rtServer.Size = new System.Drawing.Size(741, 349);
+            this.rtServer.Size = new System.Drawing.Size(741, 476);
             this.rtServer.TabIndex = 0;
             this.rtServer.Text = "";
             this.rtServer.WordWrap = false;
@@ -171,6 +171,16 @@
             this.gbManage.TabIndex = 2;
             this.gbManage.TabStop = false;
             this.gbManage.Text = "Server management";
+            // 
+            // btnMasterServerConfig
+            // 
+            this.btnMasterServerConfig.Location = new System.Drawing.Point(556, 19);
+            this.btnMasterServerConfig.Name = "btnMasterServerConfig";
+            this.btnMasterServerConfig.Size = new System.Drawing.Size(104, 49);
+            this.btnMasterServerConfig.TabIndex = 10;
+            this.btnMasterServerConfig.Text = "Master server config";
+            this.btnMasterServerConfig.UseVisualStyleBackColor = true;
+            this.btnMasterServerConfig.Click += new System.EventHandler(this.btnMasterServerConfig_Click);
             // 
             // btnManageRanks
             // 
@@ -276,7 +286,7 @@
             // 
             this.tbCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCommand.Location = new System.Drawing.Point(12, 450);
+            this.tbCommand.Location = new System.Drawing.Point(12, 577);
             this.tbCommand.Name = "tbCommand";
             this.tbCommand.Size = new System.Drawing.Size(844, 20);
             this.tbCommand.TabIndex = 3;
@@ -290,7 +300,7 @@
             this.lbPlayers.IntegralHeight = false;
             this.lbPlayers.Location = new System.Drawing.Point(759, 92);
             this.lbPlayers.Name = "lbPlayers";
-            this.lbPlayers.Size = new System.Drawing.Size(172, 349);
+            this.lbPlayers.Size = new System.Drawing.Size(172, 476);
             this.lbPlayers.TabIndex = 4;
             // 
             // tmUpdateStuff
@@ -302,7 +312,7 @@
             // btnRunCmd
             // 
             this.btnRunCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRunCmd.Location = new System.Drawing.Point(862, 450);
+            this.btnRunCmd.Location = new System.Drawing.Point(862, 577);
             this.btnRunCmd.Name = "btnRunCmd";
             this.btnRunCmd.Size = new System.Drawing.Size(69, 20);
             this.btnRunCmd.TabIndex = 10;
@@ -310,21 +320,11 @@
             this.btnRunCmd.UseVisualStyleBackColor = true;
             this.btnRunCmd.Click += new System.EventHandler(this.btnRunCmd_Click);
             // 
-            // btnMasterServerConfig
-            // 
-            this.btnMasterServerConfig.Location = new System.Drawing.Point(556, 19);
-            this.btnMasterServerConfig.Name = "btnMasterServerConfig";
-            this.btnMasterServerConfig.Size = new System.Drawing.Size(104, 49);
-            this.btnMasterServerConfig.TabIndex = 10;
-            this.btnMasterServerConfig.Text = "Master server config";
-            this.btnMasterServerConfig.UseVisualStyleBackColor = true;
-            this.btnMasterServerConfig.Click += new System.EventHandler(this.btnMasterServerConfig_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(943, 479);
+            this.ClientSize = new System.Drawing.Size(943, 606);
             this.Controls.Add(this.btnRunCmd);
             this.Controls.Add(this.lbPlayers);
             this.Controls.Add(this.tbCommand);

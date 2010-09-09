@@ -14,6 +14,8 @@ namespace MCAdmin
         frmMain parent;
         int selecteditem = -1;
 
+        List<string> toUnban = new List<string>();
+
         public frmRanks()
         {
             InitializeComponent();
@@ -56,6 +58,7 @@ namespace MCAdmin
             if (selecteditem >= 0) 
             {
                 ListViewItem lvi = lvRanks.Items[selecteditem];
+                if (lvi.SubItems[1].Text == "banned") toUnban.Add(cbPlayer.Text.ToLower());
                 lvi.SubItems[0].Text = cbPlayer.Text.ToLower();
                 lvi.SubItems[1].Text = cbRank.Text.ToLower();
             }
@@ -98,6 +101,12 @@ namespace MCAdmin
                 Program.plyranks.Add(lvi.SubItems[0].Text, lvi.SubItems[1].Text);
             }
             Program.SaveRanks();
+
+            foreach (string str in toUnban)
+            {
+                Heartbeats.MasterBans.UnbanUser(str, "CONSOLE");
+            }
+
             this.Close();
         }
     }

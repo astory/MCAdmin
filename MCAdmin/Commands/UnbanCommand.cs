@@ -11,6 +11,7 @@ namespace MCAdmin.Commands
         {
             if (Program.PlyGetRank(cmdparts[1]) != "banned") { ply.SendDirectedMessage("Player is not banned!"); return; }
             Program.PlySetRank(cmdparts[1], Program.GetServerProperty("default-rank","guest"));
+            Heartbeats.MasterBans.UnbanUser(cmdparts[1], ply.name);
             Program.SendServerMessage(ply.name + " unbanned " + cmdparts[1]);
         }
 

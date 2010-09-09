@@ -59,9 +59,13 @@ namespace MCAdmin
         static System.Threading.Timer tmCheckUpdate;
 
         static System.Threading.Timer tmHeartbeat;
+
+        public static string externalIP = "1.3.3.7";
         #endregion
 
         #region MasterList management
+        public static List<string> masterBanList = new List<string>();
+
         public static bool mlistEnable = true;
         public static bool mlistSendNames = true;
         public static bool mlistSendRanks = true;
@@ -1151,8 +1155,27 @@ namespace MCAdmin
         #endregion
 
         #region Master Heartbeats
+        static void GetExternalIP()
+        {
+            try
+            {
+                HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create("http://internal.mcadmin.eu/getip.php");
+                hwr.Proxy = null;
+                HttpWebResponse hwres = (HttpWebResponse)hwr.GetResponse();
+                if (hwres.StatusCode != HttpStatusCode.OK) { hwres.Close(); externalIP = ""; }
+                Stream str = hwres.GetResponseStream();
+                StreamReader sr = new StreamReader(str);
+                externalIP = sr.ReadToEnd();
+                sr.Close();
+                str.Close();
+                hwres.Close();
+            }
+            catch { externalIP = ""; }
+        }
+
         static void tmHeartbeat_Tick(object x)
         {
+            GetExternalIP();
             if (mlistEnable) new Thread(new ThreadStart(Heartbeats.MasterList.Pump)).Start();
             if (mbansEnable) new Thread(new ThreadStart(Heartbeats.MasterBans.Pump)).Start();
         }
