@@ -1601,7 +1601,7 @@ namespace MCAdmin
 
             //CheckUpdate(true);
             tmCheckUpdate.Change(0, 60 * 60 * 1000);
-            tmHeartbeat.Change(0, 5 * 1000);
+            tmHeartbeat.Change(0, 60 * 1000);
         }
     }
 }
