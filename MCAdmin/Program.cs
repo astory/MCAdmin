@@ -641,8 +641,7 @@ namespace MCAdmin
             }
             else
             {
-                delay *= 60 * 1000;
-                tmAutosave.Change(delay, delay);
+                tmAutosave.Change(0, delay * 60 * 1000);
             }
 
             delay = Convert.ToInt32(GetServerProperty("backup-delay", "120"));
@@ -652,8 +651,7 @@ namespace MCAdmin
             }
             else
             {
-                delay *= 60 * 1000;
-                tmBackup.Change(delay, delay);
+                tmBackup.Change(0, delay * 60 * 1000);
             }
 
             logToAddr.Clear();
@@ -757,18 +755,6 @@ namespace MCAdmin
             if ((!worldIsDirty) && (minecraftFirewall == null || minecraftFirewall.players.Count <= 0)) return;
             if(minecraftFirewall != null && minecraftFirewall.players.Count > 0) worldIsDirty = false;
             new Thread(new ThreadStart(BackupThread)).Start();
-        }
-
-        private static void __AddRecursive(ZipFile zip, string folder)
-        {
-            foreach (string file in Directory.GetFiles(folder))
-            {
-                zip.Add(file);
-            }
-            foreach (string file in Directory.GetDirectories(folder))
-            {
-                __AddRecursive(zip, file);
-            }
         }
 
         static void BackupThread()
@@ -1238,11 +1224,8 @@ namespace MCAdmin
             while(!frmMainReady) Thread.Sleep(100);
 
             tmAutosave = new System.Threading.Timer(new TimerCallback(tmAutosave_Tick));
-
             tmBackup = new System.Threading.Timer(new TimerCallback(tmBackup_Tick));
-
             tmCheckUpdate = new System.Threading.Timer(new TimerCallback(tmUpdate_Tick));
-
 
             if (!File.Exists("server.properties") || !File.ReadAllText("server.properties").Contains("server-port-real"))
             {
@@ -1508,8 +1491,8 @@ namespace MCAdmin
             }
             catch { }
 
-            CheckUpdate(true);
-
+            //CheckUpdate(true);
+            tmCheckUpdate.Change(0, 60000);
         }
     }
 }
