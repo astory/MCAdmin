@@ -9,7 +9,7 @@ namespace MCAdmin.Commands
     {
         public override void Run(Player ply, string[] cmdparts)
         {
-            //if (ply.GetLevel() <= Program.PlyGetLevel(cmdparts[1])) { ply.SendPermissionDenied(); return; }
+            if (ply.GetLevel() <= Program.PlyGetLevel(cmdparts[1])) { ply.SendPermissionDenied(); return; }
 
             string reasonstr = ""; string reason = "";
             if (cmdparts.Length > 2)
