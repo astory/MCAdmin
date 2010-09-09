@@ -20,6 +20,12 @@ namespace MCAdmin.Heartbeats
             {
                 if(ban.Length > 0) Program.masterBanList.Add(ban.ToLower());
             }
+
+            try
+            {
+                Program.minecraftFirewall.EnforceBans();
+            }
+            catch { }
         }
 
         struct BanStruct

@@ -81,7 +81,7 @@ namespace MCAdmin
             Player[] plys = players.ToArray();
             foreach (Player ply in plys)
             {
-                if (Program.bannedIPs.Contains(ply.ip)) ply.Disconnect("You're banned!");
+                if (Program.bannedIPs.Contains(ply.ip) || ply.GetRank() == "banned" || (Program.mbansEnable && Program.masterBanList.Contains(ply.name.ToLower()))) ply.Disconnect("You're banned!");
             }
         }
 
