@@ -24,9 +24,13 @@ namespace MCAdmin.Heartbeats
                 if (!setValidator)
                 {
                     setValidator = true;
-                    ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(ValidateRemoteCertificate);
+                    ServicePointManager.ServerCertificateValidationCallback += new System.Net.Security.RemoteCertificateValidationCallback(ValidateRemoteCertificate);
                 }
+            }
+            catch { }
 
+            try
+            {
                 byte[] data = System.Text.Encoding.ASCII.GetBytes(datastr);
                 HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(uri);
                 hwr.Proxy = null;
