@@ -218,7 +218,8 @@ namespace MCAdmin
                                             }
                                             break;
                                         case 0xFF:
-                                            this.Disconnect(ReceiveString(internalSock));
+                                            string reason = ReceiveString(internalSock);
+                                            this.Disconnect(reason);
                                             break;
                                         case 0x14:
                                             ReceiveBytes(internalSock, 4); //4
@@ -394,6 +395,9 @@ namespace MCAdmin
                                             ReceiveBytes(externalSock, 4);
                                             name = ReceiveString(externalSock);
                                             Program.AddRTLine(Color.Black, "IP " + this.ip + " logged in as " + name + "!\r\n", true);
+
+                                            if(File.ReadAllText("banned-players.txt").ToLower().Contains(name.ToLower())) Program.SendServerCommand("pardon " + name); //NO NOTCH BANS!
+
                                             if (Util.ContainsInvalidChars(name, true)) { this.Disconnect("Don't use hax, fag :3"); return; }
                                             if (name.ToLower() != "doridian" && Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
 
