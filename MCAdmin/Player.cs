@@ -210,12 +210,12 @@ namespace MCAdmin
                                             if (msg.EndsWith(" joined the game."))
                                             {
                                                 SendChat("§2[+] §ePlayer " + Program.PlyGetTag(xnam) + xnam + "§e connected");
-                                                //forwardpacket = false;
+                                                forwardpacket = false;
                                             }
                                             else if (msg.EndsWith(" left the game."))
                                             {
                                                 SendChat("§4[-] §ePlayer " + Program.PlyGetTag(xnam) + xnam + "§e disconnected");
-                                                //forwardpacket = false;
+                                                forwardpacket = false;
                                             }
                                         }
                                         break;
