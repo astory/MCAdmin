@@ -509,6 +509,25 @@ namespace MCAdmin
                                             }
                                         }
                                         break;
+
+                                    case 20:
+                                        ReceiveBytes(externalSock, 4); //4
+                                        ReceiveString(externalSock);
+                                        ReceiveBytes(externalSock, 16); //4 + 4 + 4 + 1 + 1 + 2
+                                        break;
+                                    case 51:
+                                        ReceiveBytes(externalSock, 13); //4 + 2 + 4 + 1 + 1 + 1
+                                        ReceiveBytes(externalSock, Util.AtoI(ReceiveBytes(externalSock, 4), 0));
+                                        break;
+                                    case 52:
+                                        ReceiveBytes(externalSock, 8); //4 + 4
+                                        ReceiveBytes(externalSock, (Util.AtoN(ReceiveBytes(externalSock, 2), 0) & 0xFFFF) * 4);
+                                        break;
+                                    case 59:
+                                        ReceiveBytes(externalSock, 10); //4 + 2 + 4
+                                        ReceiveBytes(externalSock, (Util.AtoN(ReceiveBytes(externalSock, 2), 0) & 0xFFFF));
+                                        break;
+
                                     case 5:
                                         ReceiveBytes(externalSock, 4); //4
                                         short imax = Util.AtoN(ReceiveBytes(externalSock, 2), 0); short x = 0;
