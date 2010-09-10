@@ -319,19 +319,10 @@ namespace MCAdmin
             this.Disconnect();
         }
 
-        FileStream fs;
         Thread externalThread;
         void ExternalThread()
         {
             byte[] dat = new byte[256];
-
-            try
-            {
-                fs.Close();
-            }
-            catch { }
-
-            fs = File.Open("test.txt", FileMode.Create, FileAccess.Write, FileShare.Read);
 
             while (internalSock.Connected && externalSock.Connected)
             {
@@ -344,10 +335,6 @@ namespace MCAdmin
                         lock (internalSock)
                         {
                             byte packet_id = dat[0];
-
-
-                            fs.WriteByte(packet_id);
-                            //Program.AddRTLine(Color.Red, "CS: " + ((int)packet_id) + "\r\n", false);
 
                             fwcache_ext = new byte[1];
                             fwcache_ext[0] = packet_id;
