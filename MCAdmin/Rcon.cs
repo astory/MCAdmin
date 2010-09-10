@@ -314,11 +314,21 @@ namespace MCAdmin
             {
                 conn = m_conn;
                 int size = ReadInt();
+                if (size > 4096) size = 4096;
                 byte[] thispacket = ReadBytes(size);
                 request_id = ReadInt(thispacket);
-                type = (RconPacketType)ReadInt(thispacket);
-                string1 = ReadString(thispacket);
-                string2 = ReadString(thispacket);
+                size = ReadInt(thispacket);
+                type = (RconPacketType)size;
+                if (size != 2 && size != 3)
+                {
+                    string1 = "";
+                    string2 = "";
+                }
+                else
+                {
+                    string1 = ReadString(thispacket);
+                    string2 = ReadString(thispacket);
+                }
             }
 
             #region Internal stuff
