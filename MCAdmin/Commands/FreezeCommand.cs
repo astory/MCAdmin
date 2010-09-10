@@ -7,7 +7,7 @@ namespace MCAdmin.Commands
 {
     class FreezeCommand : Command
     {
-        public override void Run(Player ply, string[] cmdparts)
+        /*public override void Run(Player ply, string[] cmdparts)
         {
             Player ply2 = Program.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 == null) { ply.SendDirectedMessage("Sorry, target could not be found!"); return; }
@@ -26,6 +26,6 @@ namespace MCAdmin.Commands
         public override int reqlevel { get { return 4; } }
 
         public override string Help { get { return "Freezes the player in position, or unfreezes."; } }
-        public override string Usage { get { return "<playername> <on/off>"; } }
+        public override string Usage { get { return "<playername> <on/off>"; } }*/
     }
 }

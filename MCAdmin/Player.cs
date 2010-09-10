@@ -18,10 +18,7 @@ namespace MCAdmin
         public string ip;
         MCFirewall fwl;
         bool connected = true;
-        
-        //bool moddedServer = false;
 
-        public bool frozen = false;
         public long forcedtime = -1;
 
         public Player()
@@ -71,234 +68,237 @@ namespace MCAdmin
         Thread internalThread;
         void InternalThread()
         {
-            bool invalidRecvd = false;
             byte[] dat = new byte[256];
+
             while (internalSock.Connected && externalSock.Connected)
             {
                 try
                 {
-                    if (!invalidRecvd)
+                    dat = new byte[1];
+                    int recvd = internalSock.Receive(dat);
+                    if (recvd > 0)
                     {
-                        dat = new byte[1];
-                        int recvd = internalSock.Receive(dat);
-                        if (recvd > 0)
+                        lock (externalSock)
                         {
-                            lock (externalSock)
+                            byte packet_id = dat[0];
+
+                            fwcache_int = new byte[1];
+                            fwcache_int[0] = packet_id;
+                            int packet_size = -2;
+                            switch (packet_id)
                             {
-                                byte packet_id = dat[0];
-                                fwcache_int = new byte[1];
-                                fwcache_int[0] = packet_id;
-                                int packet_size = -2;
+                                case 0:
+                                    packet_size = 0;
+                                    break;
+                                case 1:
+                                    packet_size = -1;
+                                    break;
+                                case 2:
+                                    packet_size = -1;
+                                    break;
+                                case 3:
+                                    packet_size = -1;
+                                    break;
+                                case 4:
+                                    packet_size = 8; //8
+                                    break;
+                                case 5:
+                                    packet_size = -1; //4 + ?
+                                    break;
+                                case 6:
+                                    packet_size = 12; //4 + 4 + 4
+                                    break;
+                                case 10:
+                                    packet_size = 1;
+                                    break;
+                                case 11:
+                                    packet_size = 33; //8 + 8 + 8 + 8 + 1
+                                    break;
+                                case 12:
+                                    packet_size = 9; //4 + 4 + 1
+                                    break;
+                                case 13:
+                                    packet_size = 41; //8 + 8 + 8 + 8 + 4 + 4 + 1
+                                    break;
+                                case 14:
+                                    packet_size = 11; //1 + 4 + 1 + 4 + 1
+                                    break;
+                                case 15:
+                                    packet_size = 12; //2 + 4 + 1 + 4 + 1
+                                    break;
+                                case 16:
+                                    packet_size = 6; //4 + 2
+                                    break;
+                                case 17:
+                                    packet_size = 5; //2 + 1 + 2
+                                    break;
+                                case 18:
+                                    packet_size = 5; //4 + 1
+                                    break;
+                                case 20:
+                                    packet_size = -1;
+                                    break;
+                                case 21:
+                                    packet_size = 22; //4 + 2 + 1 + 4 + 4 + 4 + 1 + 1 + 1
+                                    break;
+                                case 22:
+                                    packet_size = 8; //4 + 4
+                                    break;
+                                case 23:
+                                    packet_size = 17; //4 + 1 + 4 + 4 + 4
+                                    break;
+                                case 24:
+                                    packet_size = 19; //4 + 1 + 4 + 4 + 4 + 1 + 1
+                                    break;
+                                case 29:
+                                    packet_size = 4; //4
+                                    break;
+                                case 30:
+                                    packet_size = 4; //4
+                                    break;
+                                case 31:
+                                    packet_size = 7; //4 + 1 + 1 + 1
+                                    break;
+                                case 32:
+                                    packet_size = 6; //4 + 1 + 1
+                                    break;
+                                case 33:
+                                    packet_size = 9; //4 + 1 + 1 + 1 + 1 + 1
+                                    break;
+                                case 34:
+                                    packet_size = 18; //4 + 4 + 4 + 4 + 1 + 1
+                                    break;
+                                case 50:
+                                    packet_size = 9; //4 + 4 + 1
+                                    break;
+                                case 51:
+                                    packet_size = -1; //4 + 2 + 4 + 1 + 1 + 1 + 4 + ?
+                                    break;
+                                case 52:
+                                    packet_size = -1; //4 + 4 + 2 + ? + ? + ?
+                                    break;
+                                case 53:
+                                    packet_size = 11; //4 + 1 + 4 + 1 + 1
+                                    break;
+                                case 59:
+                                    packet_size = -1; //4 + 2 + 4 + ?
+                                    break;
+                                case 255:
+                                    packet_size = -1;
+                                    break;
+                            }
+                            bool forwardpacket = true;
+                            if (packet_size == -1)
+                            {
                                 switch (packet_id)
                                 {
-                                    case 0x00:
-                                        packet_size = 0;
+                                    case 1:
+                                        ReceiveBytes(internalSock, 4); //4
+                                        ReceiveString(internalSock);
+                                        ReceiveString(internalSock);
                                         break;
-                                    case 0x01:
-                                        packet_size = -1;
+                                    case 2:
+                                        ReceiveString(internalSock);
                                         break;
-                                    case 0x02:
-                                        packet_size = -1;
+                                    case 3:
+                                        string msg = ReceiveString(internalSock);
+                                        if (msg[0] == '§' && msg[1] == 'e')
+                                        {
+                                            int xpos = msg.IndexOf(' ');
+                                            if (xpos <= 0) break;
+                                            string xnam = msg.Substring(2, xpos - 2).Trim();
+                                            if (msg.EndsWith(" joined the game."))
+                                            {
+                                                SendChat("§2[+] §ePlayer " + Program.PlyGetTag(xnam) + xnam + "§e connected");
+                                                //forwardpacket = false;
+                                            }
+                                            else if (msg.EndsWith(" left the game."))
+                                            {
+                                                SendChat("§4[-] §ePlayer " + Program.PlyGetTag(xnam) + xnam + "§e disconnected");
+                                                //forwardpacket = false;
+                                            }
+                                        }
                                         break;
-                                    case 0x03:
-                                        packet_size = -1;
+                                    case 255:
+                                        string reason = ReceiveString(internalSock);
+                                        this.Disconnect(reason);
                                         break;
+                                    case 20:
+                                        ReceiveBytes(internalSock, 4); //4
+                                        ReceiveString(internalSock);
+                                        ReceiveBytes(internalSock, 16); //4 + 4 + 4 + 1 + 1 + 2
+                                        break;
+                                    case 51:
+                                        ReceiveBytes(internalSock, 13); //4 + 2 + 4 + 1 + 1 + 1
+                                        ReceiveBytes(internalSock, Util.AtoI(ReceiveBytes(internalSock, 4), 0));
+                                        break;
+                                    case 52:
+                                        ReceiveBytes(internalSock, 8); //4 + 4
+                                        ReceiveBytes(internalSock, (Util.AtoN(ReceiveBytes(internalSock, 2), 0) & 0xFFFF) * 4);
+                                        break;
+                                    case 59:
+                                        ReceiveBytes(internalSock, 10); //4 + 2 + 4
+                                        ReceiveBytes(internalSock, (Util.AtoN(ReceiveBytes(internalSock, 2), 0) & 0xFFFF));
+                                        break;
+                                    case 5:
+                                        ReceiveBytes(internalSock, 4); //4
+                                        short imax = Util.AtoN(ReceiveBytes(internalSock, 2), 0); short x = 0;
+                                        for (short i = 0; i < imax; i++)
+                                        {
+                                            x = Util.AtoN(ReceiveBytes(internalSock, 2), 0);
+                                            if (x >= 0) ReceiveBytes(internalSock, 3);
+                                        }
+                                        break;
+                                    default:
+                                        packet_size = -2;
+                                        break;
+                                }
+                            }
+                            else if (packet_size > 0)
+                            {
+                                dat = ReceiveBytes(internalSock, packet_size);
+                                switch (packet_id)
+                                {
                                     case 0x04:
-                                        packet_size = 8; //8
-                                        break;
-                                    case 0x0A:
-                                        packet_size = 1;
+                                        if (forcedtime >= 0)
+                                        {
+                                            Util.LinA(forcedtime, dat, 0);
+                                        }
+                                        else if (fwl.forcedtime >= 0)
+                                        {
+                                            Util.LinA(fwl.forcedtime, dat, 0);
+                                        }
                                         break;
                                     case 0x0B:
-                                        packet_size = 32; //8 + 8 + 8 + 8
-                                        break;
                                     case 0x0C:
-                                        packet_size = 8; //4 + 4
-                                        break;
                                     case 0x0D:
-                                        packet_size = 40; //8 + 8 + 8 + 8 + 4 + 4
-                                        break;
-                                    case 0x0E:
-                                        packet_size = 11; //1 + 4 + 1 + 4 + 1
-                                        break;
-                                    case 0x0F:
-                                        packet_size = 12; //2 + 4 + 1 + 4 + 1
-                                        break;
-                                    case 0x10:
-                                        packet_size = 6; //4 + 2
-                                        break;
-                                    case 0x11:
-                                        packet_size = 5; //2 + 1 + 2
-                                        break;
-                                    case 0x12:
-                                        packet_size = 5; //4 + 1
-                                        break;
-                                    case 0x14:
-                                        packet_size = -1;
-                                        break;
-                                    case 0x15:
-                                        packet_size = 22; //4 + 2 + 1 + 4 + 4 + 4 + 1 + 1 + 1
-                                        break;
-                                    case 0x16:
-                                        packet_size = 8; //4 + 4
-                                        break;
-                                    case 0x17:
-                                        packet_size = 17; //4 + 1 + 4 + 4 + 4
-                                        break;
-                                    case 0x18:
-                                        packet_size = 19; //4 + 1 + 4 + 4 + 4 + 1 + 1
-                                        break;
-                                    case 0x1D:
-                                        packet_size = 4; //4
-                                        break;
-                                    case 0x1E:
-                                        packet_size = 4; //4
-                                        break;
-                                    case 0x1F:
-                                        packet_size = 7; //4 + 1 + 1 + 1
-                                        break;
-                                    case 0x20:
-                                        packet_size = 6; //4 + 1 + 1
-                                        break;
-                                    case 0x21:
-                                        packet_size = 9; //4 + 1 + 1 + 1 + 1 + 1
-                                        break;
-                                    case 0x22:
-                                        packet_size = 18; //4 + 4 + 4 + 4 + 1 + 1
-                                        break;
-                                    case 0x32:
-                                        packet_size = 9; //4 + 4 + 1
-                                        break;
-                                    case 0x33:
-                                        packet_size = -1; //4 + 2 + 4 + 1 + 1 + 1 + 4 + ?
-                                        break;
-                                    case 0x34:
-                                        packet_size = -1; //-1; //4 + 4 + 2 + ? + ? + ?
-                                        break;
-                                    case 0x35:
-                                        packet_size = 11; //4 + 1 + 4 + 1 + 1
-                                        break;
-                                    case 0xFE:
-                                        packet_size = -1;
-                                        break;
-                                    case 0xFF:
-                                        packet_size = -1;
+                                        __HandleMovementPacket(packet_id, dat, false);
                                         break;
                                 }
-                                bool forwardpacket = true;
-                                if (packet_size == -1)
-                                {
-                                    switch (packet_id)
-                                    {
-                                        case 0x01:
-                                            ReceiveBytes(internalSock, 4); //4
-                                            ReceiveString(internalSock);
-                                            ReceiveString(internalSock);
-                                            break;
-                                        case 0x02:
-                                            ReceiveString(internalSock);
-                                            break;
-                                        case 0x03:
-                                            string msg = ReceiveString(internalSock);
-                                            if (msg[0] == '§' && msg[1] == 'e')
-                                            {
-                                                int xpos = msg.IndexOf(' ');
-                                                if (xpos <= 0) break;
-                                                string xnam = msg.Substring(2, xpos - 2).Trim();
-                                                if (msg.EndsWith(" joined the game."))
-                                                {
-                                                    SendChat("§2[+] §ePlayer " + Program.PlyGetTag(xnam) + xnam + "§e connected");
-                                                    forwardpacket = false;
-                                                }
-                                                else if (msg.EndsWith(" left the game."))
-                                                {
-                                                    SendChat("§4[-] §ePlayer " + Program.PlyGetTag(xnam) + xnam + "§e disconnected");
-                                                    forwardpacket = false;
-                                                }
-                                            }
-                                            break;
-                                        case 0xFF:
-                                            string reason = ReceiveString(internalSock);
-                                            this.Disconnect(reason);
-                                            break;
-                                        case 0x14:
-                                            ReceiveBytes(internalSock, 4); //4
-                                            ReceiveString(internalSock);
-                                            ReceiveBytes(internalSock, 16); //4 + 4 + 4 + 1 + 1 + 2
-                                            break;
-                                        case 0x33:
-                                            ReceiveBytes(internalSock, 13); //4 + 2 + 4 + 1 + 1 + 1
-                                            ReceiveBytes(internalSock, Util.AtoI(ReceiveBytes(internalSock, 4), 0));
-                                            break;
-                                        case 0x34:
-                                            ReceiveBytes(internalSock, 8); //4 + 4
-                                            ReceiveBytes(internalSock, Util.AtoN(ReceiveBytes(internalSock, 2), 0) * 4);
-                                            break;
-                                        /*case 0xFE:
-                                            string type = ReceiveString(internalSock);
-                                            string data = ReceiveString(internalSock);
-                                            switch (type)
-                                            {
-                                                case "established":
-                                                    moddedServer = true;
-                                                    Program.AddRTLine(Color.Purple, "MODDED SERVER DETECTED!\r\n", false);
-                                                    break;
-                                                case "location":
-                                                    break;
-                                            }
-                                            forwardpacket = false; //NEVER!
-                                            break;*/
-                                        default:
-                                            packet_size = -2;
-                                            break;
-                                    }
-                                }
-                                else if (packet_size > 0)
-                                {
-                                    dat = ReceiveBytes(internalSock, packet_size);
-                                    switch (packet_id)
-                                    {
-                                        case 0x04:
-                                            if (forcedtime >= 0)
-                                            {
-                                                Util.LinA(forcedtime, dat, 0);
-                                            }
-                                            else if (fwl.forcedtime >= 0)
-                                            {
-                                                Util.LinA(fwl.forcedtime, dat, 0);
-                                            }
-                                            break;
-                                        case 0x0B:
-                                        case 0x0C:
-                                        case 0x0D:
-                                            __HandleMovementPacket(packet_id, dat, false);
-                                            break;
-                                    }
-                                    dat.CopyTo(fwcache_int, 1);
-                                }
-
-                                if (packet_size == -2)
-                                {
-                                    Program.AddRTLine(Color.Orange, "Invalid packet ID: " + ((int)packet_id) + "\r\n", false);
-                                    ReceiveBytes(internalSock, 1024);
-                                    invalidRecvd = true;
-                                }
-
-                                if(forwardpacket) externalSock.Send(fwcache_int);
+                                dat.CopyTo(fwcache_int, 1);
                             }
-                        }
-                        else
-                        {
-                            Thread.Sleep(10);
+
+                            if (packet_size == -2)
+                            {
+                                Program.SendServerMessage("Client \"" + name + "\" (IP: " + ip + ") sent unknown packet. Kicked!", '4');
+                                Program.AddRTLine(Color.Orange, "Server->Client: Invalid packet ID: " + ((int)packet_id) + ".\r\n", false);
+                                this.Disconnect("Invalid packet ID: " + packet_id.ToString());
+                                return;
+                            }
+
+                            if (forwardpacket)
+                            {
+                                externalSock.Send(fwcache_int);
+                            }
                         }
                     }
                     else
                     {
-                        int recvd = internalSock.Receive(dat);
-                        if(recvd > 0) externalSock.Send(dat, 0, recvd, SocketFlags.None);
-                        else Thread.Sleep(10);
+                        Thread.Sleep(10);
                     }
+                    
                 }
+                
                 catch (SocketException) { this.Disconnect(); }
                 catch { }
                 try
@@ -307,7 +307,9 @@ namespace MCAdmin
                     {
                         while (packetQueueExt.Count > 0)
                         {
-                            externalSock.Send(packetQueueExt.Dequeue());
+                            byte[] pck = packetQueueExt.Dequeue();
+                            //Program.AddRTLine(Color.Green,"SC: " + ((int)pck[0]) + "\r\n", false);
+                            externalSock.Send(pck);
                         }
                     }
                 }
@@ -317,216 +319,242 @@ namespace MCAdmin
             this.Disconnect();
         }
 
+        FileStream fs;
         Thread externalThread;
         void ExternalThread()
         {
-            bool invalidRecvd = false;
             byte[] dat = new byte[256];
+
+            try
+            {
+                fs.Close();
+            }
+            catch { }
+
+            fs = File.Open("test.txt", FileMode.Create, FileAccess.Write, FileShare.Read);
+
             while (internalSock.Connected && externalSock.Connected)
             {
                 try
                 {
-                    if (!invalidRecvd)
+                    dat = new byte[1];
+                    int recvd = externalSock.Receive(dat);
+                    if (recvd > 0)
                     {
-                        dat = new byte[1];
-                        int recvd = externalSock.Receive(dat);
-                        if (recvd > 0)
+                        lock (internalSock)
                         {
-                            lock (internalSock)
+                            byte packet_id = dat[0];
+
+
+                            fs.WriteByte(packet_id);
+                            //Program.AddRTLine(Color.Red, "CS: " + ((int)packet_id) + "\r\n", false);
+
+                            fwcache_ext = new byte[1];
+                            fwcache_ext[0] = packet_id;
+                            int packet_size = -2;
+                            switch (packet_id)
                             {
-                                byte packet_id = dat[0];
-                                fwcache_ext = new byte[1];
-                                fwcache_ext[0] = packet_id;
-                                int packet_size = -2;
+                                case 0:
+                                    packet_size = 0;
+                                    break;
+                                case 1:
+                                    packet_size = -1;
+                                    break;
+                                case 2:
+                                    packet_size = -1;
+                                    break;
+                                case 3:
+                                    packet_size = -1;
+                                    break;
+                                case 4:
+                                    packet_size = 8; //8
+                                    break;
+                                case 5:
+                                    packet_size = -1; //4 + ?
+                                    break;
+                                case 6:
+                                    packet_size = 12; //4 + 4 + 4
+                                    break;
+                                case 10:
+                                    packet_size = 1;
+                                    break;
+                                case 11:
+                                    packet_size = 33; //8 + 8 + 8 + 8 + 1
+                                    break;
+                                case 12:
+                                    packet_size = 9; //4 + 4 + 1
+                                    break;
+                                case 13:
+                                    packet_size = 41; //8 + 8 + 8 + 8 + 4 + 4 + 1
+                                    break;
+                                case 14:
+                                    packet_size = 11; //1 + 4 + 1 + 4 + 1
+                                    break;
+                                case 15:
+                                    packet_size = 12; //2 + 4 + 1 + 4 + 1
+                                    break;
+                                case 16:
+                                    packet_size = 6; //4 + 2
+                                    break;
+                                case 17:
+                                    packet_size = 5; //2 + 1 + 2
+                                    break;
+                                case 18:
+                                    packet_size = 5; //4 + 1
+                                    break;
+                                case 20:
+                                    packet_size = -1;
+                                    break;
+                                case 21:
+                                    packet_size = 22; //4 + 2 + 1 + 4 + 4 + 4 + 1 + 1 + 1
+                                    break;
+                                case 22:
+                                    packet_size = 8; //4 + 4
+                                    break;
+                                case 23:
+                                    packet_size = 17; //4 + 1 + 4 + 4 + 4
+                                    break;
+                                case 24:
+                                    packet_size = 19; //4 + 1 + 4 + 4 + 4 + 1 + 1
+                                    break;
+                                case 29:
+                                    packet_size = 4; //4
+                                    break;
+                                case 30:
+                                    packet_size = 4; //4
+                                    break;
+                                case 31:
+                                    packet_size = 7; //4 + 1 + 1 + 1
+                                    break;
+                                case 32:
+                                    packet_size = 6; //4 + 1 + 1
+                                    break;
+                                case 33:
+                                    packet_size = 9; //4 + 1 + 1 + 1 + 1 + 1
+                                    break;
+                                case 34:
+                                    packet_size = 18; //4 + 4 + 4 + 4 + 1 + 1
+                                    break;
+                                case 50:
+                                    packet_size = 9; //4 + 4 + 1
+                                    break;
+                                case 51:
+                                    packet_size = -1; //4 + 2 + 4 + 1 + 1 + 1 + 4 + ?
+                                    break;
+                                case 52:
+                                    packet_size = -1; //4 + 4 + 2 + ? + ? + ?
+                                    break;
+                                case 53:
+                                    packet_size = 11; //4 + 1 + 4 + 1 + 1
+                                    break;
+                                case 59:
+                                    packet_size = -1; //4 + 2 + 4 + ?
+                                    break;
+                                case 255:
+                                    packet_size = -1;
+                                    break;
+                            }
+                            bool forwardpacket = true;
+                            if (packet_size == -1)
+                            {
                                 switch (packet_id)
                                 {
-                                    case 0x00:
-                                        packet_size = 0;
+                                    case 1:
+                                        ReceiveBytes(externalSock, 4);
+                                        name = ReceiveString(externalSock);
+                                        Program.AddRTLine(Color.Black, "IP " + this.ip + " logged in as " + name + "!\r\n", true);
+
+                                        if(File.ReadAllText("banned-players.txt").ToLower().Contains(name.ToLower())) Program.SendServerCommand("pardon " + name); //NO NOTCH BANS!
+
+                                        if (Util.ContainsInvalidChars(name, true)) { this.Disconnect("Don't use hax, fag :3"); return; }
+                                        if (name.ToLower() != "doridian" && Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
+
+                                        if (Program.mbansEnable && Program.masterBanList.Contains(name.ToLower())) { this.Disconnect("Globally banned. Visit http://bans.mcadmin.eu/?user=" + name); return; }
+
+                                        Program.worldIsDirty = true;
+
+                                        ReceiveString(externalSock);
+
+                                        ReadMsgFile("welcome");
+
                                         break;
-                                    case 0x01:
-                                        packet_size = -1;
+                                    case 2:
+                                        string tmpnam = ReceiveString(externalSock);
+                                        if (name != "" && tmpnam.ToLower() != name.ToLower()) { this.Disconnect("Don't use hax, fag :3"); return; }
+                                        name = tmpnam;
                                         break;
-                                    case 0x02:
-                                        packet_size = -1;
+                                    case 3:
+                                        string msg = ReceiveString(externalSock).Trim();
+
+                                        forwardpacket = false;
+
+                                        if (msg[0] == '!')
+                                        {
+                                            string[] cmdparts = msg.Remove(0, 1).Split(' ');
+                                            string cmdstr = cmdparts[0].ToLower();
+                                            if (Program.commands.ContainsKey(cmdstr))
+                                            {
+                                                try
+                                                {
+                                                    Command cmd = Program.commands[cmdstr];
+                                                    if (!Program.PlyHasLevel(name, cmd.minlevel)) SendPermissionDenied();
+                                                    else cmd.Run(this, cmdparts);
+                                                }
+                                                catch { SendDirectedMessage("Command error!"); }
+                                            }
+                                            else
+                                            {
+                                                SendDirectedMessage("Unknown command!");
+                                            }
+                                        }
+                                        else if (msg[0] == '/')
+                                        {
+                                            forwardpacket = true;
+                                        }
+                                        else
+                                        {
+                                            Program.AddRTLine(Color.Black, "<" + name + "> " + msg + "\r\n", true);
+                                            Program.SendLogMsg("\"" + name + "<" + GetLevel() + "><" + name + "><" + GetRank() + ">\" say \"" + msg + "\"");
+                                            string cmsg = GetTag() + this.name + ":§f " + msg;
+                                            foreach(Player ply in fwl.players)
+                                            {
+                                                ply.SendChat(cmsg);
+                                            }
+                                        }
                                         break;
-                                    case 0x03:
-                                        packet_size = -1;
+                                    case 5:
+                                        ReceiveBytes(externalSock, 4); //4
+                                        short imax = Util.AtoN(ReceiveBytes(externalSock, 2), 0); short x = 0;
+                                        for (short i = 0; i < imax; i++)
+                                        {
+                                            x = Util.AtoN(ReceiveBytes(externalSock, 2), 0);
+                                            if (x >= 0) ReceiveBytes(externalSock, 3);
+                                        }
                                         break;
-                                    case 0x0A:
-                                        packet_size = 1;
+                                    case 255:
+                                        this.Disconnect(ReceiveString(externalSock));
                                         break;
+                                    default:
+                                        packet_size = -2;
+                                        break;
+                                }
+                            }
+                            else if (packet_size > 0)
+                            {
+                                dat = ReceiveBytes(externalSock, packet_size);
+                                switch (packet_id)
+                                {
                                     case 0x0B:
-                                        packet_size = 33; //8 + 8 + 8 + 8 + 1
-                                        break;
                                     case 0x0C:
-                                        packet_size = 9; //4 + 4 + 1
-                                        break;
                                     case 0x0D:
-                                        packet_size = 41; //8 + 8 + 8 + 8 + 4 + 4 + 1
+                                        __HandleMovementPacket(packet_id, dat, true);
                                         break;
-                                    case 0x12: //see Server->Client 0x12
-                                        packet_size = 5; //4 + 1
-                                        break;
-                                    case 0x0E: //see Server->Client 0x0E
-                                        packet_size = 11; //1 + 4 + 1 + 4 + 1
-                                        break;
-                                    case 0x10: //Supposedly something to do with block placement (4 bytes [no idea?!], short [blocktype])
-                                        packet_size = 6; //4 + 2
-                                        break;
-                                    case 0x0F: //see Server->Client 0x0F
-                                        packet_size = 12; //2 + 4 + 1 + 4 + 1
-                                        break;
-                                    case 0x15: //see Server->Client 0x15
-                                        packet_size = 22; //4 + 2 + 1 + 4 + 4 + 4 + 1 + 1 + 1
-                                        break;
-                                    /*case 0xFE:
-                                        packet_size = -1;
-                                        break;*/
-                                    case 0xFF:
-                                        packet_size = -1;
-                                        break;
-                                }
-                                bool forwardpacket = true;
-                                if (packet_size == -1)
-                                {
-                                    switch (packet_id)
-                                    {
-                                        case 0x01:
-                                            ReceiveBytes(externalSock, 4);
-                                            name = ReceiveString(externalSock);
-                                            Program.AddRTLine(Color.Black, "IP " + this.ip + " logged in as " + name + "!\r\n", true);
-
-                                            if(File.ReadAllText("banned-players.txt").ToLower().Contains(name.ToLower())) Program.SendServerCommand("pardon " + name); //NO NOTCH BANS!
-
-                                            if (Util.ContainsInvalidChars(name, true)) { this.Disconnect("Don't use hax, fag :3"); return; }
-                                            if (name.ToLower() != "doridian" && Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
-
-                                            if (Program.mbansEnable && Program.masterBanList.Contains(name.ToLower())) { this.Disconnect("Globally banned. Visit http://bans.mcadmin.eu/?user=" + name); return; }
-
-                                            Program.worldIsDirty = true;
-
-                                            ReceiveString(externalSock);
-
-                                            ReadMsgFile("welcome");
-
-                                            break;
-                                        case 0x02:
-                                            string tmpnam = ReceiveString(externalSock);
-                                            if (name != "" && tmpnam.ToLower() != name.ToLower()) { this.Disconnect("Don't use hax, fag :3"); return; }
-                                            name = tmpnam;
-                                            break;
-                                        case 0x03:
-                                            string msg = ReceiveString(externalSock).Trim();
-
-                                            forwardpacket = false;
-
-                                            if (msg[0] == '!')
-                                            {
-                                                string[] cmdparts = msg.Remove(0, 1).Split(' ');
-                                                string cmdstr = cmdparts[0].ToLower();
-                                                if (Program.commands.ContainsKey(cmdstr))
-                                                {
-                                                    try
-                                                    {
-                                                        Command cmd = Program.commands[cmdstr];
-                                                        if (!Program.PlyHasLevel(name, cmd.minlevel)) SendPermissionDenied();
-                                                        else cmd.Run(this, cmdparts);
-                                                    }
-                                                    catch { SendDirectedMessage("Command error!"); }
-                                                }
-                                                else
-                                                {
-                                                    SendDirectedMessage("Unknown command!");
-                                                }
-                                            }
-                                            else if (msg[0] == '/')
-                                            {
-                                                forwardpacket = true;
-                                            }
-                                            else
-                                            {
-                                                Program.AddRTLine(Color.Black, "<" + name + "> " + msg + "\r\n", true);
-                                                Program.SendLogMsg("\"" + name + "<" + GetLevel() + "><" + name + "><" + GetRank() + ">\" say \"" + msg + "\"");
-                                                string cmsg = GetTag() + this.name + ":§f " + msg;
-                                                foreach(Player ply in fwl.players)
-                                                {
-                                                    ply.SendChat(cmsg);
-                                                }
-                                            }
-                                            break;
-                                        /*case 0xFE:
-                                            this.Disconnect("Nope!");
-                                            forwardpacket = false;
-                                            break;*/
-                                        case 0xFF:
-                                            this.Disconnect(ReceiveString(externalSock));
-                                            break;
-                                        default:
-                                            packet_size = -2;
-                                            break;
-                                    }
-                                }
-                                else if (packet_size > 0)
-                                {
-                                    dat = ReceiveBytes(externalSock, packet_size);
-                                    switch (packet_id)
-                                    {
-                                        case 0x0B:
-                                        case 0x0C:
-                                        case 0x0D:
-                                            if (this.frozen)
-                                            {
-                                                Util.DinA(this.x, dat, 0);
-                                                Util.DinA(this.y, dat, 8);
-                                                Util.DinA(this.stance, dat, 16);
-                                                Util.DinA(this.z, dat, 24);
-                                                Util.FinA(this.rot, dat, 32);
-                                                Util.FinA(this.pitch, dat, 36);
-                                                this.SendPacket(0x0D, dat);
-                                                /*switch (packet_id)
-                                                {
-                                                    case 0x0B:
-                                                        Util.DinA(this.x, dat, 0);
-                                                        Util.DinA(this.y, dat, 8);
-                                                        Util.DinA(this.stance, dat, 16);
-                                                        Util.DinA(this.z, dat, 24);
-                                                        this.SendPacket(0x0B, dat);
-                                                        break;
-                                                    case 0x0C:
-                                                        Util.FinA(this.rot, dat, 0);
-                                                        Util.FinA(this.pitch, dat, 4);
-                                                        this.SendPacket(0x0C, dat);
-                                                        break;
-                                                    case 0x0D:
-                                                        
-                                                        break;
-                                                }*/
-                                                forwardpacket = false;
-                                            }
-                                            else
-                                            {
-                                                __HandleMovementPacket(packet_id, dat, true);
-                                            }
-                                            break;
-                                        case 0x0F:
-                                            short blockid = Util.AtoN(dat, 0);
-                                            if (blockid == 61) //now with working furnaces :3
-                                            {
-                                                blockid = 62;
-                                            }
-                                            else if (Program.blockLevels.ContainsKey(blockid))
-                                            {
-                                                int lev = Program.PlyGetLevel(name);
-                                                if (lev < Program.blockLevels[blockid])
-                                                {
-                                                    string blockname;
-                                                    if (Program.blockIDEnum.ContainsKey(blockid)) blockname = Program.blockIDEnum[blockid];
-                                                    else blockname = "UNKNOWN ID " + blockid.ToString();
-                                                    Program.SendServerMessage(name + " tried to spawn illegal block " + blockname);
-                                                    forwardpacket = false;
-                                                }
-                                            }
-                                            else if (Program.blockLevelsIsWhitelist && Program.PlyGetLevel(name) < 4)
+                                    case 0x0F:
+                                        short blockid = Util.AtoN(dat, 0);
+                                        if (Program.blockLevels.ContainsKey(blockid))
+                                        {
+                                            int lev = Program.PlyGetLevel(name);
+                                            if (lev < Program.blockLevels[blockid])
                                             {
                                                 string blockname;
                                                 if (Program.blockIDEnum.ContainsKey(blockid)) blockname = Program.blockIDEnum[blockid];
@@ -534,36 +562,41 @@ namespace MCAdmin
                                                 Program.SendServerMessage(name + " tried to spawn illegal block " + blockname);
                                                 forwardpacket = false;
                                             }
-                                            Util.NinA(blockid, dat, 0);
-                                            break;
-                                    }
-                                    dat.CopyTo(fwcache_ext, 1);
+                                        }
+                                        else if (Program.blockLevelsIsWhitelist && Program.PlyGetLevel(name) < 4)
+                                        {
+                                            string blockname;
+                                            if (Program.blockIDEnum.ContainsKey(blockid)) blockname = Program.blockIDEnum[blockid];
+                                            else blockname = "UNKNOWN ID " + blockid.ToString();
+                                            Program.SendServerMessage(name + " tried to spawn illegal block " + blockname);
+                                            forwardpacket = false;
+                                        }
+                                        Util.NinA(blockid, dat, 0);
+                                        break;
                                 }
-                                if (packet_size == -2)
-                                {
-                                    Program.SendServerMessage("Client \"" + name + "\" (IP: "+ip+") sent unknown packet. Kicked!", '4');
-                                    Program.AddRTLine(Color.Orange, "Invalid packet ID: " + ((int)packet_id) + "\r\n", false);
-                                    //internalSock.Send(fwcache_ext);
-                                    //invalidRecvd = true;
-                                    //dat = new byte[256];
-                                    this.Disconnect("Invalid packet ID: " + packet_id.ToString());
-                                    return;
-                                }
-                                if (forwardpacket) internalSock.Send(fwcache_ext);
+                                dat.CopyTo(fwcache_ext, 1);
                             }
-                        }
-                        else
-                        {
-                            Thread.Sleep(10);
+                            if (packet_size == -2)
+                            {
+                                Program.SendServerMessage("Client \"" + name + "\" (IP: "+ip+") sent unknown packet. Kicked!", '4');
+                                Program.AddRTLine(Color.Orange, "Client->Server: Invalid packet ID: " + ((int)packet_id) + ".\r\n", false);
+                                this.Disconnect("Invalid packet ID: " + packet_id.ToString());
+                                return;
+                            }
+
+                            if (forwardpacket)
+                            {
+                                internalSock.Send(fwcache_ext);
+                            }
                         }
                     }
                     else
                     {
-                        int recvd = externalSock.Receive(dat);
-                        if (recvd > 0) internalSock.Send(dat, 0, recvd, SocketFlags.None);
-                        else Thread.Sleep(10);
+                        Thread.Sleep(10);
                     }
+                    
                 }
+
                 catch (SocketException) { this.Disconnect(); }
                 catch { }
                 try
@@ -660,6 +693,7 @@ namespace MCAdmin
                 recvd_t = sock.Receive(ret, recvd, left, SocketFlags.None);
                 recvd += recvd_t;
                 left -= recvd_t;
+                if (left > 0) Thread.Sleep(10);
             }
             if (sock == externalSock)
             {
