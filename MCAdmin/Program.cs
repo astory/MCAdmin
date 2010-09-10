@@ -108,7 +108,7 @@ namespace MCAdmin
 
         public static void SaveMasterConfig()
         {
-            FileStream fs = File.OpenWrite("master-config.txt");
+            FileStream fs = File.Open("master-config.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
 
             sw.WriteLine("list-enable=" + mlistEnable.ToString());
@@ -161,7 +161,7 @@ namespace MCAdmin
 
         public static void SaveRankLevels()
         {
-            FileStream fs = File.OpenWrite("ranks-config.txt");
+            FileStream fs = File.Open("ranks-config.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
             string tmptag = "";
             foreach (KeyValuePair<string, int> kvp in ranklevels)
@@ -195,7 +195,7 @@ namespace MCAdmin
 
         public static void SaveCommandLevels()
         {
-            FileStream fs = File.OpenWrite("command-levels.txt");
+            FileStream fs = File.Open("command-levels.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
             foreach (KeyValuePair<string, Command> kvp in commands)
             {
@@ -213,7 +213,7 @@ namespace MCAdmin
 
         public static void SaveBlockList()
         {
-            FileStream fs = File.OpenWrite("blocks-list.txt");
+            FileStream fs = File.Open("blocks-list.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
             sw.WriteLine("iswhitelist=" + ((blockLevelsIsWhitelist) ? '1' : '0'));
             foreach (KeyValuePair<int, int> kvp in blockLevels)
@@ -356,7 +356,7 @@ namespace MCAdmin
 
         public static void SaveRanks()
         {
-            FileStream file = File.Open("ranks.txt", FileMode.Create, FileAccess.Write);
+            FileStream file = File.Open("ranks.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(file);
             foreach (KeyValuePair<string, string> kv in plyranks)
             {
