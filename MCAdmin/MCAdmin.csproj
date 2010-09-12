@@ -95,6 +95,7 @@
     <Compile Include="Commands\UnbanipCommand.cs" />
     <Compile Include="Commands\VersionCommand.cs" />
     <Compile Include="Commands\WhoCommand.cs" />
+    <Compile Include="Commands\ZoneCommand.cs" />
     <Compile Include="frmKitShare.cs">
       <SubType>Form</SubType>
     </Compile>

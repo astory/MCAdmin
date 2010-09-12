@@ -861,6 +861,16 @@ namespace MCAdmin
 
         #region Player methods
 
+        public Vector GetBlockPos()
+        {
+            return new Vector((int)(x / 32), (int)(y / 32), (int)(z / 32));
+        }
+
+        public Zone FindApplicableZone()
+        {
+            return Program.FindApplicableZone(GetBlockPos());
+        }
+
         public bool CanBuild(Vector v)
         {
             Zone z = Program.FindApplicableZone(v);

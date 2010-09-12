@@ -1628,6 +1628,8 @@ namespace MCAdmin
             blockEnum.Add("storage minecart", 342);
             blockEnum.Add("powered minecart", 343);
             blockEnum.Add("egg", 344);
+            blockEnum.Add("compass", 345);
+
             blockEnum.Add("gold record", 2256);
             blockEnum.Add("green record", 2257);
 

@@ -46,6 +46,6 @@ namespace MCAdmin.Commands
         public override int reqlevel { get { return 3; } }
 
         public override string Help { get { return "Bans specified player"; } }
-        public override string Usage { get { return "[playername] <reason>"; } }
+        public override string Usage { get { return "<playername> [reason]"; } }
     }
 }
