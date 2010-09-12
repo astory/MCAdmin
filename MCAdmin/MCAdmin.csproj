@@ -186,6 +186,8 @@
     <Compile Include="Util.cs" />
     <Compile Include="Utils\BigEndianBitConverter.cs" />
     <Compile Include="Utils\EndianBitConverter.cs" />
+    <Compile Include="Vector.cs" />
+    <Compile Include="Zone.cs" />
     <EmbeddedResource Include="frmKitShare.resx">
       <DependentUpon>frmKitShare.cs</DependentUpon>
     </EmbeddedResource>

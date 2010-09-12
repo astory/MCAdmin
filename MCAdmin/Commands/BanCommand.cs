@@ -36,6 +36,11 @@ namespace MCAdmin.Commands
             }
 
             if (reason != "") Heartbeats.MasterBans.BanUser(cmdparts[1], ply.name, reason);
+            else if (Program.mbansEnable && Program.mbansSubmit)
+            {
+                ply.SendDirectedMessage("Global ban submission declined!");
+                ply.SendDirectedMessage("Please reban again with a reason (!ban name reason)!");
+            }
         }
 
         public override int reqlevel { get { return 3; } }

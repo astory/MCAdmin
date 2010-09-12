@@ -496,7 +496,15 @@ namespace MCAdmin
                                         }
                                         else if (msg[0] == '/')
                                         {
-                                            forwardpacket = true;
+                                            msg = msg.ToLower();
+                                            if (msg.StartsWith("/wood") || msg.StartsWith("/iron"))
+                                            {
+                                                SendDirectedMessage("Sorry, /wood and /iron are disabled!");
+                                            }
+                                            else
+                                            {
+                                                forwardpacket = true;
+                                            }
                                         }
                                         else
                                         {
@@ -577,7 +585,16 @@ namespace MCAdmin
                                             Program.SendServerMessage(name + " tried to spawn illegal block " + blockname);
                                             forwardpacket = false;
                                         }
-                                        Util.NinA(blockid, dat, 0);
+                                    
+
+                                        if (forwardpacket)
+                                        {
+                                            forwardpacket = __ZoneCheck(packet_id, dat);
+                                        }
+                                        //Util.NinA(blockid, dat, 0);
+                                        break;
+                                    case 0x0E:
+                                        forwardpacket = __ZoneCheck(packet_id, dat);
                                         break;
                                 }
                                 dat.CopyTo(fwcache_ext, 1);
@@ -620,6 +637,45 @@ namespace MCAdmin
             }
             this.Disconnect();
         }
+
+        private bool __ZoneCheck(byte packet_id, byte[] dat)
+        {
+            int offset = -1;
+            if (packet_id == 0x0E) offset = 1;
+            else if(packet_id == 0x0F) offset = 2;
+            int X = Util.AtoI(dat, offset);
+            int Y = dat[offset + 4];
+            int Z = Util.AtoI(dat, offset + 5);
+
+            switch (dat[offset + 9])
+            {
+                case 0:
+                    Y--;
+                    break;
+                case 1:
+                    Y++;
+                    break;
+                case 2:
+                    Z--;
+                    break;
+                case 3:
+                    Z++;
+                    break;
+                case 4:
+                    X--;
+                    break;
+                case 5:
+                    X++;
+                    break;
+            }
+            if (!CanBuild(new Vector(X, Y, Z)))
+            {
+                SendDirectedMessage("You cannot build here!");
+                return false;
+            }
+            return true;
+        }
+
 
         public double x = 0; public double y = 0; public double z = 0; double stance = 0;
         public float rot = 0; public float pitch = 0;
@@ -804,6 +860,14 @@ namespace MCAdmin
         #endregion
 
         #region Player methods
+
+        public bool CanBuild(Vector v)
+        {
+            Zone z = Program.FindApplicableZone(v);
+            if (z == null) return HasLevel(Program.zoneDefaultLevel);
+            else return HasLevel(z.level);
+        }
+
         public void SendPermissionDenied()
         {
             SendDirectedMessage("Permission denied!", '4');

@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.Zip;
 using MCAdmin.Commands;
 using Microsoft.Win32;
-using System.Runtime.InteropServices;
 
 namespace MCAdmin
 {
@@ -362,6 +362,51 @@ namespace MCAdmin
             {
                 if (!ranklevels.ContainsKey(kv.Value) || ranklevels[kv.Value] == 0) continue;
                 sw.WriteLine(kv.Key + "=" + kv.Value + "\r\n");
+            }
+            sw.Close();
+            file.Close();
+        }
+        #endregion
+
+        #region Zone management
+        public static Zone FindApplicableZone(Vector v)
+        {
+            Zone czone = null; int cpriority = int.MinValue;
+            foreach (Zone zone in Program.zones)
+            {
+                if (zone.priority <= cpriority || !zone.IsInZone(v)) continue;
+                czone = zone;
+                cpriority = zone.priority;
+            }
+            return czone;
+        }
+
+        public static List<Zone> zones = new List<Zone>();
+        public static int zoneDefaultLevel = 0;
+
+        public static void LoadZones()
+        {
+            zones.Clear();
+            if (File.Exists("zones.txt"))
+            {
+                string[] zonelines = File.ReadAllLines("zones.txt");
+                foreach (string zoneline in zonelines)
+                {
+                    string[] s = zoneline.Split(new char[] { ',' });
+                    if (s[0].ToLower() == "default") { zoneDefaultLevel = Convert.ToInt32(s[1]); continue; }
+                    Zone z = new Zone(new Vector(Convert.ToInt32(s[0]), Convert.ToInt32(s[1]), Convert.ToInt32(s[2])), new Vector(Convert.ToInt32(s[3]), Convert.ToInt32(s[4]), Convert.ToInt32(s[5])), Convert.ToInt32(s[6]), Convert.ToInt32(s[7]));
+                    zones.Add(z);
+                }
+            }
+        }
+        public static void SaveZones()
+        {
+            FileStream file = File.Open("zones.txt", FileMode.Create);
+            StreamWriter sw = new StreamWriter(file);
+            sw.WriteLine("default," + zoneDefaultLevel);
+            foreach (Zone zone in zones)
+            {
+                sw.WriteLine(zone.v1.x + "," + zone.v1.y + "," + zone.v1.z + "," + zone.v2.x + "," + zone.v2.y + "," + zone.v2.z + "," + zone.level + "," + zone.priority);
             }
             sw.Close();
             file.Close();
@@ -1596,6 +1641,8 @@ namespace MCAdmin
             LoadKits();
             LoadBlockList();
             LoadCommandLevels();
+
+            LoadZones();
 
             try
             {
