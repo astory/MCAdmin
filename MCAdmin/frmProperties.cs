@@ -44,6 +44,8 @@ namespace MCAdmin
             tbRCONPort.Text = Program.GetServerProperty("rcon-port", "25567");
             cbRCONEnable.Checked = (Program.GetServerProperty("rcon-enable", "false").ToLower() == "true");
 
+            cbMonsters.Checked = (Program.GetServerProperty("monsters", "false").ToLower() == "true");
+
             foreach (string rankname in Program.ranklevels.Keys)
             {
                 cbDefRank.Items.Add(rankname);
@@ -92,7 +94,7 @@ namespace MCAdmin
 
         public void RefreshPreview()
         {
-            tbPreview.Text = "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=" + cbIP.Text + "\r\nserver-port=" + tbIntPort.Text + "\r\nserver-port-real=" + tbPort.Text + "\r\nlevel-name=" + tbLevel.Text + "\r\nassigned-memory=" + numMemory.Value.ToString() + "\r\nonline-mode=" + ((cbOnline.Checked) ? "true" : "false") + "\r\nmax-players="+numMaxPlayers.Value.ToString()+"\r\ndefault-rank=" + cbDefRank.Text + "\r\nautosave-delay=" + numAS.Value.ToString() + "\r\nbackup-delay=" + numBackup.Value.ToString() + "\r\nrcon-enable="+((cbRCONEnable.Checked) ? "true" : "false")+"\r\nrcon-port="+tbRCONPort.Text+"\r\nrcon-pass="+tbRCONPass.Text+"\r\nserver-name="+tbSrvName.Text;
+            tbPreview.Text = "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=" + cbIP.Text + "\r\nserver-port=" + tbIntPort.Text + "\r\nserver-port-real=" + tbPort.Text + "\r\nlevel-name=" + tbLevel.Text + "\r\nassigned-memory=" + numMemory.Value.ToString() + "\r\nonline-mode=" + ((cbOnline.Checked) ? "true" : "false") + "\r\nmax-players=" + numMaxPlayers.Value.ToString() + "\r\ndefault-rank=" + cbDefRank.Text + "\r\nautosave-delay=" + numAS.Value.ToString() + "\r\nbackup-delay=" + numBackup.Value.ToString() + "\r\nrcon-enable=" + ((cbRCONEnable.Checked) ? "true" : "false") + "\r\nrcon-port=" + tbRCONPort.Text + "\r\nrcon-pass=" + tbRCONPass.Text + "\r\nserver-name=" + tbSrvName.Text + "\r\nmonsters=" + ((cbMonsters.Checked) ? "true" : "false");
         }
 
         private void ShowToolTipError(Control ctrl, string title, string text)

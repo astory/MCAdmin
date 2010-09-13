@@ -64,6 +64,7 @@
             this.lblMaxPlayers = new System.Windows.Forms.Label();
             this.lblSrvName = new System.Windows.Forms.Label();
             this.tbSrvName = new System.Windows.Forms.TextBox();
+            this.cbMonsters = new System.Windows.Forms.CheckBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -127,12 +128,12 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPreview.BackColor = System.Drawing.Color.White;
-            this.tbPreview.Location = new System.Drawing.Point(9, 289);
+            this.tbPreview.Location = new System.Drawing.Point(9, 312);
             this.tbPreview.Multiline = true;
             this.tbPreview.Name = "tbPreview";
             this.tbPreview.ReadOnly = true;
             this.tbPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbPreview.Size = new System.Drawing.Size(435, 154);
+            this.tbPreview.Size = new System.Drawing.Size(435, 131);
             this.tbPreview.TabIndex = 6;
             // 
             // splitContainer1
@@ -459,11 +460,23 @@
             this.tbSrvName.TabIndex = 33;
             this.tbSrvName.TextChanged += new System.EventHandler(this.event_RefreshPreview);
             // 
+            // cbMonsters
+            // 
+            this.cbMonsters.AutoSize = true;
+            this.cbMonsters.Location = new System.Drawing.Point(6, 289);
+            this.cbMonsters.Name = "cbMonsters";
+            this.cbMonsters.Size = new System.Drawing.Size(104, 17);
+            this.cbMonsters.TabIndex = 35;
+            this.cbMonsters.Text = "Enable monsters";
+            this.cbMonsters.UseVisualStyleBackColor = true;
+            this.cbMonsters.CheckedChanged += new System.EventHandler(this.event_RefreshPreview);
+            // 
             // frmProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 496);
+            this.Controls.Add(this.cbMonsters);
             this.Controls.Add(this.lblSrvName);
             this.Controls.Add(this.tbSrvName);
             this.Controls.Add(this.numMaxPlayers);
@@ -550,5 +563,6 @@
         private System.Windows.Forms.Label lblMaxPlayers;
         private System.Windows.Forms.Label lblSrvName;
         private System.Windows.Forms.TextBox tbSrvName;
+        private System.Windows.Forms.CheckBox cbMonsters;
     }
 }
