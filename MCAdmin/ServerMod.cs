@@ -77,6 +77,8 @@ namespace MCAdmin
 
             if (updaterThread != null && updaterThread.IsAlive) return;
 
+            Program.AddRTLine(Color.Orange, "Started installation of mod " + name + ". Wait for confirmation!!!\r\n", false);
+
             Directory.CreateDirectory("mods/" + name);
             CheckUpdate();
         }
