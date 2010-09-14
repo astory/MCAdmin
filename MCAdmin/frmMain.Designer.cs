@@ -54,6 +54,7 @@
             this.lbPlayers = new System.Windows.Forms.ListBox();
             this.tmUpdateStuff = new System.Windows.Forms.Timer(this.components);
             this.btnRunCmd = new System.Windows.Forms.Button();
+            this.btnMods = new System.Windows.Forms.Button();
             this.gbStatus.SuspendLayout();
             this.gbManage.SuspendLayout();
             this.SuspendLayout();
@@ -154,6 +155,7 @@
             // 
             this.gbManage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbManage.Controls.Add(this.btnMods);
             this.gbManage.Controls.Add(this.btnMasterServerConfig);
             this.gbManage.Controls.Add(this.btnManageRanks);
             this.gbManage.Controls.Add(this.btnSave);
@@ -176,9 +178,9 @@
             // 
             this.btnMasterServerConfig.Location = new System.Drawing.Point(556, 19);
             this.btnMasterServerConfig.Name = "btnMasterServerConfig";
-            this.btnMasterServerConfig.Size = new System.Drawing.Size(104, 49);
+            this.btnMasterServerConfig.Size = new System.Drawing.Size(104, 25);
             this.btnMasterServerConfig.TabIndex = 10;
-            this.btnMasterServerConfig.Text = "Master server config";
+            this.btnMasterServerConfig.Text = "Master server cfg";
             this.btnMasterServerConfig.UseVisualStyleBackColor = true;
             this.btnMasterServerConfig.Click += new System.EventHandler(this.btnMasterServerConfig_Click);
             // 
@@ -320,6 +322,16 @@
             this.btnRunCmd.UseVisualStyleBackColor = true;
             this.btnRunCmd.Click += new System.EventHandler(this.btnRunCmd_Click);
             // 
+            // btnMods
+            // 
+            this.btnMods.Location = new System.Drawing.Point(556, 43);
+            this.btnMods.Name = "btnMods";
+            this.btnMods.Size = new System.Drawing.Size(104, 25);
+            this.btnMods.TabIndex = 11;
+            this.btnMods.Text = "Server mods";
+            this.btnMods.UseVisualStyleBackColor = true;
+            this.btnMods.Click += new System.EventHandler(this.btnMods_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -371,6 +383,7 @@
         private System.Windows.Forms.Button btnRunCmd;
         public System.Windows.Forms.Button btnProperties;
         private System.Windows.Forms.Button btnMasterServerConfig;
+        private System.Windows.Forms.Button btnMods;
     }
 }
 

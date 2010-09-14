@@ -196,5 +196,10 @@ namespace MCAdmin
         {
             Program.tmAutosave_Tick(null);
         }
+
+        private void btnMods_Click(object sender, EventArgs e)
+        {
+            new frmServerMods().ShowDialog(this);
+        }
     }
 }

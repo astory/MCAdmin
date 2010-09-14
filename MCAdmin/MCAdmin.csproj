@@ -71,6 +71,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\BackupCommand.cs" />
@@ -174,6 +175,12 @@
     <Compile Include="frmRanks.Designer.cs">
       <DependentUpon>frmRanks.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmServerMods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmServerMods.Designer.cs">
+      <DependentUpon>frmServerMods.cs</DependentUpon>
+    </Compile>
     <Compile Include="Heartbeats\MasterBans.cs" />
     <Compile Include="Heartbeats\MasterList.cs" />
     <Compile Include="Heartbeats\PostRequest.cs" />
@@ -183,6 +190,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rcon.cs" />
+    <Compile Include="ServerMod.cs" />
     <Compile Include="ServerQuery.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Utils\BigEndianBitConverter.cs" />
@@ -229,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRanks.resx">
       <DependentUpon>frmRanks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmServerMods.resx">
+      <DependentUpon>frmServerMods.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

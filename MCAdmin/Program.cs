@@ -413,6 +413,16 @@ namespace MCAdmin
         }
         #endregion
 
+        #region Mod management
+        public static Dictionary<string, ServerMod> serverMods = new Dictionary<string, ServerMod>();
+        public static void LoadServerMods()
+        {
+            if (!Directory.Exists("mods")) Directory.CreateDirectory("mods");
+            serverMods.Clear();
+            new ServerMod("Runecraft", "http://www.minecraftforum.net/viewtopic.php?f=1012&t=29244", "SuperLlama", "http://llama.cerberusstudios.net/runecraft_latest.zip");            
+        }
+        #endregion
+
         public static void SendLogMsg(string msg)
         {
             msg = "L " + DateTime.Now.Month.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "/" + DateTime.Now.Year + " - " + DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":" + DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":" + DateTime.Now.Second.ToString().PadLeft(2, '0') + ": " + msg;
@@ -544,7 +554,7 @@ namespace MCAdmin
             return true;
         }
 
-        private static bool __DownloadURLToAndDiff(string url, string file, string compareto)
+        public static bool DownloadURLToAndDiff(string url, string file, string compareto)
         {
             if (!DownloadURLToFile(url, file)) return false;
 
@@ -594,7 +604,7 @@ namespace MCAdmin
             }
             else
             {
-                isUpdate = __DownloadURLToAndDiff("http://internal.mcadmin.eu/MCAdmin.exe", "MCAdmin.exe.new", "MCAdmin.exe");
+                isUpdate = DownloadURLToAndDiff("http://internal.mcadmin.eu/MCAdmin.exe", "MCAdmin.exe.new", "MCAdmin.exe");
                 if (!isUpdate)
                 {
                     if (isOutOfDate_MCA) { AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false); }
@@ -632,7 +642,7 @@ namespace MCAdmin
             }
             else
             {
-                isUpdate = __DownloadURLToAndDiff("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar.new", "minecraft_server.jar");
+                isUpdate = DownloadURLToAndDiff("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar.new", "minecraft_server.jar");
                 if (!isUpdate)
                 {
                     if (isOutOfDate_JAR) { AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false); }
@@ -1090,7 +1100,17 @@ namespace MCAdmin
                 }));
             }
 
-            ProcessStartInfo psi = new ProcessStartInfo(javaExecutable, "-Xmx" + memAssigned + "M -Xms" + memAssigned + "M -jar minecraft_server.jar nogui");
+            string cPath = "minecraft_server.jar";
+
+            foreach (ServerMod mod in serverMods.Values)
+            {
+                if (mod.IsInstalled())
+                {
+                    cPath = "mods\\" + mod.name + ";" + cPath;
+                }
+            }
+
+            ProcessStartInfo psi = new ProcessStartInfo(javaExecutable, "-Xmx" + memAssigned + "M -Xms" + memAssigned + "M -classpath " + cPath + " net.minecraft.server.MinecraftServer nogui");
             psi.WorkingDirectory = Directory.GetCurrentDirectory();
             psi.UseShellExecute = false;
             //psi.CreateNoWindow = true;
@@ -1411,6 +1431,8 @@ namespace MCAdmin
             AddRTLine(Color.Green, "Found JAVA JRE at: " + javaExecutable + "\r\n", false);
 
             LoadMasterConfig();
+
+            LoadServerMods();
 
             LoadRankLevels();
 
