@@ -49,6 +49,16 @@ namespace MCAdmin
             }
             if (isUpdate || !Directory.Exists("mods/" + name))
             {
+                try
+                {
+                    if (Directory.Exists("mods/" + name))
+                    {
+                        Directory.Delete("mods/" + name, true);
+                        Directory.CreateDirectory("mods/" + name);
+                    }
+                }
+                catch { }
+
                 FastZip fastZip = new FastZip();
                 fastZip.ExtractZip("mods/" + name + ".zip", "mods/" + name, "");
 
