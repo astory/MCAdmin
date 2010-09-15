@@ -19,8 +19,6 @@ namespace MCAdmin
             author = m_author;
             link = m_link;
             downloadURL = m_downloadURL;
-            Program.serverMods.Add(name, this);
-            this.CheckUpdate();
         }
 
         public void CheckUpdate()

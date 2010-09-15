@@ -84,109 +84,8 @@ namespace MCAdmin
 
                             fwcache_int = new byte[1];
                             fwcache_int[0] = packet_id;
-                            int packet_size = -2;
-                            switch (packet_id)
-                            {
-                                case 0:
-                                    packet_size = 0;
-                                    break;
-                                case 1:
-                                    packet_size = -1;
-                                    break;
-                                case 2:
-                                    packet_size = -1;
-                                    break;
-                                case 3:
-                                    packet_size = -1;
-                                    break;
-                                case 4:
-                                    packet_size = 8; //8
-                                    break;
-                                case 5:
-                                    packet_size = -1; //4 + ?
-                                    break;
-                                case 6:
-                                    packet_size = 12; //4 + 4 + 4
-                                    break;
-                                case 10:
-                                    packet_size = 1;
-                                    break;
-                                case 11:
-                                    packet_size = 33; //8 + 8 + 8 + 8 + 1
-                                    break;
-                                case 12:
-                                    packet_size = 9; //4 + 4 + 1
-                                    break;
-                                case 13:
-                                    packet_size = 41; //8 + 8 + 8 + 8 + 4 + 4 + 1
-                                    break;
-                                case 14:
-                                    packet_size = 11; //1 + 4 + 1 + 4 + 1
-                                    break;
-                                case 15:
-                                    packet_size = 12; //2 + 4 + 1 + 4 + 1
-                                    break;
-                                case 16:
-                                    packet_size = 6; //4 + 2
-                                    break;
-                                case 17:
-                                    packet_size = 5; //2 + 1 + 2
-                                    break;
-                                case 18:
-                                    packet_size = 5; //4 + 1
-                                    break;
-                                case 20:
-                                    packet_size = -1;
-                                    break;
-                                case 21:
-                                    packet_size = 22; //4 + 2 + 1 + 4 + 4 + 4 + 1 + 1 + 1
-                                    break;
-                                case 22:
-                                    packet_size = 8; //4 + 4
-                                    break;
-                                case 23:
-                                    packet_size = 17; //4 + 1 + 4 + 4 + 4
-                                    break;
-                                case 24:
-                                    packet_size = 19; //4 + 1 + 4 + 4 + 4 + 1 + 1
-                                    break;
-                                case 29:
-                                    packet_size = 4; //4
-                                    break;
-                                case 30:
-                                    packet_size = 4; //4
-                                    break;
-                                case 31:
-                                    packet_size = 7; //4 + 1 + 1 + 1
-                                    break;
-                                case 32:
-                                    packet_size = 6; //4 + 1 + 1
-                                    break;
-                                case 33:
-                                    packet_size = 9; //4 + 1 + 1 + 1 + 1 + 1
-                                    break;
-                                case 34:
-                                    packet_size = 18; //4 + 4 + 4 + 4 + 1 + 1
-                                    break;
-                                case 50:
-                                    packet_size = 9; //4 + 4 + 1
-                                    break;
-                                case 51:
-                                    packet_size = -1; //4 + 2 + 4 + 1 + 1 + 1 + 4 + ?
-                                    break;
-                                case 52:
-                                    packet_size = -1; //4 + 4 + 2 + ? + ? + ?
-                                    break;
-                                case 53:
-                                    packet_size = 11; //4 + 1 + 4 + 1 + 1
-                                    break;
-                                case 59:
-                                    packet_size = -1; //4 + 2 + 4 + ?
-                                    break;
-                                case 255:
-                                    packet_size = -1;
-                                    break;
-                            }
+                            int packet_size = __GetPacketSize(packet_id);
+                            
                             bool forwardpacket = true;
                             if (packet_size == -1)
                             {
@@ -307,9 +206,7 @@ namespace MCAdmin
                     {
                         while (packetQueueExt.Count > 0)
                         {
-                            byte[] pck = packetQueueExt.Dequeue();
-                            //Program.AddRTLine(Color.Green,"SC: " + ((int)pck[0]) + "\r\n", false);
-                            externalSock.Send(pck);
+                            externalSock.Send(packetQueueExt.Dequeue());
                         }
                     }
                 }
@@ -338,109 +235,8 @@ namespace MCAdmin
 
                             fwcache_ext = new byte[1];
                             fwcache_ext[0] = packet_id;
-                            int packet_size = -2;
-                            switch (packet_id)
-                            {
-                                case 0:
-                                    packet_size = 0;
-                                    break;
-                                case 1:
-                                    packet_size = -1;
-                                    break;
-                                case 2:
-                                    packet_size = -1;
-                                    break;
-                                case 3:
-                                    packet_size = -1;
-                                    break;
-                                case 4:
-                                    packet_size = 8; //8
-                                    break;
-                                case 5:
-                                    packet_size = -1; //4 + ?
-                                    break;
-                                case 6:
-                                    packet_size = 12; //4 + 4 + 4
-                                    break;
-                                case 10:
-                                    packet_size = 1;
-                                    break;
-                                case 11:
-                                    packet_size = 33; //8 + 8 + 8 + 8 + 1
-                                    break;
-                                case 12:
-                                    packet_size = 9; //4 + 4 + 1
-                                    break;
-                                case 13:
-                                    packet_size = 41; //8 + 8 + 8 + 8 + 4 + 4 + 1
-                                    break;
-                                case 14:
-                                    packet_size = 11; //1 + 4 + 1 + 4 + 1
-                                    break;
-                                case 15:
-                                    packet_size = 12; //2 + 4 + 1 + 4 + 1
-                                    break;
-                                case 16:
-                                    packet_size = 6; //4 + 2
-                                    break;
-                                case 17:
-                                    packet_size = 5; //2 + 1 + 2
-                                    break;
-                                case 18:
-                                    packet_size = 5; //4 + 1
-                                    break;
-                                case 20:
-                                    packet_size = -1;
-                                    break;
-                                case 21:
-                                    packet_size = 22; //4 + 2 + 1 + 4 + 4 + 4 + 1 + 1 + 1
-                                    break;
-                                case 22:
-                                    packet_size = 8; //4 + 4
-                                    break;
-                                case 23:
-                                    packet_size = 17; //4 + 1 + 4 + 4 + 4
-                                    break;
-                                case 24:
-                                    packet_size = 19; //4 + 1 + 4 + 4 + 4 + 1 + 1
-                                    break;
-                                case 29:
-                                    packet_size = 4; //4
-                                    break;
-                                case 30:
-                                    packet_size = 4; //4
-                                    break;
-                                case 31:
-                                    packet_size = 7; //4 + 1 + 1 + 1
-                                    break;
-                                case 32:
-                                    packet_size = 6; //4 + 1 + 1
-                                    break;
-                                case 33:
-                                    packet_size = 9; //4 + 1 + 1 + 1 + 1 + 1
-                                    break;
-                                case 34:
-                                    packet_size = 18; //4 + 4 + 4 + 4 + 1 + 1
-                                    break;
-                                case 50:
-                                    packet_size = 9; //4 + 4 + 1
-                                    break;
-                                case 51:
-                                    packet_size = -1; //4 + 2 + 4 + 1 + 1 + 1 + 4 + ?
-                                    break;
-                                case 52:
-                                    packet_size = -1; //4 + 4 + 2 + ? + ? + ?
-                                    break;
-                                case 53:
-                                    packet_size = 11; //4 + 1 + 4 + 1 + 1
-                                    break;
-                                case 59:
-                                    packet_size = -1; //4 + 2 + 4 + ?
-                                    break;
-                                case 255:
-                                    packet_size = -1;
-                                    break;
-                            }
+                            int packet_size = __GetPacketSize(packet_id);
+
                             bool forwardpacket = true;
                             if (packet_size == -1)
                             {
@@ -501,6 +297,14 @@ namespace MCAdmin
                                             {
                                                 SendDirectedMessage("Sorry, /wood and /iron are disabled!");
                                             }
+                                            else if(msg.StartsWith("/ban") || msg.StartsWith("/pardon"))
+                                            {
+                                                SendDirectedMessage("Please use !ban, !banip, !unban, !unbanip");
+                                            }
+                                            else if (msg.StartsWith("/give"))
+                                            {
+                                                SendDirectedMessage("Please use !give");
+                                            }
                                             else
                                             {
                                                 forwardpacket = true;
@@ -508,6 +312,11 @@ namespace MCAdmin
                                         }
                                         else
                                         {
+                                            if (msg.IndexOf('§') >= 0 || msg.IndexOf('\0') >= 0)
+                                            {
+                                                this.Disconnect("Don't use hax, fag!");
+                                                break;
+                                            }
                                             Program.AddRTLine(Color.Black, "<" + name + "> " + msg + "\r\n", true);
                                             Program.SendLogMsg("\"" + name + "<" + GetLevel() + "><" + name + "><" + GetRank() + ">\" say \"" + msg + "\"");
                                             string cmsg = GetTag() + this.name + ":§f " + msg;
@@ -585,13 +394,33 @@ namespace MCAdmin
                                             Program.SendServerMessage(name + " tried to spawn illegal block " + blockname);
                                             forwardpacket = false;
                                         }
+                                        else if(blockid == 326)
+                                        {
+                                            blockid = 8;
+                                        }
+                                        else if (blockid == 327)
+                                        {
+                                            blockid = 10;
+                                        }
+                                        else if (blockid == 325)
+                                        {
+                                            //No idea!
+                                        }
+                                        else if (blockid == 0)
+                                        {
+                                            this.Disconnect("Don't use hax, fag!");
+                                            forwardpacket = false;
+                                        }
                                     
 
                                         if (forwardpacket)
                                         {
                                             forwardpacket = __ZoneCheck(packet_id, dat);
+                                            if (forwardpacket)
+                                            {
+                                                Util.NinA(blockid, dat, 0);
+                                            }
                                         }
-                                        //Util.NinA(blockid, dat, 0);
                                         break;
                                     case 0x0E:
                                         forwardpacket = __ZoneCheck(packet_id, dat);
@@ -636,6 +465,80 @@ namespace MCAdmin
                 catch { }
             }
             this.Disconnect();
+        }
+
+        int __GetPacketSize(byte packet_id)
+        {
+            switch (packet_id)
+            {
+                case 0:
+                    return 0;
+                case 1:
+                    return -1;
+                case 2:
+                    return -1;
+                case 3:
+                    return -1;
+                case 4:
+                    return 8; //8
+                case 5:
+                    return -1; //4 + ?
+                case 6:
+                    return 12; //4 + 4 + 4
+                case 10:
+                    return 1;
+                case 11:
+                    return 33; //8 + 8 + 8 + 8 + 1
+                case 12:
+                    return 9; //4 + 4 + 1
+                case 13:
+                    return 41; //8 + 8 + 8 + 8 + 4 + 4 + 1
+                case 14:
+                    return 11; //1 + 4 + 1 + 4 + 1
+                case 15:
+                    return 12; //2 + 4 + 1 + 4 + 1
+                case 16:
+                    return 6; //4 + 2
+                case 17:
+                    return 5; //2 + 1 + 2
+                case 18:
+                    return 5; //4 + 1
+                case 20:
+                    return -1;
+                case 21:
+                    return 22; //4 + 2 + 1 + 4 + 4 + 4 + 1 + 1 + 1
+                case 22:
+                    return 8; //4 + 4
+                case 23:
+                    return 17; //4 + 1 + 4 + 4 + 4
+                case 24:
+                    return 19; //4 + 1 + 4 + 4 + 4 + 1 + 1
+                case 29:
+                    return 4; //4
+                case 30:
+                    return 4; //4
+                case 31:
+                    return 7; //4 + 1 + 1 + 1
+                case 32:
+                    return 6; //4 + 1 + 1
+                case 33:
+                    return 9; //4 + 1 + 1 + 1 + 1 + 1
+                case 34:
+                    return 18; //4 + 4 + 4 + 4 + 1 + 1
+                case 50:
+                    return 9; //4 + 4 + 1
+                case 51:
+                    return -1; //4 + 2 + 4 + 1 + 1 + 1 + 4 + ?
+                case 52:
+                    return -1; //4 + 4 + 2 + ? + ? + ?
+                case 53:
+                    return 11; //4 + 1 + 4 + 1 + 1
+                case 59:
+                    return -1; //4 + 2 + 4 + ?
+                case 255:
+                    return -1;
+            }
+            return -2;
         }
 
         private bool __ZoneCheck(byte packet_id, byte[] dat)

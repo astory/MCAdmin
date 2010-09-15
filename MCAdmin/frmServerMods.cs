@@ -24,7 +24,7 @@ namespace MCAdmin
 
             this.SuspendLayout();
 
-            foreach (ServerMod mod in Program.serverMods.Values)
+            foreach (ServerMod mod in Program.serverMods)
             {
                 GroupBox gbMod = new GroupBox(); ;
                 Label lbModAuthor = new Label();

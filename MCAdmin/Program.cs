@@ -414,12 +414,12 @@ namespace MCAdmin
         #endregion
 
         #region Mod management
-        public static Dictionary<string, ServerMod> serverMods = new Dictionary<string, ServerMod>();
+        public static List<ServerMod> serverMods = new List<ServerMod>();
         public static void LoadServerMods()
         {
             if (!Directory.Exists("mods")) Directory.CreateDirectory("mods");
             serverMods.Clear();
-            new ServerMod("Runecraft", "http://www.minecraftforum.net/viewtopic.php?f=1012&t=29244", "SuperLlama", "http://llama.cerberusstudios.net/runecraft_latest.zip");            
+            serverMods.Add(new ServerMod("Runecraft", "http://www.minecraftforum.net/viewtopic.php?f=1012&t=29244", "SuperLlama", "http://llama.cerberusstudios.net/runecraft_latest.zip"));            
         }
         #endregion
 
@@ -569,21 +569,15 @@ namespace MCAdmin
             }
         }
 
-        public static void CheckUpdate(bool threaded)
+        public static void CheckUpdate()
         {
             if (updaterThread != null && updaterThread.ThreadState == System.Threading.ThreadState.Running) return;
-            if (threaded)
-            {
-                updaterThread = new Thread(new ThreadStart(CheckUpdate));
-                updaterThread.Start();
-            }
-            else
-            {
-                CheckUpdate();
-            }
+
+            updaterThread = new Thread(new ThreadStart(CheckUpdateInt));
+            updaterThread.Start();
         }
 
-        public static void CheckUpdate()
+        private static void CheckUpdateInt()
         {
             AddRTLine(Color.Green, "Verifying existence of essential files...\r\n", false);
             if (!File.Exists("NBT.dll")) { DownloadURLToFile("http://internal.mcadmin.eu/NBT.dll", "NBT.dll"); }
@@ -667,6 +661,13 @@ namespace MCAdmin
                     isOutOfDate_JAR = true;
                     AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false);
                 }
+            }
+
+            AddRTLine(Color.Green, "Checking for mod updates...\r\n", false);
+
+            foreach (ServerMod mod in serverMods)
+            {
+                mod.CheckUpdate();
             }
 
             AddRTLine(Color.Green, "Update checking done!\r\n", false);
@@ -876,7 +877,7 @@ namespace MCAdmin
         #region Timer stuff
         private static void tmUpdate_Tick(object x)
         {
-            CheckUpdate(true);
+            CheckUpdate();
         }
 
         public static void tmBackup_Tick(object x)
@@ -1102,12 +1103,9 @@ namespace MCAdmin
 
             string cPath = "minecraft_server.jar";
 
-            foreach (ServerMod mod in serverMods.Values)
+            foreach (string dir in Directory.GetDirectories("mods/"))
             {
-                if (mod.IsInstalled())
-                {
-                    cPath = "mods\\" + mod.name + ";" + cPath;
-                }
+                cPath = dir + ";" + cPath;
             }
 
             ProcessStartInfo psi = new ProcessStartInfo(javaExecutable, "-Xmx" + memAssigned + "M -Xms" + memAssigned + "M -classpath " + cPath + " net.minecraft.server.MinecraftServer nogui");
