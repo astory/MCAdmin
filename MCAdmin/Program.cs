@@ -666,7 +666,7 @@ namespace MCAdmin
 
             foreach (ServerMod mod in serverMods)
             {
-                mod.CheckUpdate();
+                mod.CheckUpdateT();
             }
 
             AddRTLine(Color.Green, "Update checking done!\r\n", false);

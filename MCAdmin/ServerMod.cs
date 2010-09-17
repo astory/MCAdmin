@@ -13,6 +13,7 @@ namespace MCAdmin
     {
         public string name; public string link; public string author; public string downloadURL;
         Thread updaterThread;
+        object lockObject = new object();
         public ServerMod(string m_name, string m_link, string m_author, string m_downloadURL)
         {
             name = m_name;
@@ -28,39 +29,42 @@ namespace MCAdmin
             updaterThread.Start();
         }
 
-        private void CheckUpdateT()
+        public void CheckUpdateT()
         {
-            if (!this.IsInstalled()) return;
-            bool isUpdate = false;
-            if (Program.DownloadURLToAndDiff(downloadURL, "mods/" + name + ".zip.new", "mods/" + name + ".zip"))
+            lock (lockObject)
             {
-                try
+                if (!this.IsInstalled()) return;
+                bool isUpdate = false;
+                if (Program.DownloadURLToAndDiff(downloadURL, "mods/" + name + ".zip.new", "mods/" + name + ".zip"))
                 {
-                    if (File.Exists("mods/" + name + ".zip")) File.Delete("mods/" + name + ".zip");
-                    File.Move("mods/" + name + ".zip.new", "mods/" + name + ".zip");
-                    isUpdate = true;
-                }
-                catch
-                {
-                    Program.AddRTLine(Color.Red, "Error updating/installing mod " + name + "\r\n", false);
-                }
-            }
-            if (isUpdate || !Directory.Exists("mods/" + name))
-            {
-                try
-                {
-                    if (Directory.Exists("mods/" + name))
+                    try
                     {
-                        Directory.Delete("mods/" + name, true);
-                        Directory.CreateDirectory("mods/" + name);
+                        if (File.Exists("mods/" + name + ".zip")) File.Delete("mods/" + name + ".zip");
+                        File.Move("mods/" + name + ".zip.new", "mods/" + name + ".zip");
+                        isUpdate = true;
+                    }
+                    catch
+                    {
+                        Program.AddRTLine(Color.Red, "Error updating/installing mod " + name + "\r\n", false);
                     }
                 }
-                catch { }
+                if (isUpdate || !Directory.Exists("mods/" + name))
+                {
+                    try
+                    {
+                        if (Directory.Exists("mods/" + name))
+                        {
+                            Directory.Delete("mods/" + name, true);
+                            Directory.CreateDirectory("mods/" + name);
+                        }
+                    }
+                    catch { }
 
-                FastZip fastZip = new FastZip();
-                fastZip.ExtractZip("mods/" + name + ".zip", "mods/" + name, "");
+                    FastZip fastZip = new FastZip();
+                    fastZip.ExtractZip("mods/" + name + ".zip", "mods/" + name, "");
 
-                Program.AddRTLine(Color.Orange, "Updated/Installed mod " + name + "\r\n", false);
+                    Program.AddRTLine(Color.Orange, "Updated/Installed mod " + name + "\r\n", false);
+                }
             }
         }
 
