@@ -19,8 +19,7 @@ namespace MCAdmin
         {
             try
             {
-                HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(url);
-                hwr.Proxy = null;
+                HttpWebRequest hwr = Util.GetHttpWebRequest(url);
                 HttpWebResponse hwres = (HttpWebResponse)hwr.GetResponse();
                 if (hwres.StatusCode != HttpStatusCode.OK) return null;
                 Stream str = hwres.GetResponseStream();

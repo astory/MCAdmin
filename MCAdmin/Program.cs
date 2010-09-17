@@ -524,8 +524,7 @@ namespace MCAdmin
         {
             try
             {
-                HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(url);
-                hwr.Proxy = null;
+                HttpWebRequest hwr = Util.GetHttpWebRequest(url);
                 HttpWebResponse hwres = (HttpWebResponse)hwr.GetResponse();
                 if (hwres.StatusCode != HttpStatusCode.OK) { hwres.Close(); return false; }
                 Stream str = hwres.GetResponseStream();
@@ -1230,8 +1229,7 @@ namespace MCAdmin
         {
             try
             {
-                HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create("http://internal.mcadmin.eu/getip.php");
-                hwr.Proxy = null;
+                HttpWebRequest hwr = Util.GetHttpWebRequest("http://internal.mcadmin.eu/getip.php");
                 HttpWebResponse hwres = (HttpWebResponse)hwr.GetResponse();
                 if (hwres.StatusCode != HttpStatusCode.OK) { hwres.Close(); externalIP = ""; }
                 Stream str = hwres.GetResponseStream();

@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MiscUtil.Conversion;
+using System.Net;
 
 namespace MCAdmin
 {
     public static class Util
     {
         static Encoding enc = new UTF8Encoding(false);
+
+        public static HttpWebRequest GetHttpWebRequest(string url)
+        {
+            HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(url);
+            hwr.Proxy = null;
+            hwr.UserAgent = "MCAdmin/1.3.3.7";
+            return hwr;
+        }
+
 
         #region Networking ByteArray Encoders
 

@@ -17,7 +17,7 @@ namespace MCAdmin.Heartbeats
             return true;
         }
 
-        public static string Send(string uri, string datastr)
+        public static string Send(string url, string datastr)
         {
             try
             {
@@ -32,8 +32,7 @@ namespace MCAdmin.Heartbeats
             try
             {
                 byte[] data = System.Text.Encoding.ASCII.GetBytes(datastr);
-                HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(uri);
-                hwr.Proxy = null;
+                HttpWebRequest hwr = Util.GetHttpWebRequest(url);
                 hwr.Method = "POST";
                 hwr.ContentType = "application/x-www-form-urlencoded";
                 hwr.ContentLength = data.Length;
