@@ -87,27 +87,30 @@ namespace MCAdmin
 
         public void Uninstall()
         {
-            if (!this.IsInstalled()) return;
-
-            if (updaterThread != null && updaterThread.IsAlive) return;
-
-            try
+            lock (lockObject)
             {
-                updaterThread.Abort();
-            }
-            catch { }
+                if (!this.IsInstalled()) return;
 
-            Directory.Delete("mods/" + name, true);
-            try
-            {
-                File.Delete("mods/" + name + ".zip");
+                if (updaterThread != null && updaterThread.IsAlive) return;
+
+                try
+                {
+                    updaterThread.Abort();
+                }
+                catch { }
+
+                Directory.Delete("mods/" + name, true);
+                try
+                {
+                    File.Delete("mods/" + name + ".zip");
+                }
+                catch { }
+                try
+                {
+                    File.Delete("mods/" + name + ".zip.new");
+                }
+                catch { }
             }
-            catch { }
-            try
-            {
-                File.Delete("mods/" + name + ".zip.new");
-            }
-            catch { }
         }
     }
 }
