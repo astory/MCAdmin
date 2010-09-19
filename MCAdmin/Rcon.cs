@@ -145,10 +145,6 @@ namespace MCAdmin
                                         Program.tmAutosave_Tick(null);
                                         response = "Save initiated!";
                                         break;
-                                    case "backup":
-                                        Program.tmBackup_Tick(null);
-                                        response = "Backup initiated!";
-                                        break;
                                     case "status":
                                         //response = Program.serverStatus;
                                         break;

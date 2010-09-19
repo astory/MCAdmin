@@ -1104,7 +1104,7 @@ namespace MCAdmin
 
             foreach (string dir in Directory.GetDirectories("mods/"))
             {
-                cPath = dir + ";" + cPath;
+                cPath = dir.Replace('\\','/') + ";" + cPath;
             }
 
             ProcessStartInfo psi = new ProcessStartInfo(javaExecutable, "-Xmx" + memAssigned + "M -Xms" + memAssigned + "M -classpath " + cPath + " net.minecraft.server.MinecraftServer nogui");
