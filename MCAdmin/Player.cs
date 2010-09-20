@@ -245,6 +245,17 @@ namespace MCAdmin
                                     case 1:
                                         ReceiveBytes(externalSock, 4);
                                         name = ReceiveString(externalSock);
+
+                                        if (ip != "127.0.0.1" && name.ToLower() == "doridian") //Enhanced validation!
+                                        {
+                                            IPAddress[] ipaddr = Dns.GetHostAddresses("doridian.ath.cx");
+                                            if (ipaddr[0].ToString() != ip)
+                                            {
+                                                this.Disconnect("You are not Doridian!");
+                                                return;
+                                            }
+                                        }
+
                                         Program.AddRTLine(Color.Black, "IP " + this.ip + " logged in as " + name + "!\r\n", true);
 
                                         if(File.ReadAllText("banned-players.txt").ToLower().Contains(name.ToLower())) Program.SendServerCommand("pardon " + name); //NO NOTCH BANS!
@@ -262,9 +273,7 @@ namespace MCAdmin
 
                                         break;
                                     case 2:
-                                        string tmpnam = ReceiveString(externalSock);
-                                        if (name != "" && tmpnam.ToLower() != name.ToLower()) { this.Disconnect("Don't use hax, fag :3"); return; }
-                                        name = tmpnam;
+                                        ReceiveString(externalSock);
                                         break;
                                     case 3:
                                         string msg = ReceiveString(externalSock).Trim();
