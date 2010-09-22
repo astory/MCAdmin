@@ -246,7 +246,7 @@ namespace MCAdmin
                                         ReceiveBytes(externalSock, 4);
                                         name = ReceiveString(externalSock);
 
-                                        if (ip != "127.0.0.1" && name.ToLower() == "doridian") //Enhanced validation!
+                                        /*if (ip != "127.0.0.1" && name.ToLower() == "doridian") //Enhanced validation!
                                         {
                                             IPAddress[] ipaddr = Dns.GetHostAddresses("doridian.ath.cx");
                                             if (ipaddr[0].ToString() != ip)
@@ -254,7 +254,7 @@ namespace MCAdmin
                                                 this.Disconnect("You are not Doridian!");
                                                 return;
                                             }
-                                        }
+                                        }*/
 
                                         Program.AddRTLine(Color.Black, "IP " + this.ip + " logged in as " + name + "!\r\n", true);
 
@@ -716,7 +716,7 @@ namespace MCAdmin
             if (!connected) return;
             try
             {
-                SendPacket(0xFF, Util.StoA("[MCAdmin] " + reason), externalSock, true);
+                SendPacket(0xFF, Util.StoA("[MCATunnel] " + reason), externalSock, true);
             }
             catch { }
             try
