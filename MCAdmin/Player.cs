@@ -716,7 +716,7 @@ namespace MCAdmin
             if (!connected) return;
             try
             {
-                SendPacket(0xFF, Util.StoA("[MCATunnel] " + reason), externalSock, true);
+                SendPacket(0xFF, Util.StoA("[MCAdmin] " + reason), externalSock, true);
             }
             catch { }
             try
