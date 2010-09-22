@@ -775,7 +775,7 @@ namespace MCAdmin
 
         public Vector GetBlockPos()
         {
-            return new Vector((int)(x / 32), (int)(y / 32), (int)(z / 32));
+            return new Vector((int)x, (int)y, (int)z);
         }
 
         public Zone FindApplicableZone()

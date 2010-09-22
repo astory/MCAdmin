@@ -40,10 +40,18 @@ namespace MCAdmin
         {
             return EndianBitConverter.Big.ToInt32(arr, start);
         }
+        public static byte[] ItoA(int num)
+        {
+            return EndianBitConverter.Big.GetBytes(num);
+        }
+        public static void IinA(int num, byte[] arr, int start)
+        {
+            Util.ItoA(num).CopyTo(arr, start);
+        }
 
         public static double AtoD(byte[] arr, int start)
         {
-            return EndianBitConverter.Big.ToInt64(arr, start);
+            return EndianBitConverter.Big.ToDouble(arr, start);
         }
         public static byte[] DtoA(double num)
         {
