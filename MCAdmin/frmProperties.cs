@@ -104,7 +104,7 @@ namespace MCAdmin
                     "server-ip=127.0.0.1" + System.Environment.NewLine +
                     "server-ip-real=" + cbIP.Text + System.Environment.NewLine +
                     "server-port=" + tbIntPort.Text + System.Environment.NewLine +
-                    "server-port-real=25565" + tbPort.Text + System.Environment.NewLine +
+                    "server-port-real=" + tbPort.Text + System.Environment.NewLine +
                     "level-name=" + tbLevel.Text + System.Environment.NewLine +
                     "assigned-memory=" + numMemory.Value.ToString() + System.Environment.NewLine +
                     "online-mode=" + cbOnline.Checked.ToString().ToLower() + System.Environment.NewLine +
