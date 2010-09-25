@@ -94,7 +94,30 @@ namespace MCAdmin
 
         public void RefreshPreview()
         {
-            tbPreview.Text = "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=" + cbIP.Text + "\r\nserver-port=" + tbIntPort.Text + "\r\nserver-port-real=" + tbPort.Text + "\r\nlevel-name=" + tbLevel.Text + "\r\nassigned-memory=" + numMemory.Value.ToString() + "\r\nonline-mode=" + ((cbOnline.Checked) ? "true" : "false") + "\r\nmax-players=" + numMaxPlayers.Value.ToString() + "\r\ndefault-rank=" + cbDefRank.Text + "\r\nautosave-delay=" + numAS.Value.ToString() + "\r\nbackup-delay=" + numBackup.Value.ToString() + "\r\nrcon-enable=" + ((cbRCONEnable.Checked) ? "true" : "false") + "\r\nrcon-port=" + tbRCONPort.Text + "\r\nrcon-pass=" + tbRCONPass.Text + "\r\nserver-name=" + tbSrvName.Text + "\r\nmonsters=" + ((cbMonsters.Checked) ? "true" : "false");
+            tbPreview.Text =
+                    "#Config created by MCAdmin (c) Doridian 2010" + System.Environment.NewLine +
+                    "#Use the values from the GUI!" + System.Environment.NewLine +
+                    "#DO NOT EDIT MANUALLY!" + System.Environment.NewLine +
+                    "#DO NOT USE VALUES FROM HERE!" + System.Environment.NewLine +
+                    "#Use the values from the GUI!" + System.Environment.NewLine +
+                    "#DO NOT EDIT MANUALLY!" + System.Environment.NewLine +
+                    "server-ip=127.0.0.1" + System.Environment.NewLine +
+                    "server-ip-real=" + cbIP.Text + System.Environment.NewLine +
+                    "server-port=" + tbIntPort.Text + System.Environment.NewLine +
+                    "server-port-real=25565" + tbPort.Text + System.Environment.NewLine +
+                    "level-name=" + tbLevel.Text + System.Environment.NewLine +
+                    "assigned-memory=" + numMemory.Value.ToString() + System.Environment.NewLine +
+                    "online-mode=" + cbOnline.Checked.ToString().ToLower() + System.Environment.NewLine +
+                    "max-players=" + numMaxPlayers.Value.ToString() + System.Environment.NewLine +
+                    "default-rank=" + cbDefRank.Text + System.Environment.NewLine +
+                    "autosave-delay=" + numAS.Value.ToString() + System.Environment.NewLine +
+                    "backup-delay=" + numBackup.Value.ToString() + System.Environment.NewLine +
+                    "rcon-enable=" + cbRCONEnable.Checked.ToString().ToLower() + System.Environment.NewLine +
+                    "rcon-port=" + tbRCONPort.Text + System.Environment.NewLine +
+                    "rcon-pass=" + tbRCONPass.Text + System.Environment.NewLine +
+                    "server-name=" + tbSrvName.Text + System.Environment.NewLine +
+                    "monsters=" + cbMonsters.Checked.ToString().ToLower()
+                ;
         }
 
         private void ShowToolTipError(Control ctrl, string title, string text)

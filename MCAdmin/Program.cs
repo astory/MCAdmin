@@ -290,6 +290,7 @@ namespace MCAdmin
                     {
                         AddRTLine(Color.Red, "Restart me!\r\n", false);
                         if (consoleOnly) Console.In.ReadLine();
+                        else MessageBox.Show("Restart me!");
                         KillServer();
                         Environment.Exit(0);
                         return;
@@ -1404,7 +1405,30 @@ namespace MCAdmin
 
             if (!File.Exists("server.properties") || !File.ReadAllText("server.properties").Contains("server-port-real"))
             {
-                File.WriteAllText("server.properties", "#Config created by MCAdmin (c) Doridian 2010\r\n#DO NOT SAVE MANUALLY!\r\nserver-ip=127.0.0.1\r\nserver-ip-real=0.0.0.0\r\nserver-port=25566\r\nserver-port-real=25565\r\nlevel-name=world\r\nonline-mode=true\r\ndefault-rank=guest\r\nautosave-delay=60\r\nbackup-delay=120");
+                File.WriteAllText("server.properties",
+                    "#Config created by MCAdmin (c) Doridian 2010" + System.Environment.NewLine +
+                    "#Use the values from the GUI!" + System.Environment.NewLine +
+                    "#DO NOT EDIT MANUALLY!" + System.Environment.NewLine +
+                    "#DO NOT USE VALUES FROM HERE!" + System.Environment.NewLine +
+                    "#Use the values from the GUI!" + System.Environment.NewLine +
+                    "#DO NOT EDIT MANUALLY!" + System.Environment.NewLine +
+                    "server-ip=127.0.0.1" + System.Environment.NewLine +
+                    "server-ip-real=0.0.0.0" + System.Environment.NewLine +
+                    "server-port=25566" + System.Environment.NewLine +
+                    "server-port-real=25565" + System.Environment.NewLine +
+                    "level-name=world" + System.Environment.NewLine +
+                    "assigned-memory=1024" + System.Environment.NewLine +
+                    "online-mode=true" + System.Environment.NewLine +
+                    "max-players=20" + System.Environment.NewLine +
+                    "default-rank=guest" + System.Environment.NewLine +
+                    "autosave-delay=120" + System.Environment.NewLine +
+                    "backup-delay=120" + System.Environment.NewLine +
+                    "rcon-enable=false" + System.Environment.NewLine +
+                    "rcon-port=25567" + System.Environment.NewLine +
+                    "rcon-pass=changeme" + System.Environment.NewLine +
+                    "server-name=MCAdmin Server" + System.Environment.NewLine +
+                    "monsters=false"
+                );
             }
 
             ReloadServerProperties();
@@ -1420,6 +1444,7 @@ namespace MCAdmin
             {
                 AddRTLine(Color.Red, "JAVA JRE could not be found!", false);
                 if (consoleOnly) Console.In.ReadLine();
+                else MessageBox.Show("JAVA JRE could not be found!");
                 KillServer();
                 Environment.Exit(0);
             }
