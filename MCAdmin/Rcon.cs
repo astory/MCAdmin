@@ -186,8 +186,13 @@ namespace MCAdmin
                                         if (Program.commands.ContainsKey(cmd))
                                         {
                                             ply.request_id = recvd.request_id;
-                                            Program.commands[cmd].Run(ply, str.Split(new char[] {' '}));
+                                            Program.commands[cmd].Run(ply, str.Split(new char[] { ' ' }));
                                             response = "";
+                                        }
+                                        else
+                                        {
+                                            Program.SendServerCommand(str);
+                                            response = "Sent command to server commandline!";
                                         }
                                         break;
                                 }
