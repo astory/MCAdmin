@@ -1475,6 +1475,7 @@ namespace MCAdmin
             commands.Add("unban", new UnbanCommand());
 
             commands.Add("tp", new TpCommand());
+            commands.Add("notp", new NoTpCommand());
             commands.Add("summon", new SummonCommand());
 
             commands.Add("motd", new MotdCommand());
@@ -1489,6 +1490,8 @@ namespace MCAdmin
             commands.Add("backup", new BackupCommand());
             commands.Add("changelevel", new ChangelevelCommand());
             //commands.Add("freeze", new FreezeCommand(this));
+
+            commands.Add("tell", new TellCommand());
             #endregion
 
             #region Blocks <-> IDs init
