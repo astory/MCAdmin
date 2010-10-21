@@ -51,7 +51,7 @@ namespace MCAdmin
                 llModLink.Size = new System.Drawing.Size(301, 13);
                 llModLink.Text = mod.link;
                 llModLink.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
-                llModLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(llRunecraft_LinkClicked);
+                llModLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(llModLink_LinkClicked);
                 llModLink.Links.Add(new LinkLabel.Link(0, llModLink.Text.Length, llModLink.Text));
 
                 lbModAuthor.AutoSize = true;
@@ -99,7 +99,7 @@ namespace MCAdmin
             this.ResumeLayout(true);
         }
 
-        private void llRunecraft_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void llModLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process linkLabelProc = new Process();
             linkLabelProc.StartInfo.FileName = e.Link.LinkData.ToString();

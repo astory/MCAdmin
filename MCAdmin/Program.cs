@@ -420,7 +420,7 @@ namespace MCAdmin
         {
             if (!Directory.Exists("mods")) Directory.CreateDirectory("mods");
             serverMods.Clear();
-            serverMods.Add(new ServerMod("Runecraft", "http://www.minecraftforum.net/viewtopic.php?f=1012&t=29244", "SuperLlama", "http://llama.cerberusstudios.net/runecraft_latest.zip"));            
+            serverMods.Add(new ServerMod("Runecraft", "http://www.minecraftforum.net/viewtopic.php?f=1012&t=29244", "SuperLlama", "http://llama.cerberusstudios.net/runecraft/runecraft_latest.zip"));            
         }
         #endregion
 
