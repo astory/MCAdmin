@@ -461,6 +461,9 @@ namespace MCAdmin
                 case "doribot":
                     rank = "§d[Bot] §f" + rank;
                     break;
+                case "toxicated":
+                    rank = "§d[Dev] §f" + rank;
+                    break;
             }
             return rank;
         }
@@ -1434,9 +1437,10 @@ namespace MCAdmin
             ReloadServerProperties();
 
             if (!Directory.Exists("messages")) { Directory.CreateDirectory("messages"); }
-            if (!File.Exists("messages/welcome.txt")) { File.WriteAllText("messages/welcome.txt", "Default MCAdmin welcome file. Edit messages/welcome.txt"); }
+            if (!File.Exists("messages/welcome.txt")) { File.WriteAllText("messages/welcome.txt", "Default MCAdmin Welcome file. Edit messages/welcome.txt"); }
             if (!File.Exists("messages/motd.txt")) { File.WriteAllText("messages/motd.txt", "Default MCAdmin MOTD file. Edit messages/motd.txt"); }
-            if (!File.Exists("messages/rules.txt")) { File.WriteAllText("messages/rules.txt", "Default MCAdmin rules file. Edit messages/rules.txt"); }
+            if (!File.Exists("messages/rules.txt")) { File.WriteAllText("messages/rules.txt", "Default MCAdmin Rules file. Edit messages/rules.txt"); }
+            if (!File.Exists("messages/info.txt")) { File.WriteAllText("messages/info.txt", "§bwww.mcadmin.eu\r\n§fDefault MCAdmin Info file. Edit messages/info.txt\r\nAdd Information to come up when you type !info"); }
 
             if (!Directory.Exists("backups")) { Directory.CreateDirectory("backups"); }
 
@@ -1480,6 +1484,7 @@ namespace MCAdmin
 
             commands.Add("motd", new MotdCommand());
             commands.Add("rules", new RulesCommand());
+            commands.Add("info", new InfoCommand());
 
             commands.Add("version", new VersionCommand());
             commands.Add("compass", new CompassCommand());

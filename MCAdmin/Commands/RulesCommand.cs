@@ -14,7 +14,7 @@ namespace MCAdmin.Commands
 
         public override int reqlevel { get { return 0; } }
 
-        public override string Help { get { return "Displays the rules file"; } }
+        public override string Help { get { return "Displays the Rules file"; } }
         public override string Usage { get { return ""; } }
     }
 }

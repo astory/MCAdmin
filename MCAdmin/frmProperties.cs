@@ -100,7 +100,7 @@ namespace MCAdmin
                     "#DO NOT EDIT MANUALLY!" + System.Environment.NewLine +
                     "#DO NOT USE VALUES FROM HERE!" + System.Environment.NewLine +
                     "#Use the values from the GUI!" + System.Environment.NewLine +
-                    "#DO NOT EDIT MANUALLY!" + System.Environment.NewLine +
+                    "#EDITING THESE VALUES MANUALLY WILL EXCLUDE YOU FROM SUPPORT!" + System.Environment.NewLine +
                     "server-ip=127.0.0.1" + System.Environment.NewLine +
                     "server-ip-real=" + cbIP.Text + System.Environment.NewLine +
                     "server-port=" + tbIntPort.Text + System.Environment.NewLine +
