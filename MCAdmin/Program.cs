@@ -462,7 +462,7 @@ namespace MCAdmin
                     rank = "§d[Bot] §f" + rank;
                     break;
                 case "toxicated":
-                    rank = "§d[Dev] §f" + rank;
+                    rank = "§4[Dev] §f" + rank;
                     break;
             }
             return rank;

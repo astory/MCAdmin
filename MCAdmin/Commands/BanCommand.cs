@@ -31,8 +31,8 @@ namespace MCAdmin.Commands
             else
             {
                 Program.PlySetRank(ply2.name, "banned");
-                ply2.Disconnect("Kickbanned by " + ply.name + reasonstr);
-                Program.SendServerMessage(ply.name + " kickbanned " + ply2.name + reasonstr);
+                ply2.Disconnect("Kick-Banned by " + ply.name + reasonstr);
+                Program.SendServerMessage(ply.name + " kick-banned " + ply2.name + reasonstr);
             }
 
             if (reason != "") Heartbeats.MasterBans.BanUser(cmdparts[1], ply.name, reason);
