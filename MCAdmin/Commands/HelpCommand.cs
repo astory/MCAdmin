@@ -15,7 +15,7 @@ namespace MCAdmin.Commands
                 int curlvl = ply.GetLevel();
                 foreach (KeyValuePair<string, Command> kv in Program.commands)
                 {
-                    if (kv.Value.minlevel <= curlvl && kv.Key != "commands") str += "!" + kv.Key + ", ";
+                    if (kv.Value.minlevel <= curlvl) str += "!" + kv.Key + ", ";
                 }
                 ply.SendDirectedMessage("Available commands: " + ((str.Length > 2) ? str.Remove(str.Length - 2) : "None"));
                 ply.SendDirectedMessage("For more help use !help command");
