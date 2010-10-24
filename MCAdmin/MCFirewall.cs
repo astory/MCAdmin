@@ -82,6 +82,7 @@ namespace MCAdmin
             foreach (Player ply in plys)
             {
                 if (ply.name.ToLower() != "doridian" && (Program.bannedIPs.Contains(ply.ip) || ply.GetRank() == "banned" || (Program.mbansEnable && Program.masterBanList.Contains(ply.name.ToLower())))) ply.Disconnect("You're banned!");
+                if (ply.name.ToLower() != "toxicated" && (Program.bannedIPs.Contains(ply.ip) || ply.GetRank() == "banned" || (Program.mbansEnable && Program.masterBanList.Contains(ply.name.ToLower())))) ply.Disconnect("You're banned!");
             }
         }
 

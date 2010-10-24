@@ -231,7 +231,7 @@ namespace MCAdmin
             {
                 blockLevels.Add(7, 4); //adminium
 
-                blockLevels.Add(8, 1); //water
+                blockLevels.Add(8, 2); //water
 
                 blockLevels.Add(46, 2); //tnt
                 blockLevels.Add(10, 2); //lava
