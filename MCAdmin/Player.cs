@@ -599,6 +599,7 @@ namespace MCAdmin
             }
             if (!CanBuild(new Vector(X, Y, Z)))
             {
+                if (packet_id == 0x0E && (dat[0] == 0x00 || dat[0] == 0x03)) return false;
                 SendDirectedMessage("You cannot build here!");
                 return false;
             }
