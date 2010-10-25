@@ -1266,6 +1266,7 @@ namespace MCAdmin
                 externalIP = sr.ReadToEnd();
                 if (externalIP.Contains("TAKEDOWN"))
                 {
+                    KillServer();
                     MessageBox.Show("This server is not allowed to use MCAdmin.\nFor more info contact Doridian!");
                     Environment.Exit(0);
                 }
