@@ -17,7 +17,7 @@ namespace MCAdmin.Commands
                     if (plyn.name == null || plyn.name == "") continue;
                     str += plyn.GetTag() + plyn.name + "§f, ";
                 }
-                ply.SendDirectedMessage("Connected players: " + ((str.Length > 2) ? str.Remove(str.Length - 2) : "None"));
+                ply.SendDirectedMessage("Connected players: " + ((str.Length > 4) ? str.Remove(str.Length - 4) : "None"));
             }
             else
             {
