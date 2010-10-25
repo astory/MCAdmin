@@ -20,6 +20,7 @@ namespace MCAdmin
         public static bool dontUpdateMCAdmin = false;
         public static bool dontUpdateJAR = false;
         public static bool consoleOnly = false;
+        public static bool autoStartServer = false;
 
         #region Header variables
         public static bool isStuffInProgress = false;
@@ -677,6 +678,11 @@ namespace MCAdmin
 
             AddRTLine(Color.Green, "Update checking done!\r\n", false);
             updateRunning = false;
+
+            if (autoStartServer && minecraftServer == null)
+            {
+                StartServer();
+            }
         }
 
         private static bool FileCompare(string file1, string file2)
@@ -1282,6 +1288,7 @@ namespace MCAdmin
                 else if (argtl.Contains("nojarupdate")) dontUpdateJAR = true;
                 else if (argtl.Contains("noexeupdate")) dontUpdateMCAdmin = true;
                 else if (argtl.Contains("console")) consoleOnly = true;
+                else if (argtl.Contains("autostart") || argtl.Contains("autorun")) autoStartServer = true;
             }
 
             Console.Title = "MCAdmin (c) by Doridian 2010";
@@ -1486,7 +1493,7 @@ namespace MCAdmin
 
             commands.Add("motd", new MotdCommand());
             commands.Add("rules", new RulesCommand());
-            //commands.Add("info", new InfoCommand());
+            commands.Add("info", new InfoCommand());
 
             commands.Add("version", new VersionCommand());
             commands.Add("compass", new CompassCommand());
@@ -1709,7 +1716,6 @@ namespace MCAdmin
             }
             catch { }
 
-            //CheckUpdate(true);
             tmCheckUpdate.Change(0, 60 * 60 * 1000);
             tmHeartbeat.Change(0, 60 * 1000);
         }
