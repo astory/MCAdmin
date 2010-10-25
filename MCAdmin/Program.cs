@@ -449,6 +449,23 @@ namespace MCAdmin
         }
 
         #region Player interface
+        public static string PlyGetColor(string ply)
+        {
+            string tag = PlyGetTag(ply);
+            bool isCC = false;
+            string colcode = "";
+            foreach (char c in tag)
+            {
+                if (isCC)
+                {
+                    colcode = "§" + c;
+                    isCC = false;
+                }
+                if (c == '§') isCC = true;
+            }
+            return colcode;
+        }
+
         public static string PlyGetTag(string ply)
         {
             string rank = PlyGetRank(ply);

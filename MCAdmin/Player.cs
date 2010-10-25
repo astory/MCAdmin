@@ -127,9 +127,21 @@ namespace MCAdmin
                                         this.Disconnect(reason);
                                         break;
                                     case 20:
-                                        ReceiveBytes(internalSock, 4); //4
+                                        ReceiveBytes(internalSock, 4);
                                         ReceiveString(internalSock);
-                                        ReceiveBytes(internalSock, 16); //4 + 4 + 4 + 1 + 1 + 2
+                                        ReceiveBytes(internalSock, 16);
+
+                                        //Sadly removes the ability of skins v.v Stupid notch
+                                        /*byte[] b1 = ReceiveBytes(internalSock, 4); //4
+                                        string nam = ReceiveString(internalSock);
+                                        byte[] b3 = ReceiveBytes(internalSock, 16); //4 + 4 + 4 + 1 + 1 + 2
+                                        nam = Program.PlyGetColor(nam) + nam;
+                                        byte[] b2 = Util.StoA(nam);
+                                        fwcache_int = new byte[21 + b2.Length];
+                                        fwcache_int[0] = 20;
+                                        b1.CopyTo(fwcache_int, 1);
+                                        b2.CopyTo(fwcache_int, 5);
+                                        b3.CopyTo(fwcache_int, b2.Length + 5);*/
                                         break;
                                     case 51:
                                         ReceiveBytes(internalSock, 13); //4 + 2 + 4 + 1 + 1 + 1
@@ -924,6 +936,11 @@ namespace MCAdmin
         public virtual string GetTag()
         {
             return Program.PlyGetTag(name);
+        }
+
+        public virtual string GetColor()
+        {
+            return Program.PlyGetColor(name);
         }
 
         public virtual void SetRank(string rank)
