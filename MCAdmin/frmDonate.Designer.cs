@@ -40,7 +40,7 @@
             this.lblDonate.AutoSize = true;
             this.lblDonate.Location = new System.Drawing.Point(12, 9);
             this.lblDonate.Name = "lblDonate";
-            this.lblDonate.Size = new System.Drawing.Size(432, 104);
+            this.lblDonate.Size = new System.Drawing.Size(375, 104);
             this.lblDonate.TabIndex = 0;
             this.lblDonate.Text = resources.GetString("lblDonate.Text");
             this.lblDonate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -49,7 +49,7 @@
             // 
             this.btnDonate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDonate.Image = global::MCAdmin.Properties.Resources.btn_donate_LG;
-            this.btnDonate.Location = new System.Drawing.Point(173, 135);
+            this.btnDonate.Location = new System.Drawing.Point(154, 125);
             this.btnDonate.Name = "btnDonate";
             this.btnDonate.Size = new System.Drawing.Size(95, 25);
             this.btnDonate.TabIndex = 1;
@@ -59,7 +59,7 @@
             // btnNo
             // 
             this.btnNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNo.Location = new System.Drawing.Point(315, 135);
+            this.btnNo.Location = new System.Drawing.Point(265, 125);
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(122, 25);
             this.btnNo.TabIndex = 2;
@@ -71,13 +71,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 172);
+            this.ClientSize = new System.Drawing.Size(395, 157);
             this.ControlBox = false;
             this.Controls.Add(this.btnNo);
             this.Controls.Add(this.btnDonate);
             this.Controls.Add(this.lblDonate);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmDonate";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Please Donate";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmDonate_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.btnDonate)).EndInit();
