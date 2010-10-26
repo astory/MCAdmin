@@ -40,7 +40,7 @@
             this.lblDonate.AutoSize = true;
             this.lblDonate.Location = new System.Drawing.Point(12, 9);
             this.lblDonate.Name = "lblDonate";
-            this.lblDonate.Size = new System.Drawing.Size(375, 104);
+            this.lblDonate.Size = new System.Drawing.Size(366, 104);
             this.lblDonate.TabIndex = 0;
             this.lblDonate.Text = resources.GetString("lblDonate.Text");
             this.lblDonate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
