@@ -206,5 +206,10 @@ namespace MCAdmin
         {
             new frmServerMods().ShowDialog(this);
         }
+
+        private void btnDonate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=N75E8XW5N2XRU");
+        }
     }
 }

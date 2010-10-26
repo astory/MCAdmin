@@ -39,6 +39,7 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.gbManage = new System.Windows.Forms.GroupBox();
+            this.btnMods = new System.Windows.Forms.Button();
             this.btnMasterServerConfig = new System.Windows.Forms.Button();
             this.btnManageRanks = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -54,9 +55,10 @@
             this.lbPlayers = new System.Windows.Forms.ListBox();
             this.tmUpdateStuff = new System.Windows.Forms.Timer(this.components);
             this.btnRunCmd = new System.Windows.Forms.Button();
-            this.btnMods = new System.Windows.Forms.Button();
+            this.btnDonate = new System.Windows.Forms.PictureBox();
             this.gbStatus.SuspendLayout();
             this.gbManage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDonate)).BeginInit();
             this.SuspendLayout();
             // 
             // rtServer
@@ -174,6 +176,16 @@
             this.gbManage.TabStop = false;
             this.gbManage.Text = "Server management";
             // 
+            // btnMods
+            // 
+            this.btnMods.Location = new System.Drawing.Point(556, 43);
+            this.btnMods.Name = "btnMods";
+            this.btnMods.Size = new System.Drawing.Size(104, 25);
+            this.btnMods.TabIndex = 11;
+            this.btnMods.Text = "Server mods";
+            this.btnMods.UseVisualStyleBackColor = true;
+            this.btnMods.Click += new System.EventHandler(this.btnMods_Click);
+            // 
             // btnMasterServerConfig
             // 
             this.btnMasterServerConfig.Location = new System.Drawing.Point(556, 19);
@@ -288,9 +300,9 @@
             // 
             this.tbCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCommand.Location = new System.Drawing.Point(12, 577);
+            this.tbCommand.Location = new System.Drawing.Point(14, 580);
             this.tbCommand.Name = "tbCommand";
-            this.tbCommand.Size = new System.Drawing.Size(844, 20);
+            this.tbCommand.Size = new System.Drawing.Size(741, 20);
             this.tbCommand.TabIndex = 3;
             this.tbCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCommand_KeyDown);
             // 
@@ -314,29 +326,32 @@
             // btnRunCmd
             // 
             this.btnRunCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRunCmd.Location = new System.Drawing.Point(862, 577);
+            this.btnRunCmd.Location = new System.Drawing.Point(761, 577);
             this.btnRunCmd.Name = "btnRunCmd";
-            this.btnRunCmd.Size = new System.Drawing.Size(69, 20);
+            this.btnRunCmd.Size = new System.Drawing.Size(69, 25);
             this.btnRunCmd.TabIndex = 10;
             this.btnRunCmd.Text = "Run";
             this.btnRunCmd.UseVisualStyleBackColor = true;
             this.btnRunCmd.Click += new System.EventHandler(this.btnRunCmd_Click);
             // 
-            // btnMods
+            // btnDonate
             // 
-            this.btnMods.Location = new System.Drawing.Point(556, 43);
-            this.btnMods.Name = "btnMods";
-            this.btnMods.Size = new System.Drawing.Size(104, 25);
-            this.btnMods.TabIndex = 11;
-            this.btnMods.Text = "Server mods";
-            this.btnMods.UseVisualStyleBackColor = true;
-            this.btnMods.Click += new System.EventHandler(this.btnMods_Click);
+            this.btnDonate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDonate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDonate.Image = global::MCAdmin.Properties.Resources.btn_donate_LG;
+            this.btnDonate.Location = new System.Drawing.Point(836, 577);
+            this.btnDonate.Name = "btnDonate";
+            this.btnDonate.Size = new System.Drawing.Size(95, 25);
+            this.btnDonate.TabIndex = 11;
+            this.btnDonate.TabStop = false;
+            this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(943, 606);
+            this.Controls.Add(this.btnDonate);
             this.Controls.Add(this.btnRunCmd);
             this.Controls.Add(this.lbPlayers);
             this.Controls.Add(this.tbCommand);
@@ -352,6 +367,7 @@
             this.gbStatus.ResumeLayout(false);
             this.gbStatus.PerformLayout();
             this.gbManage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.btnDonate)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -384,6 +400,7 @@
         public System.Windows.Forms.Button btnProperties;
         private System.Windows.Forms.Button btnMasterServerConfig;
         private System.Windows.Forms.Button btnMods;
+        private System.Windows.Forms.PictureBox btnDonate;
     }
 }
 
