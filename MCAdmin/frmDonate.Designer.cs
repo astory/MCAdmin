@@ -40,7 +40,7 @@
             this.lblDonate.AutoSize = true;
             this.lblDonate.Location = new System.Drawing.Point(12, 9);
             this.lblDonate.Name = "lblDonate";
-            this.lblDonate.Size = new System.Drawing.Size(366, 104);
+            this.lblDonate.Size = new System.Drawing.Size(424, 52);
             this.lblDonate.TabIndex = 0;
             this.lblDonate.Text = resources.GetString("lblDonate.Text");
             this.lblDonate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -49,7 +49,7 @@
             // 
             this.btnDonate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDonate.Image = global::MCAdmin.Properties.Resources.btn_donate_LG;
-            this.btnDonate.Location = new System.Drawing.Point(154, 125);
+            this.btnDonate.Location = new System.Drawing.Point(172, 79);
             this.btnDonate.Name = "btnDonate";
             this.btnDonate.Size = new System.Drawing.Size(95, 25);
             this.btnDonate.TabIndex = 1;
@@ -59,11 +59,11 @@
             // btnNo
             // 
             this.btnNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNo.Location = new System.Drawing.Point(265, 125);
+            this.btnNo.Location = new System.Drawing.Point(314, 79);
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(122, 25);
             this.btnNo.TabIndex = 2;
-            this.btnNo.Text = "I don\'t want to donate";
+            this.btnNo.Text = "No thanks";
             this.btnNo.UseVisualStyleBackColor = true;
             this.btnNo.Click += new System.EventHandler(this.btnNo_Click);
             // 
@@ -71,7 +71,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(395, 157);
+            this.ClientSize = new System.Drawing.Size(447, 109);
             this.ControlBox = false;
             this.Controls.Add(this.btnNo);
             this.Controls.Add(this.btnDonate);

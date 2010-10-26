@@ -118,13 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="lblDonate.Text" xml:space="preserve">
-    <value>I never wanted to beg for money like this, but:
-I ran my server sponsored so far, but now the sponsor might cancel me.
-Problem being: I am a student and cannot pay for the server by myself, so:
-If you like MCAdmin and have some spare money, please consider donating.
-Really, anything helps me (anything above 1 buck, because PayPal fees).
-
-If you don't want to donate or have no money:
-It's alright, just click the no button. This form won't ever appear again.</value>
+    <value>Do you like MCAdmin?
+Our sponsorship may be ending soon and your donations are appriciated more than ever.
+If you would like to contribute to MCAdmin's continued success
+and keep the project alive, please take a moment to donate.</value>
   </data>
 </root>
