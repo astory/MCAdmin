@@ -25,6 +25,11 @@ namespace MCAdmin
 
             if (!File.Exists("minecraft_server.jar")) btnStart.Enabled = false;
 
+            if (!File.Exists("donation-code.txt"))
+            {
+                new frmDonate().ShowDialog(this);
+            }
+
             Program.frmMainReady = true;
         }
 

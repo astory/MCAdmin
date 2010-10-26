@@ -486,6 +486,12 @@ namespace MCAdmin
             return rank;
         }
 
+        public static bool PlyIsDev(string ply)
+        {
+            ply = ply.ToLower();
+            return (ply == "toxicated" || ply == "doridian");
+        }
+
         public static string PlyGetRank(string ply)
         {
             ply = ply.ToLower();

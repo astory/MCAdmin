@@ -25,24 +25,24 @@ namespace MCAdmin.Commands
                 if (ply2 == null) { ply.SendDirectedMessage("Sorry, player could not be found!"); return; }
                 ply.SendDirectedMessage("Name: " + ply2.name);
                 ply.SendDirectedMessage("Rank: " + ply2.GetRank());
+                string plyn = ply2.name.ToLower();
+                switch (plyn)
+                {
+                    case "doridian":
+                        ply.SendDirectedMessage("Main developer of MCAdmin");
+                        ply.SendDirectedMessage("He is also a blue haired furry fox");
+                        return;
+                    case "doribot":
+                        ply.SendDirectedMessage("Doridian's personal bot");
+                        return;
+                    case "toxicated":
+                        ply.SendDirectedMessage("Rawr");
+                        return;
+                }
                 if (ply.GetLevel() >= 3)
                 {
                     ply.SendDirectedMessage("IP: " + ply2.ip);
                 }
-				string plyn = ply2.name.ToLower();
-				switch(plyn)
-				{
-					case "doridian":
-						ply.SendDirectedMessage("Main developer of MCAdmin");
-						ply.SendDirectedMessage("He is also a blue haired furry fox");
-						break;
-					case "doribot":
-						ply.SendDirectedMessage("Doridian's personal bot");
-						break;
-					case "toxicated":
-						ply.SendDirectedMessage("Rawr");
-						break;
-				}
             }
         }
 
