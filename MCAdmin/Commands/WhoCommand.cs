@@ -40,7 +40,7 @@ namespace MCAdmin.Commands
 						ply.SendDirectedMessage("Doridian's personal bot");
 						break;
 					case "toxicated":
-						ply.SendDirectedMessage("Help developer for MCAdmin");
+						ply.SendDirectedMessage("Rawr");
 						break;
 				}
             }
