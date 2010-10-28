@@ -34,7 +34,6 @@ namespace MCAdmin.Commands
         }
 
         public override int minlevel { get { return reqlevel; } set { } }
-
         public override int reqlevel { get { return 0; } }
 
         public override string Help { get { return "Gives help about commands."; } }

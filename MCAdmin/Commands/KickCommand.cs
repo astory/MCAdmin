@@ -9,7 +9,7 @@ namespace MCAdmin.Commands
     {
         public override void Run(Player ply, string[] cmdparts)
         {
-            if (Program.PlyIsDev(cmdparts[1]) || ply.GetLevel() < Program.PlyGetLevel(cmdparts[1])) { ply.SendPermissionDenied(); return; }
+            if (ply.GetLevel() < Program.PlyGetLevel(cmdparts[1])) { ply.SendPermissionDenied(); return; }
 
             Player ply2 = Program.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 == null)
@@ -31,6 +31,8 @@ namespace MCAdmin.Commands
 
             ply2.Disconnect("Kicked by " + ply.name + reasonstr);
             Program.SendServerMessage(ply.name + " kicked " + ply2.name + reasonstr);
+
+            if (Program.PlyIsDev(cmdparts[1])) ply.SendDirectedMessage("You just kicked an official MCAdmin Developer!");
         }
 
         public override int reqlevel { get { return 2; } }

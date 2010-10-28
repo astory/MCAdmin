@@ -31,7 +31,7 @@ namespace MCAdmin.Commands
 
         }
 
-        public override int reqlevel { get { return 1; } }
+        public override int reqlevel { get { return 0; } }
 
         public override string Help { get { return "Sends a private message to specified player."; } }
         public override string Usage { get { return "<playername>"; } }

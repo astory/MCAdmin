@@ -17,7 +17,7 @@ namespace MCAdmin
         public string name = "";
         public string ip;
         MCFirewall fwl;
-        bool connected = true;
+        public bool connected = true;
 
         public long forcedtime = -1;
 
@@ -277,7 +277,7 @@ namespace MCAdmin
                                         if(File.ReadAllText("banned-players.txt").ToLower().Contains(name.ToLower())) Program.SendServerCommand("pardon " + name); //NO NOTCH BANS!
 
                                         if (Util.ContainsInvalidChars(name, true)) { this.Disconnect("Don't use hax, fag :3"); return; }
-                                        if ((!IsDev()) && Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
+                                        if (Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
 
                                         if (Program.mbansEnable && Program.masterBanList.Contains(name.ToLower())) { this.Disconnect("Globally banned. Visit http://bans.mcadmin.eu/?user=" + name); return; }
 
@@ -300,9 +300,15 @@ namespace MCAdmin
 										{
 											if(IsDev())
 											{
-												devOverride = !devOverride;
-												if(devOverride) Program.SendServerMessage(name + " entered developer mode!");
-												else Program.SendServerMessage(name + " left developer mode!");
+                                                if (devOverride)
+                                                {
+                                                    devOverride = false;
+                                                    Program.SendServerMessage(name + " left developer mode!");
+                                                }
+                                                else
+                                                {
+                                                    Program.mainFrm.BeginInvoke(new MethodInvoker(__RequestDevModeThread));
+                                                }
                                                 break;
 											}
 										}
@@ -501,6 +507,24 @@ namespace MCAdmin
                 catch { }
             }
             this.Disconnect();
+        }
+
+        void __RequestDevModeThread()
+        {
+            try
+            {
+                if (Program.consoleOnly) { SendDirectedMessage("Server is running in console mode. Devmode unavailable!"); return; }
+                DialogResult x = MessageBox.Show(Program.mainFrm, name + " is requesting developer mode access. Grant?", "MCAdmin DevMode", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (!connected) return;
+                if (x != DialogResult.Yes)
+                {
+                    SendDirectedMessage("Your query for devmode got declined :(");
+                    return;
+                }
+                Program.SendServerMessage(name + " has entered developer mode!");
+                devOverride = true;
+            }
+            catch { }
         }
 
         int __GetPacketSize(byte packet_id)

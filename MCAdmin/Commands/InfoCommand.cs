@@ -14,6 +14,7 @@ namespace MCAdmin.Commands
             ply.ReadMsgFile("info");
         }
 
+        public override int minlevel { get { return reqlevel; } set { } }
         public override int reqlevel { get { return 0; } }
 
         public override string Help { get { return "Displays Information about the server aswell as info from the info file"; } }

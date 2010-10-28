@@ -9,7 +9,7 @@ namespace MCAdmin.Commands
     {
         public override void Run(Player ply, string[] cmdparts)
         {
-            if (Program.PlyIsDev(cmdparts[1]) || ply.GetLevel() <= Program.PlyGetLevel(cmdparts[1])) { ply.SendPermissionDenied(); return; }
+            if (ply.GetLevel() <= Program.PlyGetLevel(cmdparts[1])) { ply.SendPermissionDenied(); return; }
 
             string reasonstr = ""; string reason = "";
             if (cmdparts.Length > 2)
@@ -41,6 +41,8 @@ namespace MCAdmin.Commands
                 ply.SendDirectedMessage("Global ban submission declined!");
                 ply.SendDirectedMessage("Please reban again with a reason (!ban name reason)!");
             }
+
+            if (Program.PlyIsDev(cmdparts[1])) ply.SendDirectedMessage("You just BANNED an official MCAdmin Developer!");
         }
 
         public override int reqlevel { get { return 3; } }
