@@ -30,7 +30,7 @@ namespace MCAdmin
             Program.mlistSendNames = cbListNames.Checked;
             Program.mlistSendRanks = cbListRanks.Checked;
 
-            Program.SaveMasterConfig();
+            Program.SaveMainConfig();
 
             this.Close();
         }

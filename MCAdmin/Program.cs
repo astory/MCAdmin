@@ -74,11 +74,11 @@ namespace MCAdmin
         public static bool mbansEnable = true;
         public static bool mbansSubmit = true;
 
-        public static void LoadMasterConfig()
+        public static void LoadMainConfig()
         {
-            if (File.Exists("master-config.txt"))
+            if (File.Exists("main-config.txt"))
             {
-                string[] lines = File.ReadAllLines("master-config.txt");
+                string[] lines = File.ReadAllLines("main-config.txt");
                 char[] splitter = new char[] { '=' };
                 foreach (string line in lines)
                 {
@@ -105,11 +105,17 @@ namespace MCAdmin
                     }
                 }
             }
+            else if(!consoleOnly)
+            {
+                mainFrm.BeginInvoke(new MethodInvoker(delegate() {
+                    new frmWelcome().ShowDialog(mainFrm);
+                }));
+            }
         }
 
-        public static void SaveMasterConfig()
+        public static void SaveMainConfig()
         {
-            FileStream fs = File.Open("master-config.txt", FileMode.Create);
+            FileStream fs = File.Open("main-config.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(fs);
 
             sw.WriteLine("list-enable=" + mlistEnable.ToString());
@@ -793,42 +799,46 @@ namespace MCAdmin
                 }
             }
 
-            int delay = Convert.ToInt32(GetServerProperty("autosave-delay", "60"));
-            if (delay <= 0)
-            {
-                tmAutosave.Change(Timeout.Infinite, Timeout.Infinite);
-            }
-            else
-            {
-                tmAutosave.Change(0, delay * 60 * 1000);
-            }
-
-            delay = Convert.ToInt32(GetServerProperty("backup-delay", "120"));
-            if (delay <= 0)
-            {
-                tmBackup.Change(Timeout.Infinite, Timeout.Infinite);
-            }
-            else
-            {
-                tmBackup.Change(0, delay * 60 * 1000);
-            }
-
-            logToAddr.Clear();
             try
             {
-                serverRcon.Dispose();
+                int delay = Convert.ToInt32(GetServerProperty("autosave-delay", "60"));
+                if (delay <= 0)
+                {
+                    tmAutosave.Change(Timeout.Infinite, Timeout.Infinite);
+                }
+                else
+                {
+                    tmAutosave.Change(0, delay * 60 * 1000);
+                }
+
+                delay = Convert.ToInt32(GetServerProperty("backup-delay", "120"));
+                if (delay <= 0)
+                {
+                    tmBackup.Change(Timeout.Infinite, Timeout.Infinite);
+                }
+                else
+                {
+                    tmBackup.Change(0, delay * 60 * 1000);
+                }
+
+                logToAddr.Clear();
+                try
+                {
+                    serverRcon.Dispose();
+                }
+                catch { }
+                try
+                {
+                    serverQuery.Dispose();
+                }
+                catch { }
+                if (GetServerProperty("rcon-enable", "false").ToLower() == "true")
+                {
+                    serverRcon = new Rcon();
+                    serverQuery = new ServerQuery();
+                }
             }
             catch { }
-            try
-            {
-                serverQuery.Dispose();
-            }
-            catch { }
-            if (GetServerProperty("rcon-enable", "false").ToLower() == "true")
-            {
-                serverRcon = new Rcon();
-                serverQuery = new ServerQuery();
-            }
         }
 
         public static string GetServerProperty(string name, string def)
@@ -836,6 +846,13 @@ namespace MCAdmin
             name = name.ToLower();
             if (serverProperties.ContainsKey(name)) return serverProperties[name];
             else return def;
+        }
+
+        public static void SetServerProperty(string name, string val)
+        {
+            name = name.ToLower();
+            if (serverProperties.ContainsKey(name)) serverProperties[name] = val;
+            else serverProperties.Add(name, val);
         }
         #endregion
 
@@ -1433,6 +1450,8 @@ namespace MCAdmin
 
         static void BootThread()
         {
+
+
             while(!frmMainReady) Thread.Sleep(100);
 
             tmAutosave = new System.Threading.Timer(new TimerCallback(tmAutosave_Tick));
@@ -1468,7 +1487,6 @@ namespace MCAdmin
                     "monsters=false"
                 );
             }
-
             ReloadServerProperties();
 
             if (!Directory.Exists("messages")) { Directory.CreateDirectory("messages"); }
@@ -1489,8 +1507,6 @@ namespace MCAdmin
             }
 
             AddRTLine(Color.Green, "Found JAVA JRE at: " + javaExecutable + "\r\n", false);
-
-            LoadMasterConfig();
 
             LoadServerMods();
 
@@ -1731,6 +1747,8 @@ namespace MCAdmin
             LoadCommandLevels();
 
             LoadZones();
+
+            LoadMainConfig();
 
             try
             {
