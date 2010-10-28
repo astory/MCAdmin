@@ -1523,8 +1523,6 @@ namespace MCAdmin
 
             commands.Add("version", new VersionCommand());
             commands.Add("compass", new CompassCommand());
-            commands.Add("dev", new DevCommand());
-            commands.Add("devs", new DevCommand());
 
             commands.Add("time", new TimeCommand());
             commands.Add("servertime", new ServertimeCommand());
