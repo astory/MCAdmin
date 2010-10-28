@@ -479,9 +479,6 @@ namespace MCAdmin
                 case "doribot":
                     rank = "§d[Bot] §f" + rank;
                     break;
-                case "toxicated":
-                    rank = "§4[Dev] §f" + rank;
-                    break;
             }
             return rank;
         }
@@ -489,7 +486,7 @@ namespace MCAdmin
         public static bool PlyIsDev(string ply)
         {
             ply = ply.ToLower();
-            return (ply == "toxicated" || ply == "doridian");
+            return (ply == "doridian");
         }
 
         public static string PlyGetRank(string ply)
@@ -1526,6 +1523,8 @@ namespace MCAdmin
 
             commands.Add("version", new VersionCommand());
             commands.Add("compass", new CompassCommand());
+            commands.Add("dev", new DevCommand());
+            commands.Add("devs", new DevCommand());
 
             commands.Add("time", new TimeCommand());
             commands.Add("servertime", new ServertimeCommand());

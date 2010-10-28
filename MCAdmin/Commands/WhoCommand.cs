@@ -35,9 +35,6 @@ namespace MCAdmin.Commands
                     case "doribot":
                         ply.SendDirectedMessage("Doridian's personal bot");
                         return;
-                    case "toxicated":
-                        ply.SendDirectedMessage("Rawr");
-                        return;
                 }
                 if (ply.GetLevel() >= 3)
                 {
