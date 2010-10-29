@@ -15,7 +15,7 @@ namespace MCAdmin.Commands
                 foreach (Player plyn in Program.minecraftFirewall.players)
                 {
                     if (plyn.name == null || plyn.name == "") continue;
-                    str += /*plyn.GetTag() +*/ plyn.name + ", ";
+                    str += plyn.name + ", ";
                 }
                 ply.SendDirectedMessage("Connected players: " + ((str.Length > 2) ? str.Remove(str.Length - 2) : "None"));
             }

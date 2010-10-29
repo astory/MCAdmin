@@ -1311,12 +1311,6 @@ namespace MCAdmin
                 Stream str = hwres.GetResponseStream();
                 StreamReader sr = new StreamReader(str);
                 externalIP = sr.ReadToEnd();
-                /*if (externalIP.Contains("TAKEDOWN"))
-                {
-                    KillServer();
-                    MessageBox.Show("This server is not allowed to use MCAdmin.\nFor more info contact Doridian!");
-                    Environment.Exit(0);
-                }*/
                 sr.Close();
                 str.Close();
                 hwres.Close();
