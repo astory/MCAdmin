@@ -20,7 +20,7 @@ namespace MCAdmin
         SERVERDATA_EXECCOMMAND = 2
     }
 
-    class RconConnection
+    public class RconConnection
     {
         Rcon rcon;
         Socket sock;
@@ -376,7 +376,7 @@ namespace MCAdmin
         }
     }
 
-    class Rcon
+    public class Rcon
     {
         public List<RconConnection> rconConnections = new List<RconConnection>();
         TcpListener externalListener;

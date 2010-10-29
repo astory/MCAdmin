@@ -9,7 +9,7 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace MCAdmin
 {
-    class ServerMod
+    public class ServerMod
     {
         public string name; public string link; public string author; public string downloadURL;
         Thread updaterThread;

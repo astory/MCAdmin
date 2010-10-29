@@ -10,10 +10,11 @@ using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.Zip;
 using MCAdmin.Commands;
 using Microsoft.Win32;
+using System.Reflection;
 
 namespace MCAdmin
 {
-    static class Program
+    public static class Program
     {   
         public static frmMain mainFrm;
         public static bool dontUpdate = false;
@@ -428,6 +429,32 @@ namespace MCAdmin
             if (!Directory.Exists("mods")) Directory.CreateDirectory("mods");
             serverMods.Clear();
             serverMods.Add(new ServerMod("Runecraft", "http://www.minecraftforum.net/viewtopic.php?f=1012&t=29244", "SuperLlama", "http://llama.cerberusstudios.net/runecraft/runecraft_latest.zip"));            
+        }
+        #endregion
+
+        #region Plugin management
+        public static List<Plugin> serverPlugins = new List<Plugin>();
+        public static void LoadPlugins()
+        {
+            foreach (Plugin px in serverPlugins)
+            {
+                px.Unload();
+            }
+            serverPlugins.Clear();
+
+            if (!Directory.Exists("plugins")) Directory.CreateDirectory("plugins");
+
+            Plugin plugin;
+            Assembly asm;
+            string name;
+            string cdir = Directory.GetCurrentDirectory() + "\\";
+            foreach (string plugfile in Directory.GetFiles("plugins"))
+            {
+                asm = Assembly.LoadFile(cdir + plugfile);
+                name = plugfile.Substring(8, plugfile.Length - 12);
+                plugin = (Plugin)asm.CreateInstance("MCAdmin.Plugins." + name);
+                serverPlugins.Add(plugin);
+            }
         }
         #endregion
 
@@ -1749,6 +1776,8 @@ namespace MCAdmin
             LoadZones();
 
             LoadMainConfig();
+
+            LoadPlugins();
 
             try
             {

@@ -30,7 +30,7 @@ namespace MCAdmin
         A2S_RULES = 0x45
     }
 
-    class ServerQuery
+    public class ServerQuery
     {
         public UdpClient externalListener;
         string ip; int port;
