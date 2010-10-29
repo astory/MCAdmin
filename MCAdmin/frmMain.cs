@@ -61,6 +61,8 @@ namespace MCAdmin
                 Program.serverQuery.Dispose();
             }
             catch { }
+
+            Environment.Exit(0);
         }
 
         public void AddRTLine(Color color, string line)
