@@ -444,16 +444,29 @@ namespace MCAdmin
 
             if (!Directory.Exists("plugins")) Directory.CreateDirectory("plugins");
 
-            Plugin plugin;
-            Assembly asm;
-            string name;
+            Plugin plugin; Assembly asm; string name; Type type;
             string cdir = Directory.GetCurrentDirectory() + "\\";
             foreach (string plugfile in Directory.GetFiles("plugins"))
             {
                 asm = Assembly.LoadFile(cdir + plugfile);
                 name = plugfile.Substring(8, plugfile.Length - 12);
-                plugin = (Plugin)asm.CreateInstance("MCAdmin.Plugins." + name);
-                serverPlugins.Add(plugin);
+                type = asm.GetType("MCAdmin.Plugins." + name);
+                try
+                {
+                    plugin = (Plugin)type.GetConstructor(Type.EmptyTypes).Invoke(null);
+                    if (plugin == null)
+                    {
+                        AddRTLine(Color.Red, "Unknown error loading plugin " + name + "!\r\n", true);
+                    }
+                    else
+                    {
+                        serverPlugins.Add(plugin);
+                    }
+                }
+                catch(Exception e)
+                {
+                    AddRTLine(Color.Red, "Error loading plugin " + name + ": " + e.ToString() + "\r\n", true);
+                }
             }
         }
         #endregion
