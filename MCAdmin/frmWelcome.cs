@@ -24,6 +24,9 @@ namespace MCAdmin
             {
                 Program.SetServerProperty("default-rank", "banned");
             }
+            if (!Program.serverProperties.ContainsKey("server-port")) Program.SetServerProperty("server-port", "25566");
+            if (!Program.serverProperties.ContainsKey("server-port-real")) Program.SetServerProperty("server-port-real", "25565");
+
             Program.mbansEnable = cbBans.Checked;
             Program.mbansSubmit = cbBans.Checked;
             Program.mlistEnable = cbList.Checked;
