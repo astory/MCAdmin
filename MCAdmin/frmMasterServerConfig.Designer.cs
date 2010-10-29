@@ -51,7 +51,7 @@
             this.cbEnableList.Name = "cbEnableList";
             this.cbEnableList.Size = new System.Drawing.Size(172, 17);
             this.cbEnableList.TabIndex = 0;
-            this.cbEnableList.Text = "List this sevrer on the masterlist";
+            this.cbEnableList.Text = "List this server on the masterlist";
             this.cbEnableList.UseVisualStyleBackColor = true;
             this.cbEnableList.CheckedChanged += new System.EventHandler(this.cbEnableList_CheckedChanged);
             // 
