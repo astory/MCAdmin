@@ -8,7 +8,7 @@
         }
         ~Plugin()
         {
-            this.Unload();
+            //this.Unload();
         }
 
         public virtual void Load() { }
