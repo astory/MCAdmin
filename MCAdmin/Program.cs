@@ -442,11 +442,11 @@ namespace MCAdmin
             }
             serverPlugins.Clear();
 
-            if (!Directory.Exists("plugins")) Directory.CreateDirectory("plugins");
+            if (!Directory.Exists("plugins_mca")) Directory.CreateDirectory("plugins_mca");
 
             Plugin plugin; Assembly asm; string name; Type type;
             string cdir = Directory.GetCurrentDirectory() + "\\";
-            foreach (string plugfile in Directory.GetFiles("plugins"))
+            foreach (string plugfile in Directory.GetFiles("plugins_mca"))
             {
                 asm = Assembly.LoadFile(cdir + plugfile);
                 name = plugfile.Substring(8, plugfile.Length - 12);
