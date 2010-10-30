@@ -116,7 +116,8 @@ namespace MCAdmin
                     "rcon-port=" + tbRCONPort.Text + System.Environment.NewLine +
                     "rcon-pass=" + tbRCONPass.Text + System.Environment.NewLine +
                     "server-name=" + tbSrvName.Text + System.Environment.NewLine +
-                    "monsters=" + cbMonsters.Checked.ToString().ToLower()
+                    "monsters=" + cbMonsters.Checked.ToString().ToLower() + System.Environment.NewLine + 
+                    "hellworld=" + cbHellworld.Checked.ToString().ToLower()
                 ;
         }
 

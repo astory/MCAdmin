@@ -65,6 +65,7 @@
             this.lblSrvName = new System.Windows.Forms.Label();
             this.tbSrvName = new System.Windows.Forms.TextBox();
             this.cbMonsters = new System.Windows.Forms.CheckBox();
+            this.cbHellworld = new System.Windows.Forms.CheckBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -471,11 +472,23 @@
             this.cbMonsters.UseVisualStyleBackColor = true;
             this.cbMonsters.CheckedChanged += new System.EventHandler(this.event_RefreshPreview);
             // 
+            // cbHellworld
+            // 
+            this.cbHellworld.AutoSize = true;
+            this.cbHellworld.Location = new System.Drawing.Point(116, 289);
+            this.cbHellworld.Name = "cbHellworld";
+            this.cbHellworld.Size = new System.Drawing.Size(72, 17);
+            this.cbHellworld.TabIndex = 36;
+            this.cbHellworld.Text = "Hell world";
+            this.cbHellworld.UseVisualStyleBackColor = true;
+            this.cbHellworld.CheckedChanged += new System.EventHandler(this.event_RefreshPreview);
+            // 
             // frmProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 496);
+            this.Controls.Add(this.cbHellworld);
             this.Controls.Add(this.cbMonsters);
             this.Controls.Add(this.lblSrvName);
             this.Controls.Add(this.tbSrvName);
@@ -564,5 +577,6 @@
         private System.Windows.Forms.Label lblSrvName;
         private System.Windows.Forms.TextBox tbSrvName;
         private System.Windows.Forms.CheckBox cbMonsters;
+        private System.Windows.Forms.CheckBox cbHellworld;
     }
 }
