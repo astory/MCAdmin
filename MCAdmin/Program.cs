@@ -367,9 +367,10 @@ namespace MCAdmin
         {
             FileStream file = File.Open("ranks.txt", FileMode.Create);
             StreamWriter sw = new StreamWriter(file);
+            string defRank = GetServerProperty("default-rank","guest");
             foreach (KeyValuePair<string, string> kv in plyranks)
             {
-                if (!ranklevels.ContainsKey(kv.Value) || ranklevels[kv.Value] == 0) continue;
+                if (!ranklevels.ContainsKey(kv.Value) || kv.Value == defRank) continue;
                 sw.WriteLine(kv.Key + "=" + kv.Value + "\r\n");
             }
             sw.Close();
