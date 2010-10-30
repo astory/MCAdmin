@@ -99,6 +99,7 @@ namespace MCAdmin
                                         ReceiveBytes(internalSock, 4); //4
                                         ReceiveString(internalSock);
                                         ReceiveString(internalSock);
+                                        ReceiveBytes(internalSock, 9);
                                         break;
                                     case 2:
                                         ReceiveString(internalSock);
@@ -286,6 +287,8 @@ namespace MCAdmin
                                         ReceiveString(externalSock);
 
                                         ReadMsgFile("welcome");
+
+                                        ReceiveBytes(externalSock, 9);
 
                                         break;
                                     case 2:
