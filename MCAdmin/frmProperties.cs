@@ -45,6 +45,7 @@ namespace MCAdmin
             cbRCONEnable.Checked = (Program.GetServerProperty("rcon-enable", "false").ToLower() == "true");
 
             cbMonsters.Checked = (Program.GetServerProperty("monsters", "false").ToLower() == "true");
+            cbHellworld.Checked = (Program.GetServerProperty("hellworld", "false").ToLower() == "true");
 
             foreach (string rankname in Program.ranklevels.Keys)
             {
