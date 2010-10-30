@@ -83,7 +83,7 @@
     <Compile Include="Commands\CompassCommand.cs" />
     <Compile Include="Commands\FreezeCommand.cs" />
     <Compile Include="Commands\InfoCommand.cs" />
-    <Compile Include="Commands\TellCommand.cs" />
+    <Compile Include="Commands\PrivateMessageCommand.cs" />
     <Compile Include="Commands\NoTpCommand.cs" />
     <Compile Include="Commands\RulesCommand.cs" />
     <Compile Include="Commands\MotdCommand.cs" />

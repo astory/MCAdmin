@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MCAdmin.Commands
 {
-    class TellCommand : Command
+    class PrivateMessageCommand : Command
     {
         public override void Run(Player ply, string[] cmdparts)
         {
@@ -20,9 +20,9 @@ namespace MCAdmin.Commands
                     message.Append(cmdparts[i] + " ");
                 message.Remove(message.Length - 1, 1);
 
-                Program.AddRTLine(Color.Black, ply.name + " whispered to " + ply2.name + ": " + message + "\n", true );
-                ply.SendDirectedMessage("You whisper to " + ply2.name + ".");
-                ply2.SendDirectedMessage(ply.name + " whispers: " + message );
+                Program.AddRTLine(Color.Black, "[PM]" + ply.name + " to " + ply2.name + ": " + message + "\n", true );
+                ply.SendDirectedMessage("§e[PM >] §f" + ply.name + "§f: " + message);
+                ply2.SendDirectedMessage("§e[PM <] §f" + ply.name + "§f: " + message);
             }
             catch (Exception ex)
             {
@@ -34,7 +34,7 @@ namespace MCAdmin.Commands
         public override int reqlevel { get { return 0; } }
 
         public override string Help { get { return "Sends a private message to specified player."; } }
-        public override string Usage { get { return "<playername>"; } }
+        public override string Usage { get { return "<playername> <message>"; } }
 
     }
 }

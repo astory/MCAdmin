@@ -1581,7 +1581,7 @@ namespace MCAdmin
             commands.Add("changelevel", new ChangelevelCommand());
             //commands.Add("freeze", new FreezeCommand(this));
 
-            commands.Add("tell", new TellCommand());
+            commands.Add("pm", new PrivateMessageCommand());
             #endregion
 
             #region Blocks <-> IDs init
