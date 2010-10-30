@@ -17,7 +17,7 @@ namespace MCAdmin.Heartbeats
             return true;
         }
 
-        public static string Send(string url, string datastr)
+        public static void DisableCertValidation()
         {
             try
             {
@@ -28,7 +28,11 @@ namespace MCAdmin.Heartbeats
                 }
             }
             catch { }
+        }
 
+        public static string Send(string url, string datastr)
+        {
+            DisableCertValidation();
             try
             {
                 byte[] data = System.Text.Encoding.ASCII.GetBytes(datastr);

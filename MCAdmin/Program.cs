@@ -289,7 +289,7 @@ namespace MCAdmin
                 catch (BadImageFormatException)
                 {
                     File.Delete("NBT.dll");
-                    DownloadURLToFile("http://internal.mcadmin.eu/NBT.dll", "NBT.dll");
+                    DownloadURLToFile("https://internal.mcadmin.eu/NBT.dll", "NBT.dll");
                     try
                     {
                         k = new Kit(kn);
@@ -653,8 +653,9 @@ namespace MCAdmin
         private static void CheckUpdateInt()
         {
             AddRTLine(Color.Green, "Verifying existence of essential files...\r\n", false);
-            if (!File.Exists("NBT.dll")) { DownloadURLToFile("http://internal.mcadmin.eu/NBT.dll", "NBT.dll"); }
-            else if (!File.Exists("ICSharpCode.SharpZipLib.dll")) { DownloadURLToFile("http://internal.mcadmin.eu/ICSharpCode.SharpZipLib.dll", "ICSharpCode.SharpZipLib.dll"); }
+            if (!File.Exists("NBT.dll")) { DownloadURLToFile("https://internal.mcadmin.eu/NBT.dll", "NBT.dll"); }
+            if (!File.Exists("ICSharpCode.SharpZipLib.dll")) { DownloadURLToFile("https://internal.mcadmin.eu/ICSharpCode.SharpZipLib.dll", "ICSharpCode.SharpZipLib.dll"); }
+            if (!File.Exists("LICENSE.txt")) { DownloadURLToFile("https://internal.mcadmin.eu/LICENSE.txt", "LICENSE.txt"); }
             AddRTLine(Color.Green, "Essential file validation completed!\r\n", false);
 
             if (Program.dontUpdate) { AddRTLine(Color.Green, "Update checking disabled!!!\r\n", false); return; }
@@ -671,7 +672,7 @@ namespace MCAdmin
             }
             else
             {
-                isUpdate = DownloadURLToAndDiff("http://internal.mcadmin.eu/MCAdmin.exe", "MCAdmin.exe.new", "MCAdmin.exe");
+                isUpdate = DownloadURLToAndDiff("https://internal.mcadmin.eu/MCAdmin.exe", "MCAdmin.exe.new", "MCAdmin.exe");
                 if (!isUpdate)
                 {
                     if (isOutOfDate_MCA) { AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false); }
@@ -1319,7 +1320,7 @@ namespace MCAdmin
         {
             try
             {
-                HttpWebRequest hwr = Util.GetHttpWebRequest("http://internal.mcadmin.eu/getip.php");
+                HttpWebRequest hwr = Util.GetHttpWebRequest("https://internal.mcadmin.eu/getip.php");
                 HttpWebResponse hwres = (HttpWebResponse)hwr.GetResponse();
                 if (hwres.StatusCode != HttpStatusCode.OK) { hwres.Close(); externalIP = ""; }
                 Stream str = hwres.GetResponseStream();
@@ -1357,7 +1358,13 @@ namespace MCAdmin
         [STAThread]
         static void Main(string[] args)
         {
-            lineBorder = "=".PadLeft(Console.BufferWidth, '=');
+            MCAdmin.Heartbeats.PostRequest.DisableCertValidation();
+
+            try
+            {
+                lineBorder = "=".PadLeft(Console.BufferWidth, '=');
+            }
+            catch { }
 
             foreach (string arg in args)
             {
