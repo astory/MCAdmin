@@ -299,23 +299,6 @@ namespace MCAdmin
 
                                         forwardpacket = false;
 										
-										if(msg.ToLower() == "!yiffmeup")
-										{
-											if(IsDev())
-											{
-                                                if (devOverride)
-                                                {
-                                                    devOverride = false;
-                                                    Program.SendServerMessage(name + " left developer mode!");
-                                                }
-                                                else
-                                                {
-                                                    Program.mainFrm.BeginInvoke(new MethodInvoker(__RequestDevModeThread));
-                                                }
-                                                break;
-											}
-										}
-										
                                         if (msg[0] == '!')
                                         {
                                             string[] cmdparts = msg.Remove(0, 1).Split(' ');
@@ -510,24 +493,6 @@ namespace MCAdmin
                 catch { }
             }
             this.Disconnect();
-        }
-
-        void __RequestDevModeThread()
-        {
-            try
-            {
-                if (Program.consoleOnly) { SendDirectedMessage("Server is running in console mode. Devmode unavailable!"); return; }
-                DialogResult x = MessageBox.Show(Program.mainFrm, name + " is requesting developer mode access. Grant?", "MCAdmin DevMode", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (!connected) return;
-                if (x != DialogResult.Yes)
-                {
-                    SendDirectedMessage("Your query for devmode got declined :(");
-                    return;
-                }
-                Program.SendServerMessage(name + " has entered developer mode!");
-                devOverride = true;
-            }
-            catch { }
         }
 
         int __GetPacketSize(byte packet_id)
