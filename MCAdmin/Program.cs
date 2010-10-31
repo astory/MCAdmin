@@ -535,8 +535,7 @@ namespace MCAdmin
 
         public static bool PlyIsDev(string ply)
         {
-            ply = ply.ToLower();
-            return (ply == "doridian" || ply == "toxicated");
+            return false;
         }
 
         public static string PlyGetRank(string ply)
