@@ -526,6 +526,9 @@ namespace MCAdmin
                 case "doribot":
                     rank = "§d[Bot] §f" + rank;
                     break;
+                case "toxicated":
+                    rank = "§4[Dev] §f" + rank;
+                    break;
             }
             return rank;
         }
