@@ -450,7 +450,7 @@ namespace MCAdmin
             foreach (string plugfile in Directory.GetFiles("plugins_mca"))
             {
                 asm = Assembly.LoadFile(cdir + plugfile);
-                name = plugfile.Substring(8, plugfile.Length - 12);
+                name = plugfile.Substring(12, plugfile.Length - 16);
                 type = asm.GetType("MCAdmin.Plugins." + name);
                 try
                 {
