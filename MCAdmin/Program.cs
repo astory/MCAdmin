@@ -518,18 +518,6 @@ namespace MCAdmin
             string rank = PlyGetRank(ply);
             if (!ranktags.ContainsKey(rank)) rank = "";
             else rank = ranktags[rank];
-            switch (ply.ToLower())
-            {
-                case "doridian":
-                    rank = "§d[Dev] §f" + rank;
-                    break;
-                case "doribot":
-                    rank = "§d[Bot] §f" + rank;
-                    break;
-                case "toxicated":
-                    rank = "§4[Dev] §f" + rank;
-                    break;
-            }
             return rank;
         }
 
