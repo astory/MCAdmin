@@ -22,8 +22,6 @@ namespace MCAdmin
         public long forcedtime = -1;
 
         public bool allowTP = true;
-		
-		public bool devOverride = false;
 
         public Player()
         {

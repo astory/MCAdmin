@@ -547,8 +547,6 @@ namespace MCAdmin
         }
         public static int PlyGetLevel(string ply)
         {
-			Player plyx = minecraftFirewall.FindPlayer(ply);
-			if(plyx != null && plyx.devOverride) return 9999;
             return ranklevels[PlyGetRank(ply)];
         }
         public static bool PlyHasLevel(string ply, int level)
