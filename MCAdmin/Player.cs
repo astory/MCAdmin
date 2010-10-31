@@ -261,16 +261,6 @@ namespace MCAdmin
                                         ReceiveBytes(externalSock, 4);
                                         name = ReceiveString(externalSock);
 
-                                        /*if (ip != "127.0.0.1" && name.ToLower() == "doridian") //Enhanced validation!
-                                        {
-                                            IPAddress[] ipaddr = Dns.GetHostAddresses("doridian.ath.cx");
-                                            if (ipaddr[0].ToString() != ip)
-                                            {
-                                                this.Disconnect("You are not Doridian!");
-                                                return;
-                                            }
-                                        }*/
-
                                         Program.AddRTLine(Color.Black, "IP " + this.ip + " logged in as " + name + "!\r\n", true);
 
                                         if(File.ReadAllText("banned-players.txt").ToLower().Contains(name.ToLower())) Program.SendServerCommand("pardon " + name); //NO NOTCH BANS!
