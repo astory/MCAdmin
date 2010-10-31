@@ -12,8 +12,7 @@ namespace MCAdmin.Commands
             ply.SendDirectedMessage("§9MCAdmin (c) 2010");
             ply.SendDirectedMessage("§eBy Doridian the Blue Haired Fox");
             ply.SendDirectedMessage("");
-            ply.SendDirectedMessage("§eYou are not allowed to edit MCAdmin in any way, unless you have permission");
-            ply.SendDirectedMessage("§efrom Doridian. MCAdmin is not Open Source.");
+            ply.SendDirectedMessage("§eReleased under the terms of the BSD License");
         }
 
         public override int minlevel { get { return reqlevel; } set { } }
