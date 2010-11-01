@@ -18,7 +18,6 @@ namespace MCAdmin
     {   
         public static frmMain mainFrm;
         public static bool dontUpdate = false;
-        public static bool dontUpdateMCAdmin = false;
         public static bool dontUpdateJAR = false;
         public static bool consoleOnly = false;
         public static bool autoStartServer = false;
@@ -653,62 +652,6 @@ namespace MCAdmin
             AddRTLine(Color.Green, "Checking for updates...\r\n", false);
 
             bool isUpdate;
-
-            if (Program.dontUpdateMCAdmin)
-            {
-                AddRTLine(Color.Green, "MCAdmin update checking disabled.\r\n", false);
-            }
-            else
-            {
-                isUpdate = DownloadURLToAndDiff("https://internal.mcadmin.eu/MCAdmin.exe", "MCAdmin.exe.new", "MCAdmin.exe");
-                if (!isUpdate)
-                {
-                    if (isOutOfDate_MCA) {
-                        AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false);
-                        if (minecraftFirewall != null && minecraftFirewall.players.Count > 0)
-                        {
-                            foreach (Player ply in Program.minecraftFirewall.players)
-                            {
-                                if (ply.name == null || ply.name == "") continue;
-                                if (PlyHasLevel(ply.name, 4)) { ply.SendDirectedMessage("MCAdmin update downloaded!"); };
-                            }
-                        }
-                    }
-                    else { AddRTLine(Color.Green, "MCAdmin already up to date!\r\n", false); }
-                }
-                else
-                {
-                    try
-                    {
-                        if (File.Exists("MCAdmin.exe.old"))
-                        {
-                            File.Delete("MCAdmin.exe.old");
-                        }
-                    }
-                    catch { }
-                    try
-                    {
-                        if (File.Exists("MCAdmin.exe"))
-                        {
-                            File.Delete("MCAdmin.exe");
-                        }
-                    }
-                    catch { }
-
-                    if (File.Exists("MCAdmin.exe")) File.Move("MCAdmin.exe", "MCAdmin.exe.old");
-                    File.Move("MCAdmin.exe.new", "MCAdmin.exe");
-                    isOutOfDate_MCA = true;
-                    AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false);
-                    if (minecraftFirewall != null && minecraftFirewall.players.Count > 0) {
-                            foreach (Player ply in minecraftFirewall.players)
-                            {
-                                if (ply.name == null || ply.name == "") continue;
-                                if (PlyHasLevel(ply.name, 4)) { ply.SendDirectedMessage("MCAdmin update downloaded!"); };
-                            }
-                        }
-                    }
-                
-            }
 
             if (Program.dontUpdateJAR)
             {
@@ -1395,7 +1338,6 @@ namespace MCAdmin
                 string argtl = arg.Trim().ToLower();
                 if (argtl.Contains("noupdate")) dontUpdate = true;
                 else if (argtl.Contains("nojarupdate")) dontUpdateJAR = true;
-                else if (argtl.Contains("noexeupdate")) dontUpdateMCAdmin = true;
                 else if (argtl.Contains("console")) consoleOnly = true;
                 else if (argtl.Contains("autostart") || argtl.Contains("autorun")) autoStartServer = true;
             }
@@ -1605,7 +1547,7 @@ namespace MCAdmin
             commands.Add("info", new InfoCommand());
 
             commands.Add("version", new VersionCommand());
-            commands.Add("credits", new CreditsCommand()); //Do not change/remove/alter in anyway.
+            commands.Add("credits", new CreditsCommand());
             commands.Add("compass", new CompassCommand());
 
             commands.Add("time", new TimeCommand());
