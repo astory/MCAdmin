@@ -12,7 +12,7 @@ namespace MCAdmin.Commands
             if (cmdparts.Length < 2 || cmdparts[1].ToLower() == "normal")
             {
                 ply.forcedtime = -1;
-                ply.SendDirectedMessage("Reset your time back to normal!");
+                ply.SendDirectedMessage("Reset Your Time back to normal!");
                 return;
             }
             int settime = -1;
@@ -47,7 +47,7 @@ namespace MCAdmin.Commands
             {
                 ply.forcedtime = (settime - 6) * 1000;
             }
-            ply.SendDirectedMessage("Forced your time to be: " + settime.ToString() + ":00");
+            ply.SendDirectedMessage("You Forced Your Time to be: " + settime.ToString() + ":00");
         }
 
         public override int reqlevel { get { return 1; } }

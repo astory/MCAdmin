@@ -278,7 +278,7 @@ namespace MCAdmin
                                         if (Util.ContainsInvalidChars(name, true)) { this.Disconnect("Don't use hax, fag :3"); return; }
                                         if (Program.PlyGetRank(name) == "banned") { this.Disconnect("You're banned"); return; }
 
-                                        if (Program.mbansEnable && Program.masterBanList.Contains(name.ToLower())) { this.Disconnect("Globally banned. Visit http://bans.mcadmin.eu/?user=" + name); return; }
+                                        if (Program.mbansEnable && Program.masterBanList.Contains(name.ToLower())) { this.Disconnect("Globally Banned. Visit http://bans.mcadmin.eu/?user=" + name); return; }
 
                                         Program.worldIsDirty = true;
 

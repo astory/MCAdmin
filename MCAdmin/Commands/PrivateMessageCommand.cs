@@ -20,7 +20,7 @@ namespace MCAdmin.Commands
                     message.Append(cmdparts[i] + " ");
                 message.Remove(message.Length - 1, 1);
 
-                Program.AddRTLine(Color.Black, "[PM] " + ply.name + " to " + ply2.name + ": " + message + "\n", true );
+                Program.AddRTLine(Color.Black, "[PM] " + ply.name + " to " + ply2.name + ": " + message + "\n", true);
                 ply.SendDirectedMessage("§e[PM >] §f" + ply2.name + "§f: " + message);
                 ply2.SendDirectedMessage("§e[PM <] §f" + ply.name + "§f: " + message);
             }

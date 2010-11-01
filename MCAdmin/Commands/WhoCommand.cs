@@ -39,6 +39,9 @@ namespace MCAdmin.Commands
                     case "doribot":
                         ply.SendDirectedMessage("Doridian's personal bot");
                         return;
+                    case "toxicated":
+                        ply.SendDirectedMessage("Combine Soldier - Developer for MCAdmin & Universal Union");
+                        return;
                 }
             }
         }

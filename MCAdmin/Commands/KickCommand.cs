@@ -32,7 +32,7 @@ namespace MCAdmin.Commands
             ply2.Disconnect("Kicked by " + ply.name + reasonstr);
             Program.SendServerMessage(ply.name + " kicked " + ply2.name + reasonstr);
 
-            if (Program.PlyIsDev(cmdparts[1])) ply.SendDirectedMessage("You just kicked an official MCAdmin Developer!");
+            if (Program.PlyIsDev(cmdparts[1])) ply.SendDirectedMessage("§4You just kicked an Official MCAdmin Developer!");
         }
 
         public override int reqlevel { get { return 2; } }

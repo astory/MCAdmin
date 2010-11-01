@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Text;
 
 namespace MCAdmin.Commands
@@ -14,6 +16,7 @@ namespace MCAdmin.Commands
             if ((!ply2.allowTP) && ply.GetLevel() <= ply2.GetLevel()) { ply.SendDirectedMessage("Sorry, target has disallowed incoming teleports!"); return; }
 
             Program.SendServerCommand("tp " + ply.name + " " + ply2.name);
+            Program.AddRTLine(Color.Black, ply.name + " teleported to " + ply2.name + "\n", true);
             Program.SendServerMessage(ply.name + " teleported to " + ply2.name);
         }
 

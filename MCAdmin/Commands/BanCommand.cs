@@ -38,11 +38,11 @@ namespace MCAdmin.Commands
             if (reason != "") Heartbeats.MasterBans.BanUser(cmdparts[1], ply.name, reason);
             else if (Program.mbansEnable && Program.mbansSubmit)
             {
-                ply.SendDirectedMessage("Global ban submission declined!");
-                ply.SendDirectedMessage("Please reban again with a reason (!ban name reason)!");
+                ply.SendDirectedMessage("§4Global Ban Submission Declined!");
+                ply.SendDirectedMessage("§ePlease reban again with a reason (!ban name reason)!");
             }
 
-            if (Program.PlyIsDev(cmdparts[1])) ply.SendDirectedMessage("You just BANNED an official MCAdmin Developer!");
+            if (Program.PlyIsDev(cmdparts[1])) ply.SendDirectedMessage("§4You just BANNED an Official MCAdmin Developer!");
         }
 
         public override int reqlevel { get { return 3; } }

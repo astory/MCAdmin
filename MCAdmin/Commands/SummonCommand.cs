@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace MCAdmin.Commands
             Player ply2 = Program.minecraftFirewall.FindPlayer(cmdparts[1]);
             if (ply2 == null) { ply.SendDirectedMessage("Sorry, target could not be found!"); return; }
             Program.SendServerCommand("tp " + ply2.name + " " + ply.name);
+            Program.AddRTLine(Color.Black, ply.name + " summoned " + ply2.name + "\n", true);
             Program.SendServerMessage(ply.name + " summoned " + ply2.name);
         }
 

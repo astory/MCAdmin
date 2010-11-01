@@ -1560,6 +1560,7 @@ namespace MCAdmin
 
             commands.Add("who", new WhoCommand());
             commands.Add("setrank", new SetrankCommand());
+            commands.Add("pm", new PrivateMessageCommand());
 
             commands.Add("kit", new KitCommand());
             commands.Add("give", new GiveCommand());
@@ -1581,6 +1582,7 @@ namespace MCAdmin
             commands.Add("info", new InfoCommand());
 
             commands.Add("version", new VersionCommand());
+            commands.Add("credits", new CreditsCommand()); //Do not change/remove/alter in anyway.
             commands.Add("compass", new CompassCommand());
 
             commands.Add("time", new TimeCommand());
@@ -1590,7 +1592,6 @@ namespace MCAdmin
             commands.Add("changelevel", new ChangelevelCommand());
             //commands.Add("freeze", new FreezeCommand(this));
 
-            commands.Add("pm", new PrivateMessageCommand());
             #endregion
 
             #region Blocks <-> IDs init

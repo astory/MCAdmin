@@ -12,7 +12,7 @@ namespace MCAdmin.Commands
             if (cmdparts.Length < 2 || cmdparts[1].ToLower() == "normal")
             {
                 Program.minecraftFirewall.forcedtime = -1;
-                Program.SendServerMessage(ply.name + " reset time back to normal!");
+                Program.SendServerMessage(ply.name + " reset the Server Time back to normal!");
                 return;
             }
             int settime = -1;
@@ -47,7 +47,7 @@ namespace MCAdmin.Commands
             {
                 Program.minecraftFirewall.forcedtime = (settime - 6) * 1000;
             }
-            Program.SendServerMessage(ply.name + " forced time to be: " + settime.ToString() + ":00");
+            Program.SendServerMessage(ply.name + " forced the Server Time to be: " + settime.ToString() + ":00");
         }
 
         public override int reqlevel { get { return 3; } }
