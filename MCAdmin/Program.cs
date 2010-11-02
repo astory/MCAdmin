@@ -1684,6 +1684,13 @@ namespace MCAdmin
             blockEnum.Add("reed block", 83);
             blockEnum.Add("jukebox", 84);
             blockEnum.Add("fence", 85);
+            blockEnum.Add("pumpkin", 86);
+            blockEnum.Add("bloodstone", 87);
+            blockEnum.Add("mud", 88);
+            blockEnum.Add("lightstone", 89);
+            blockEnum.Add("portal", 90);
+            blockEnum.Add("jack-o-lantern", 85);
+
 
             blockEnum.Add("iron shovel", 256);
             blockEnum.Add("iron pickaxe", 257);
@@ -1775,6 +1782,12 @@ namespace MCAdmin
             blockEnum.Add("powered minecart", 343);
             blockEnum.Add("egg", 344);
             blockEnum.Add("compass", 345);
+            blockEnum.Add("fishing rod", 346);
+            blockEnum.Add("watch", 347);
+            blockEnum.Add("lightstone dust", 348);
+            blockEnum.Add("raw fish", 349);
+            blockEnum.Add("cooked fish", 350);
+
 
             blockEnum.Add("gold record", 2256);
             blockEnum.Add("green record", 2257);

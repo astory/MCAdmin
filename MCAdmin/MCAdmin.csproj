@@ -81,6 +81,7 @@
     <Compile Include="Commands\ChangelevelCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CompassCommand.cs" />
+    <Compile Include="Commands\CreditsCommand.cs" />
     <Compile Include="Commands\FreezeCommand.cs" />
     <Compile Include="Commands\InfoCommand.cs" />
     <Compile Include="Commands\PrivateMessageCommand.cs" />
