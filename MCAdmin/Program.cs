@@ -1689,7 +1689,7 @@ namespace MCAdmin
             blockEnum.Add("mud", 88);
             blockEnum.Add("lightstone", 89);
             blockEnum.Add("portal", 90);
-            blockEnum.Add("jack-o-lantern", 85);
+            blockEnum.Add("jack-o-lantern", 91);
 
 
             blockEnum.Add("iron shovel", 256);
