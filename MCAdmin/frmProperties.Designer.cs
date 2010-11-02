@@ -477,9 +477,9 @@
             this.cbHellworld.AutoSize = true;
             this.cbHellworld.Location = new System.Drawing.Point(116, 289);
             this.cbHellworld.Name = "cbHellworld";
-            this.cbHellworld.Size = new System.Drawing.Size(72, 17);
+            this.cbHellworld.Size = new System.Drawing.Size(160, 17);
             this.cbHellworld.TabIndex = 36;
-            this.cbHellworld.Text = "Hell world";
+            this.cbHellworld.Text = "Use The Nether World (Hell)";
             this.cbHellworld.UseVisualStyleBackColor = true;
             this.cbHellworld.CheckedChanged += new System.EventHandler(this.event_RefreshPreview);
             // 
