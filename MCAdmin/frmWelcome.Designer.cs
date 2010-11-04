@@ -92,10 +92,10 @@
             this.lblOwner.AutoSize = true;
             this.lblOwner.Location = new System.Drawing.Point(12, 184);
             this.lblOwner.Name = "lblOwner";
-            this.lblOwner.Size = new System.Drawing.Size(242, 26);
+            this.lblOwner.Size = new System.Drawing.Size(245, 26);
             this.lblOwner.TabIndex = 11;
             this.lblOwner.Text = "What is your (the owner\'s) full ingame name?\r\nLeave empty if you wish to set your" +
-                "self admin later";
+                "self admin later.\r\n";
             // 
             // tbOwner
             // 
