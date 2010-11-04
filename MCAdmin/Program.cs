@@ -676,7 +676,17 @@ namespace MCAdmin
                 isUpdate = DownloadURLToAndDiff("https://internal.mcadmin.eu/MCAdmin.exe", "MCAdmin.exe.new", "MCAdmin.exe");
                 if (!isUpdate)
                 {
-                    if (isOutOfDate_MCA) { AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false); }
+                    if (isOutOfDate_MCA) {
+                        AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false);
+                        if (minecraftFirewall != null && minecraftFirewall.players.Count > 0)
+                        {
+                            foreach (Player ply in Program.minecraftFirewall.players)
+                            {
+                                if (ply.name == null || ply.name == "") continue;
+                                if (PlyHasLevel(ply.name, 4)) { ply.SendDirectedMessage("MCAdmin update downloaded!"); };
+                            }
+                        }
+                    }
                     else { AddRTLine(Color.Green, "MCAdmin already up to date!\r\n", false); }
                 }
                 else
@@ -702,7 +712,15 @@ namespace MCAdmin
                     File.Move("MCAdmin.exe.new", "MCAdmin.exe");
                     isOutOfDate_MCA = true;
                     AddRTLine(Color.Orange, "MCAdmin update downloaded! Restart MCAdmin to apply update!\r\n", false);
-                }
+                    if (minecraftFirewall != null && minecraftFirewall.players.Count > 0) {
+                            foreach (Player ply in minecraftFirewall.players)
+                            {
+                                if (ply.name == null || ply.name == "") continue;
+                                if (PlyHasLevel(ply.name, 4)) { ply.SendDirectedMessage("MCAdmin update downloaded!"); };
+                            }
+                        }
+                    }
+                
             }
 
             if (Program.dontUpdateJAR)
@@ -714,7 +732,17 @@ namespace MCAdmin
                 isUpdate = DownloadURLToAndDiff("http://minecraft.net/download/minecraft_server.jar", "minecraft_server.jar.new", "minecraft_server.jar");
                 if (!isUpdate)
                 {
-                    if (isOutOfDate_JAR) { AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false); }
+                    if (isOutOfDate_JAR) {
+                        AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false);
+                        if (minecraftFirewall != null && minecraftFirewall.players.Count > 0)
+                        {
+                            foreach (Player ply in Program.minecraftFirewall.players)
+                            {
+                                if (ply.name == null || ply.name == "") continue;
+                                if (PlyHasLevel(ply.name, 4)) { ply.SendDirectedMessage("JAR update applied. Restart server to apply update!\r\n"); };
+                            }
+                        }
+                    }
                     else { AddRTLine(Color.Green, "JAR already up to date!\r\n", false); }
                 }
                 else if (minecraftServer == null)
@@ -735,6 +763,14 @@ namespace MCAdmin
                 {
                     isOutOfDate_JAR = true;
                     AddRTLine(Color.Orange, "JAR update applied. Restart server to apply update!\r\n", false);
+                    if (minecraftFirewall != null && minecraftFirewall.players.Count > 0)
+                    {
+                        foreach (Player ply in Program.minecraftFirewall.players)
+                        {
+                            if (ply.name == null || ply.name == "") continue;
+                            if (PlyHasLevel(ply.name, 4)) { ply.SendDirectedMessage("JAR update applied. Restart server to apply update!\r\n"); };
+                        }
+                    }
                 }
             }
 
